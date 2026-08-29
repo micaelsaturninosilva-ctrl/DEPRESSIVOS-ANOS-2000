@@ -1,0 +1,6 @@
+{
+  "name": "Gerador de Posts - Depressivos 2000",
+  "description": "Gerador e editor de posts e memes nostálgicos dos anos 2000 da marca Depressivos 2000 com templates estilo Tweet de Parede, Alerta de Sistema Windows, Terminal 3 da Manhã e mockups retrô em alta resolução.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-impact {
+    font-family: 'Arial Black', Impact, 'Syne', sans-serif;
+  }
+  .font-mono-retro {
+    font-family: 'Courier Prime', monospace;
+  }
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+  }
+  .font-terminal {
+    font-family: 'VT323', monospace;
+  }
+  .font-grotesk {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* Textura de ruído analógico / Grain */
+  .bg-noise {
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.06"/%3E%3C/svg%3E');
+  }
+
+  .bg-grid-pattern {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  /* Scanlines CRT */
+  .crt-scanlines {
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.35) 50%
+    ), linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.04),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.04)
+    );
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+  }
+
+  .crt-scanlines-dense {
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.5) 50%
+    ), linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.06),
+      rgba(0, 255, 0, 0.03),
+      rgba(0, 0, 255, 0.06)
+    );
+    background-size: 100% 3px, 4px 100%;
+    pointer-events: none;
+  }
+
+  /* CRT Flicker Animation */
+  @keyframes crt-flicker-anim {
+    0% { opacity: 0.985; }
+    15% { opacity: 0.96; }
+    30% { opacity: 1; }
+    45% { opacity: 0.975; }
+    60% { opacity: 1.015; }
+    75% { opacity: 0.955; }
+    90% { opacity: 0.99; }
+    100% { opacity: 0.98; }
+  }
+
+  .crt-flicker-active {
+    animation: crt-flicker-anim 0.12s infinite;
+  }
+
+  /* CRT Slow Rolling Scanline Beam */
+  @keyframes crt-beam-roll {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(1200%); }
+  }
+
+  .crt-moving-beam {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.04) 40%,
+      rgba(255, 255, 255, 0.09) 50%,
+      rgba(255, 255, 255, 0.04) 60%,
+      transparent 100%
+    );
+    height: 120px;
+    animation: crt-beam-roll 6s linear infinite;
+    pointer-events: none;
+  }
+
+  /* CRT Lens Curvature & Screen Bezel Shadows */
+  .crt-curvature-subtle {
+    border-radius: 28px;
+    box-shadow: 
+      inset 0 0 80px rgba(0, 0, 0, 0.75),
+      inset 0 0 20px rgba(0, 0, 0, 0.95);
+  }
+
+  .crt-curvature-heavy {
+    border-radius: 56px;
+    box-shadow: 
+      inset 0 0 140px rgba(0, 0, 0, 0.88),
+      inset 0 0 45px rgba(0, 0, 0, 0.98);
+  }
+
+  /* CRT Radial Vignette */
+  .crt-vignette {
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      transparent 55%,
+      rgba(0, 0, 0, 0.35) 80%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+    pointer-events: none;
+  }
+
+  .crt-vignette-heavy {
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.55) 75%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* CRT Screen Glass Glare / Reflexo de Luz no Vidro Curvo */
+  .crt-glass-glare {
+    background: linear-gradient(
+      130deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 30%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  /* Phosphor Blur & Optical Low-Res */
+  .crt-phosphor-blur {
+    filter: blur(1.2px) contrast(1.18) brightness(1.04);
+  }
+
+  /* Phosphor Green Matrix Tint */
+  .crt-tint-cyber {
+    filter: sepia(1) hue-rotate(85deg) saturate(4.5) contrast(1.2) brightness(0.95);
+  }
+
+  /* Phosphor Amber 80s Tint */
+  .crt-tint-amber {
+    filter: sepia(1) hue-rotate(345deg) saturate(5) contrast(1.25) brightness(0.98);
+  }
+
+  /* VHS / Chromatic Aberration Shift */
+  .crt-rgb-shift {
+    filter: drop-shadow(2px 0px 0px rgba(255, 0, 0, 0.45)) drop-shadow(-2px 0px 0px rgba(0, 255, 255, 0.45));
+  }
+
+  /* Windows 98 bevel borders */
+  .win98-border {
+    border-top: 4px solid #ffffff;
+    border-left: 4px solid #ffffff;
+    border-right: 4px solid #1A1A1A;
+    border-bottom: 4px solid #1A1A1A;
+  }
+
+  .win98-border-thick {
+    border-top: 16px solid #ffffff;
+    border-left: 16px solid #ffffff;
+    border-right: 16px solid #1A1A1A;
+    border-bottom: 16px solid #1A1A1A;
+  }
+
+  .win98-btn {
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #ffffff;
+    border-right: 3px solid #1A1A1A;
+    border-bottom: 3px solid #1A1A1A;
+  }
+
+  .win98-btn:active {
+    border-top: 3px solid #1A1A1A;
+    border-left: 3px solid #1A1A1A;
+    border-right: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+  }
+
+  .win98-inset {
+    border-top: 3px solid #808080;
+    border-left: 3px solid #808080;
+    border-right: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+  }
+
+  /* Vinyl / CD Spin & Audio Movement Animations */
+  @keyframes spin-disc {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .animate-spin-disc {
+    animation: spin-disc 7s linear infinite;
+  }
+
+  @keyframes eq-wave-1 { 0%, 100% { height: 20%; } 50% { height: 95%; } }
+  @keyframes eq-wave-2 { 0%, 100% { height: 85%; } 50% { height: 30%; } }
+  @keyframes eq-wave-3 { 0%, 100% { height: 45%; } 50% { height: 100%; } }
+  @keyframes eq-wave-4 { 0%, 100% { height: 90%; } 50% { height: 35%; } }
+  @keyframes eq-wave-5 { 0%, 100% { height: 30%; } 50% { height: 80%; } }
+
+  .animate-eq-1 { animation: eq-wave-1 0.75s ease-in-out infinite; }
+  .animate-eq-2 { animation: eq-wave-2 0.65s ease-in-out infinite 0.1s; }
+  .animate-eq-3 { animation: eq-wave-3 0.85s ease-in-out infinite 0.2s; }
+  .animate-eq-4 { animation: eq-wave-4 0.7s ease-in-out infinite 0.15s; }
+  .animate-eq-5 { animation: eq-wave-5 0.8s ease-in-out infinite 0.25s; }
+
+  /* iPod Classic Screen & Reflection */
+  .ipod-reflect {
+    -webkit-box-reflect: below 2px linear-gradient(transparent 70%, rgba(255,255,255,0.25) 100%);
+  }
+
+  .ipod-header-gloss {
+    background: linear-gradient(180deg, #FFFFFF 0%, #E8EDF3 40%, #CCD3DE 100%);
+  }
+
+  .ipod-scrubber-blue {
+    background: linear-gradient(180deg, #53C3F8 0%, #2196E3 50%, #157CC2 100%);
+  }
+
+  .ipod-casing-silver {
+    background: linear-gradient(90deg, #7E858E 0%, #B8BEC7 3%, #E5E9EE 15%, #F0F3F7 50%, #E5E9EE 85%, #B8BEC7 97%, #7E858E 100%);
+  }
+}
+
