@@ -18,7 +18,11 @@ import {
   Layers,
   ArrowRight,
   TrendingUp,
-  Smile
+  Smile,
+  Globe,
+  Search,
+  Newspaper,
+  Radio
 } from 'lucide-react';
 
 interface StrategyHubModalProps {
@@ -442,7 +446,7 @@ export const StrategyHubModal: React.FC<StrategyHubModalProps> = ({
   onApplyPost,
   currentPostText,
 }) => {
-  const [activeTab, setActiveTab] = useState<'memes20' | 'reels10' | 'analyze' | 'calendar' | 'shows'>('memes20');
+  const [activeTab, setActiveTab] = useState<'observatorio' | 'memes20' | 'reels10' | 'analyze' | 'calendar' | 'shows'>('observatorio');
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [memeFilter, setMemeFilter] = useState<string>('todos');
@@ -450,6 +454,12 @@ export const StrategyHubModal: React.FC<StrategyHubModalProps> = ({
   // States for Batch Memes - initialized with 20 rich presets so it's instant!
   const [batchMemes, setBatchMemes] = useState<any[]>(LOCAL_FALLBACK_MEMES);
   
+  // States for Observatório do Mundo (Live Web Grounding)
+  const [worldTopic, setWorldTopic] = useState<string>('notícias, cultura pop, internet, tendências e cotidiano do Brasil');
+  const [worldSummary, setWorldSummary] = useState<string>('');
+  const [worldMemes, setWorldMemes] = useState<any[]>([]);
+  const [worldLoading, setWorldLoading] = useState(false);
+
   // States for Reels
   const [reelsScripts, setReelsScripts] = useState<any[]>([]);
 
@@ -475,6 +485,37 @@ export const StrategyHubModal: React.FC<StrategyHubModalProps> = ({
       [list[i], list[j]] = [list[j], list[i]];
     }
     return list;
+  };
+
+  // Fetch Live World Memes (Google Search Grounding)
+  const fetchWorldMemes = async (customTopic?: string) => {
+    setWorldLoading(true);
+    const query = customTopic || worldTopic || 'notícias e cultura pop hoje';
+    try {
+      const res = await fetch('/api/generate-live-world-memes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: query,
+          count: 10,
+          searchFocus: 'brasil cultura internet noticias',
+        }),
+      });
+      const data = await res.json();
+      if (data && Array.isArray(data.memes) && data.memes.length > 0) {
+        setWorldMemes(data.memes);
+        if (data.trendingSummary) {
+          setWorldSummary(data.trendingSummary);
+        }
+      } else {
+        setWorldMemes(getShuffledLocal('todos'));
+      }
+    } catch (err) {
+      console.warn("Falha no observatório, usando fallback:", err);
+      setWorldMemes(getShuffledLocal('todos'));
+    } finally {
+      setWorldLoading(false);
+    }
   };
 
   // Generate 20 Memes
@@ -633,6 +674,19 @@ export const StrategyHubModal: React.FC<StrategyHubModalProps> = ({
         <div className="flex border-b border-gray-800 bg-[#0E1118] px-4 gap-1 sm:gap-2 overflow-x-auto text-xs">
           <button
             onClick={() => {
+              setActiveTab('observatorio');
+              if (worldMemes.length === 0) fetchWorldMemes();
+            }}
+            className={`py-3 px-3 font-bold flex items-center gap-1.5 border-b-2 whitespace-nowrap transition ${
+              activeTab === 'observatorio'
+                ? 'border-cyan-400 text-cyan-300 bg-cyan-500/10'
+                : 'border-transparent text-gray-400 hover:text-white'
+            }`}
+          >
+            <Globe className="w-4 h-4 text-cyan-400 animate-pulse" /> OBSERVATÓRIO DO MUNDO (AO VIVO)
+          </button>
+          <button
+            onClick={() => {
               setActiveTab('memes20');
               if (batchMemes.length === 0) fetch20Memes();
             }}
@@ -694,6 +748,179 @@ export const StrategyHubModal: React.FC<StrategyHubModalProps> = ({
 
         {/* Tab Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-[#0B0D13]">
+          {/* TAB: OBSERVATÓRIO DO MUNDO (LIVE SEARCH GROUNDING) */}
+          {activeTab === 'observatorio' && (
+            <div className="flex flex-col gap-4">
+              <div className="bg-gradient-to-r from-cyan-950/40 via-[#101926] to-[#0D111A] border border-cyan-500/30 rounded-2xl p-4 sm:p-5 flex flex-col gap-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 bg-cyan-500/20 text-cyan-300 rounded-xl border border-cyan-500/40">
+                      <Radio className="w-5 h-5 animate-pulse" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-white text-base flex items-center gap-2">
+                        Observatório do Mundo — Pesquisa Web ao Vivo
+                        <span className="text-[10px] bg-cyan-400 text-black px-2 py-0.5 rounded font-black tracking-wider">
+                          GOOGLE SEARCH GROUNDING
+                        </span>
+                      </h3>
+                      <p className="text-xs text-gray-400">
+                        O Depressivos 2000 não é só madrugada: olha pro mundo hoje (notícias, cultura pop, trends, bizarrices) e transforma em memes ácidos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search Bar & Quick Triggers */}
+                <div className="flex flex-col sm:flex-row gap-2 mt-1">
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Pesquisar acontecimentos: ex: eleição, polêmica do BBB, apagão, nova IA, trânsito..."
+                      value={worldTopic}
+                      onChange={(e) => setWorldTopic(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && fetchWorldMemes(worldTopic)}
+                      className="w-full bg-[#080B12] border border-cyan-500/30 rounded-xl pl-9 pr-3.5 py-2.5 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-400"
+                    />
+                  </div>
+                  <button
+                    onClick={() => fetchWorldMemes(worldTopic)}
+                    disabled={worldLoading}
+                    className="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-black text-xs rounded-xl flex items-center justify-center gap-2 transition shadow-lg disabled:opacity-50"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${worldLoading ? 'animate-spin' : ''}`} />
+                    {worldLoading ? 'Pesquisando o Mundo com IA...' : 'Rastrear Notícias & Gerar'}
+                  </button>
+                </div>
+
+                {/* Fast Category Tags */}
+                <div className="flex items-center gap-1.5 overflow-x-auto text-[11px] pt-1">
+                  {[
+                    '🌐 Notícias & Tendências de Hoje no Brasil',
+                    '⚡ Cultura Pop & Treta de Celebridades',
+                    '📱 Internet, Threads, X e Algoritmos',
+                    '🏢 Cotidiano: Supermercado, Inflação e Trabalho',
+                    '💔 Dates Desastrosos & Stalking',
+                    '🗳️ Eleições & Discussões de Família',
+                    '🌧️ Clima, Apagão e Perrengues Urbanos',
+                  ].map((preset) => (
+                    <button
+                      key={preset}
+                      onClick={() => {
+                        setWorldTopic(preset);
+                        fetchWorldMemes(preset);
+                      }}
+                      className="bg-[#141B2D] hover:bg-[#1C263F] text-cyan-200 px-2.5 py-1 rounded-lg border border-cyan-500/20 whitespace-nowrap transition"
+                    >
+                      {preset}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Trending Summary from Live Search */}
+                {worldSummary && (
+                  <div className="bg-[#0A0E18] border border-cyan-500/20 p-3 rounded-xl text-xs text-gray-300 flex items-start gap-2">
+                    <Newspaper className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-cyan-300 block mb-0.5">Resumo das Descobertas de Hoje:</span>
+                      <p className="text-gray-300 leading-relaxed">{worldSummary}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* World Memes Grid */}
+              {worldLoading && worldMemes.length === 0 ? (
+                <div className="py-20 flex flex-col items-center justify-center text-center">
+                  <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin mb-3" />
+                  <p className="font-bold text-white text-sm">Pesquisando acontecimentos reais no Google...</p>
+                  <p className="text-xs text-gray-400 mt-1">Transformando notícias e comportamento em humor do Depressivos 2000</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {(worldMemes.length > 0 ? worldMemes : LOCAL_FALLBACK_MEMES.slice(0, 10)).map((meme, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-[#141824] border border-cyan-500/20 hover:border-cyan-400/50 p-4 rounded-xl flex flex-col justify-between transition group gap-2.5"
+                    >
+                      <div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-[11px] font-mono text-cyan-300 font-bold bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                            #{idx + 1} • {meme.quadro || meme.category || 'Observatório do Mundo'}
+                          </span>
+                          <span className="text-[10px] text-gray-400 font-mono bg-black/40 px-2 py-0.5 rounded border border-gray-800">
+                            {meme.template || 'tweet-parede'}
+                          </span>
+                        </div>
+                        <p className="text-white font-impact uppercase text-base leading-snug my-2 whitespace-pre-line tracking-wide">
+                          {meme.text}
+                        </p>
+
+                        {/* Metadados e Áudio Viral */}
+                        {meme.viralAudio && (
+                          <div className="bg-[#0E121B] p-2 rounded-lg border border-cyan-500/20 text-[11px] text-cyan-200 flex items-center gap-1.5 my-1.5 font-mono">
+                            <Zap className="w-3.5 h-3.5 text-pink-400 flex-shrink-0" />
+                            <span className="truncate">Áudio Viral: {meme.viralAudio}</span>
+                          </div>
+                        )}
+
+                        {/* 3 Opções de Visual */}
+                        <div className="mt-3 pt-2.5 border-t border-gray-800/80">
+                          <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block mb-1.5 font-bold">
+                            3 Modelos Visuais para Testar:
+                          </span>
+                          <div className="grid grid-cols-3 gap-1.5">
+                            {(meme.threeVisualVariations || [
+                              { name: "Tweet Parede", template: "tweet-parede" },
+                              { name: "Windows 98", template: "sistema-alerta" },
+                              { name: "Terminal 3AM", template: "terminal-dark" }
+                            ]).map((opt: any, optIdx: number) => (
+                              <button
+                                key={optIdx}
+                                onClick={() => handleApplyMemeToPost(meme, opt.template as TemplateType)}
+                                className="bg-[#1C2333] hover:bg-cyan-500 hover:text-black text-gray-200 text-[10px] font-bold py-1.5 px-1 rounded-md transition text-center truncate border border-gray-700 hover:border-cyan-400"
+                                title={`Aplicar no template: ${opt.name}`}
+                              >
+                                {opt.name.replace('Opção ', '')}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Botões de Ação do Card */}
+                      <div className="flex items-center justify-between gap-2 pt-2 border-t border-gray-800">
+                        <button
+                          onClick={() => copyToClipboard(meme.text, `world-${idx}`)}
+                          className="text-xs text-gray-400 hover:text-white flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-gray-800/50 hover:bg-gray-800 transition"
+                        >
+                          {copiedId === `world-${idx}` ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-green-400" />
+                              <span className="text-green-400 font-bold">Copiado!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copiar Texto</span>
+                            </>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => handleApplyMemeToPost(meme)}
+                          className="text-xs font-bold text-black bg-cyan-400 hover:bg-cyan-300 px-3 py-1.5 rounded-lg flex items-center gap-1 transition shadow-sm"
+                        >
+                          <span>Usar no Post</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           {/* TAB: 20 MEMES */}
           {activeTab === 'memes20' && (
             <div className="flex flex-col gap-4">

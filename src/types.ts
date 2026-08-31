@@ -11,6 +11,7 @@ export type TemplateType =
   | 'tela-azul-brutalista' // IDENTIDADE OFICIAL: Tela Azul Pura / Neo-Brutalismo
   | 'barra-carregamento-99' // BARRA 99%: Processando maturidade emocional...
   | 'aviso-sistema-bateria' // ALERTA AZUL: Aviso do Sistema / Bateria Social Crítica
+  | 'terminal-dark' 
   | 'mockup-tv-vhs'        // 📺 TV de Tubo Bege/Branca com VHS & Adesivos (Quasar)
   | 'mockup-tv-dvd'        // 📺 TV de Tubo Prata com DVD & Cabos RCA (Memorex)
   | 'mockup-monitor-bege'  // 🖥️ Monitor de Tubo Bege (Windows 95/98)
@@ -19,8 +20,9 @@ export type TemplateType =
   | 'mockup-gameboy'       // 🎮 Console Portátil (Gameboy)
   | 'mockup-mp3-player'    // 🎵 Reprodutor de MP3 / iPod
   | 'tweet-parede' 
-  | 'terminal-dark' 
-  | 'winamp-retro';
+  | 'winamp-retro'
+  | 'windows-media-player' // 🎬 Windows Media Player XP (Bliss Wallpaper, Controles WMP 9, Vídeo/Foto)
+  | 'wmp-xp';
 
 export type AspectRatioType = '1:1' | '4:5' | '9:16' | '16:9';
 
@@ -92,6 +94,7 @@ export interface PostConfig {
   fontSize: number; // relative size multiplier 0.4 to 2.0
   textAlign?: 'left' | 'center' | 'right';
   lineHeightMultiplier?: number; // e.g. 1.0, 1.15, 1.3, 1.5
+  letterSpacing?: number; // in pixels, e.g. -4, -2, 0, 2, 4, 8, 12
   textTransform?: 'uppercase' | 'none';
   showNoise: boolean;
   showScanlines: boolean;

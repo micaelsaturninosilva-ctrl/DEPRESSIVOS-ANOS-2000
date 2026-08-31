@@ -1,10 +1,12 @@
 import { toCanvas } from 'html-to-image';
+import { AspectRatioType } from '../types';
 
 export interface VideoExportOptions {
-  durationSeconds: number; // e.g. 5, 10, 15, 30
+  durationSeconds: number; // e.g. 3, 5, 7, 10
   fps?: number; // default 30
   targetWidth?: number; // default 1080
-  targetHeight?: number; // default 1080 (or 1920 for stories)
+  targetHeight?: number; // default 1080 (or 1920 for stories, 1350 for portrait)
+  aspectRatio?: AspectRatioType;
   format?: 'mp4' | 'webm';
   includeAudio?: boolean;
   audioUrl?: string | null;
@@ -18,6 +20,31 @@ export interface VideoExportResult {
   filename: string;
   format: 'mp4' | 'webm';
   durationSeconds: number;
+  width: number;
+  height: number;
+  aspectRatioLabel: string;
+}
+
+/**
+ * Return precise width, height, and label for each post aspect ratio
+ */
+export function getDimensionsForAspectRatio(aspectRatio: AspectRatioType = '1:1'): {
+  width: number;
+  height: number;
+  label: string;
+  tag: string;
+} {
+  switch (aspectRatio) {
+    case '9:16':
+      return { width: 1080, height: 1920, label: 'Reels / Stories / TikTok (9:16)', tag: 'reels-9x16' };
+    case '4:5':
+      return { width: 1080, height: 1350, label: 'Feed Retrato (4:5)', tag: 'feed-retrato-4x5' };
+    case '16:9':
+      return { width: 1920, height: 1080, label: 'Widescreen / Banner (16:9)', tag: 'widescreen-16x9' };
+    case '1:1':
+    default:
+      return { width: 1080, height: 1080, label: 'Feed Quadrado (1:1)', tag: 'feed-quadrado-1x1' };
+  }
 }
 
 /**
@@ -61,27 +88,51 @@ export function getSupportedVideoMimeType(preferredFormat: 'mp4' | 'webm' = 'mp4
 }
 
 /**
- * Record and Export DOM node as MP4/WebM Video with optional background audio
+ * Record and Export DOM node as MP4/WebM Video with exact dimensions according to chosen post aspect ratio
  */
 export async function exportNodeToVideo(
   node: HTMLElement,
   options: VideoExportOptions
 ): Promise<VideoExportResult> {
+  const rawDuration = options.durationSeconds ?? 5;
+  // Rigorously cap loop export duration to maximum 10 seconds as requested
+  const clampedDuration = Math.min(10, Math.max(1, rawDuration));
+
+  // Determine exact dimensions from options, aspectRatio, or DOM node
+  let finalWidth = options.targetWidth;
+  let finalHeight = options.targetHeight;
+  let ratioInfo = getDimensionsForAspectRatio(options.aspectRatio || '1:1');
+
+  if (options.aspectRatio) {
+    ratioInfo = getDimensionsForAspectRatio(options.aspectRatio);
+    finalWidth = ratioInfo.width;
+    finalHeight = ratioInfo.height;
+  } else if (!finalWidth || !finalHeight) {
+    finalWidth = node.offsetWidth || 1080;
+    finalHeight = node.offsetHeight || 1080;
+  }
+
   const {
-    durationSeconds = 5,
+    durationSeconds = clampedDuration,
     fps = 30,
-    targetWidth = 1080,
-    targetHeight = 1080,
+    targetWidth = finalWidth,
+    targetHeight = finalHeight,
     preferredFormat = 'mp4',
     includeAudio = true,
     audioUrl = null,
     bitrate = 8_000_000,
     onProgress,
-  } = { ...options, preferredFormat: options.format || 'mp4' };
+  } = { 
+    ...options, 
+    durationSeconds: clampedDuration, 
+    preferredFormat: options.format || 'mp4',
+    targetWidth: finalWidth,
+    targetHeight: finalHeight,
+  };
 
-  onProgress?.(0, 'Iniciando motor de renderização de vídeo...');
+  onProgress?.(0, `Iniciando gravação (${targetWidth}x${targetHeight} • ${ratioInfo.label})...`);
 
-  // 1. Setup Offscreen Canvas
+  // 1. Setup Offscreen Master Canvas with Exact Target Dimensions
   const exportCanvas = document.createElement('canvas');
   exportCanvas.width = targetWidth;
   exportCanvas.height = targetHeight;
@@ -178,7 +229,7 @@ export async function exportNodeToVideo(
   const totalFrames = Math.max(1, Math.round(durationSeconds * fps));
   const frameIntervalMs = 1000 / fps;
 
-  // Temporarily reset transform on node to render full 1080p
+  // Temporarily reset transform on node to render full resolution
   const originalTransform = node.style.transform;
   node.style.transform = 'scale(1)';
 
@@ -188,12 +239,12 @@ export async function exportNodeToVideo(
       const currentSec = (frameIndex / fps).toFixed(1);
       onProgress?.(
         progressPercent,
-        `Renderizando frame ${frameIndex + 1}/${totalFrames} (${currentSec}s / ${durationSeconds}s)...`
+        `Renderizando frame ${frameIndex + 1}/${totalFrames} (${currentSec}s / ${durationSeconds}s • ${targetWidth}x${targetHeight})...`
       );
 
-      // Render DOM node to offscreen canvas
+      // Render DOM node to offscreen canvas with exact dimensions
       const frameCanvas = await toCanvas(node, {
-        quality: 0.95,
+        quality: 0.98,
         pixelRatio: 1,
         cacheBust: false,
         width: targetWidth,
@@ -240,9 +291,9 @@ export async function exportNodeToVideo(
 
   const finalBlob = await exportPromise;
   const url = URL.createObjectURL(finalBlob);
-  const filename = `depressivos2000-video-${Date.now()}.${extension}`;
+  const filename = `depressivos2000-${ratioInfo.tag}-${Date.now()}.${extension}`;
 
-  onProgress?.(100, 'Vídeo gerado com sucesso!');
+  onProgress?.(100, `Vídeo gerado em ${ratioInfo.label} (${targetWidth}x${targetHeight})!`);
 
   return {
     blob: finalBlob,
@@ -250,5 +301,8 @@ export async function exportNodeToVideo(
     filename,
     format: extension,
     durationSeconds,
+    width: targetWidth,
+    height: targetHeight,
+    aspectRatioLabel: ratioInfo.label,
   };
 }

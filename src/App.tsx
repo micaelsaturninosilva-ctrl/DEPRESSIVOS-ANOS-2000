@@ -52,6 +52,7 @@ const DEFAULT_CONFIG: PostConfig = {
   fontSize: 1.0,
   textAlign: 'left',
   lineHeightMultiplier: 1.15,
+  letterSpacing: 0,
   textTransform: 'uppercase',
   showNoise: true,
   showScanlines: false,
@@ -534,6 +535,7 @@ export default function App() {
         isOpen={isVideoExportOpen}
         onClose={() => setIsVideoExportOpen(false)}
         config={config}
+        onUpdateConfig={(partial) => setConfig((prev) => ({ ...prev, ...partial }))}
         canvasRef={canvasRef}
         onShowToast={showToast}
       />

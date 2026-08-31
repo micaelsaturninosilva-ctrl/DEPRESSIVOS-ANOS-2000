@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PostConfig } from '../types';
-import { Sparkles, X, Wand2, RefreshCw, AlertCircle } from 'lucide-react';
+import { Sparkles, X, Wand2, RefreshCw, AlertCircle, Globe, Flame } from 'lucide-react';
 
 interface AiGeneratorModalProps {
   isOpen: boolean;
@@ -9,14 +9,14 @@ interface AiGeneratorModalProps {
 }
 
 const THEME_IDEAS = [
-  'Efeitos colaterais do Escitalopram e libido zero',
-  'Diagnóstico DSM-5, CID F32 e F41',
-  'Comprando coisas de madrugada sob efeito do Zolpidem',
-  'Pagar R$ 250 de terapia pra ouvir "e como você se sente?"',
-  'Falta de serotonina e dependência de Rivotril',
-  'Crise dos 30 e choques na cabeça por esquecer o remédio',
-  'Tentando parecer funcional sob medicação tarja preta',
-  'Nostalgia do MSN, Fresno e drama existencial dos anos 2000',
+  '🌐 O que está acontecendo hoje na internet e no Brasil',
+  '⚡ Cultura pop, polêmicas e comportamento viral nas redes',
+  '🏢 Cotidiano: supermercado, Uber, reuniões inúteis e burocracia',
+  '💔 Relacionamentos: stalk de 2017, vácuo e apego ansioso',
+  '🌙 Madrugada: decisões péssimas, compras no impulso e insônia',
+  '💊 Farmacologia: efeitos colaterais do Escitalopram e libido zero',
+  '🛋️ No Consultório: gastar R$ 250 de terapia pra rir nervoso',
+  '💾 Nostalgia Anos 2000: MSN Messenger, Orkut e Windows 98',
 ];
 
 export const AiGeneratorModal: React.FC<AiGeneratorModalProps> = ({
@@ -25,7 +25,8 @@ export const AiGeneratorModal: React.FC<AiGeneratorModalProps> = ({
   onApplyGenerated,
 }) => {
   const [theme, setTheme] = useState('');
-  const [tone, setTone] = useState('Sarcástico e existencial');
+  const [tone, setTone] = useState('Sarcástico, absurdo e existencial');
+  const [useLiveSearch, setUseLiveSearch] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [generatedResult, setGeneratedResult] = useState<{
@@ -42,11 +43,37 @@ export const AiGeneratorModal: React.FC<AiGeneratorModalProps> = ({
     setGeneratedResult(null);
 
     try {
+      if (useLiveSearch) {
+        const res = await fetch('/api/generate-live-world-memes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            topic: theme || 'notícias, cultura pop, internet e cotidiano de hoje',
+            count: 1,
+            searchFocus: 'brasil tendências virais',
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && Array.isArray(data.memes) && data.memes.length > 0) {
+            const m = data.memes[0];
+            setGeneratedResult({
+              text: m.text,
+              highlight: m.highlight || '',
+              systemTitle: m.systemTitle || 'Observatório_Mundo.exe',
+            });
+            setIsLoading(false);
+            return;
+          }
+        }
+      }
+
       const res = await fetch('/api/generate-quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          theme: theme || 'vida adulta e cansaço',
+          theme: theme || 'observação do mundo e cotidiano',
           tone,
         }),
       });
@@ -67,22 +94,22 @@ export const AiGeneratorModal: React.FC<AiGeneratorModalProps> = ({
       }
     } catch (err: any) {
       console.warn('Fallback local para geração criativa:', err);
-      // Smart offline fallback generator
+      // Smart offline fallback generator tailored to Depressivos 2000
       const offlineQuotes = [
+        {
+          text: 'Vendo a internet inteira discutir a nova trend da semana enquanto eu só queria que meu cérebro parasse de rodar o pensamento de 2014 em segundo plano.',
+          highlight: 'pensamento de 2014',
+          systemTitle: 'Observatório_Mundo.exe',
+        },
         {
           text: 'A médica aumentou meu Escitalopram para 20mg.\n\nResultado: a ansiedade sumiu, mas a libido foi junto e agora sou oficialmente um monge tibetano.',
           highlight: 'libido foi junto',
           systemTitle: 'Bula_Interativa - escitalopram.exe',
         },
         {
-          text: 'Diagnóstico segundo o DSM-5:\nCID F41.1 (TAG)\nCID F32 (Depressão)\n\nMinha mente: "e que tal mais um pensamento catastrófico antes de dormir?"',
-          highlight: 'pensamento catastrófico',
-          systemTitle: 'Laudo_Psiquiatrico.dll',
-        },
-        {
-          text: 'Tomei Zolpidem ontem às 23h pra dormir e acordei dono de um curso de day trade e uma airfryer parcelada em 12x.',
-          highlight: 'Tomei Zolpidem',
-          systemTitle: '> zolpidem_blackout.sh',
+          text: 'Fui stalkear um perfil de 2017 e meu dedo deu dois toques acidentais na foto do batizado do sobrinho da pessoa.\n\nJá estou com as malas prontas para morar no interior do Paraguai.',
+          highlight: 'dois toques acidentais',
+          systemTitle: 'Alerta de Stalking - fail.exe',
         },
         {
           text: 'Paguei R$ 250 de terapia pra psicóloga perguntar "e como você se sente sobre isso?" e eu responder "com vontade de reiniciar o Windows".',
@@ -148,6 +175,35 @@ export const AiGeneratorModal: React.FC<AiGeneratorModalProps> = ({
               onChange={(e) => setTheme(e.target.value)}
               className="w-full bg-[#101217] border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 placeholder:text-gray-500"
             />
+          </div>
+
+          {/* Live Search Toggle */}
+          <div className="flex items-center justify-between p-3 rounded-xl bg-purple-950/20 border border-purple-500/30">
+            <div className="flex items-center gap-2.5">
+              <Globe className="w-4 h-4 text-cyan-400" />
+              <div>
+                <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                  Motor de Observação do Mundo (Web ao Vivo)
+                  <span className="text-[9px] bg-cyan-500/20 text-cyan-300 font-mono px-1.5 py-0.5 rounded">Google Search</span>
+                </div>
+                <div className="text-[10px] text-gray-400">
+                  Pesquisa acontecimentos reais de hoje, notícias, memes e cultura pop
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setUseLiveSearch(!useLiveSearch)}
+              className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                useLiveSearch ? 'bg-cyan-500' : 'bg-gray-700'
+              }`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out ${
+                  useLiveSearch ? 'translate-x-4' : 'translate-x-0'
+                }`}
+              />
+            </button>
           </div>
 
           {/* Quick suggestions */}

@@ -27,8 +27,10 @@ import {
   Music,
   Hash,
   Share2,
-  Layers
+  Layers,
+  Laptop
 } from 'lucide-react';
+import { getRandomSystemTitle, SYSTEM_TITLES_DATA } from '../data/systemTitles';
 
 interface MediaAnalyzerModalProps {
   isOpen: boolean;
@@ -76,61 +78,71 @@ interface MemeOption {
 
 const HUMOR_VIBES = [
   { 
-    id: 'farmacologia-remedios', 
-    label: '💊 Remédios & Farmácia', 
-    desc: 'Antidepressivos, tarja preta, libido zero, Zolpidem, efeitos colaterais' 
+    id: 'saude-mental-geral', 
+    label: '🧠 Saúde Mental Geral', 
+    desc: 'Depressão, ansiedade, cansaço existencial e dias difíceis' 
   },
   { 
-    id: 'dsm5-psiquiatria', 
-    label: '🧠 DSM-5 & Psiquiatria', 
-    desc: 'Laudos, CID F32, F41, TDAH, Bipolaridade, crises sinápticas' 
+    id: 'crise-30-anos', 
+    label: '🎂 Crise dos 30 Anos', 
+    desc: 'Boletos, dor nas costas, juventude indo embora e cobranças' 
   },
   { 
-    id: 'terapia-psicologia', 
-    label: '🛋️ Terapia & Psicólogo', 
-    desc: 'Sessão de 50 min, TCC, psicanálise, fingir que tá são' 
+    id: 'crise-meia-idade', 
+    label: '⚡ Crise da Meia-Idade', 
+    desc: 'Questionando escolhas, nostalgia e dilemas da vida adulta' 
   },
   { 
-    id: 'crise-existencial', 
-    label: '⚡ Crise das 03h & Vácuo', 
-    desc: 'Pensamentos intrusivos, insônia, olhar pro teto' 
+    id: 'ansiedade-pensamentos', 
+    label: '🌀 Ansiedade & Cenários', 
+    desc: 'Pensamentos intrusivos, 50 catástrofes irreais, insônia e overthinking' 
   },
   { 
-    id: 'nostalgia-2000', 
-    label: '💾 Emo & Nostalgia 2000', 
-    desc: 'MSN, Orkut, Fresno, internet discada e drama adolescente' 
+    id: 'burnout-esgotamento', 
+    label: '💼 Burnout & Sobrecarga', 
+    desc: 'Exaustão no trabalho, fingir normalidade, zero energia' 
   },
   { 
-    id: 'variado-psicopatologia', 
-    label: '🎲 Mix Completo Psiquiátrico', 
-    desc: 'Equilíbrio perfeito de todos os estilos de humor' 
+    id: 'bateria-social', 
+    label: '🔋 Bateria Social Zerada', 
+    desc: 'Desmarcar rolês, vácuo no WhatsApp, querer ficar no quarto escuro' 
+  },
+  { 
+    id: 'terapia-diva', 
+    label: '🛋️ Terapia & Autoconhecimento', 
+    desc: 'Sessões de 50 min, rindo das próprias tragédias, desmascarar autossabotagem' 
+  },
+  { 
+    id: 'nostalgia-anos-2000', 
+    label: '💾 Nostalgia Anos 2000', 
+    desc: 'MSN, Orkut, Fresno, internet discada vs caos mental da vida adulta' 
   },
 ];
 
 const SAMPLE_PRESETS = [
   {
-    name: '💊 Remédios & Ansiedade',
-    url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
-    type: 'image' as const,
-    topic: 'Frascos de remédio e rotina farmacológica',
-  },
-  {
-    name: '🛋️ Olhar Vazio no Sofá',
+    name: '😫 Olhar Vazio & Bateria Social 0%',
     url: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80',
     type: 'image' as const,
-    topic: 'Gato ou pessoa deitada encarando o vazio existencial',
+    topic: 'Exaustão mental e encarando o vazio existencial',
   },
   {
-    name: '💻 Monitor & Erro Fatal',
+    name: '🏢 Burnout & Crise dos 30 Anos',
+    url: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
+    type: 'image' as const,
+    topic: 'Cansaço no trabalho, boletos e sobrecarga mental',
+  },
+  {
+    name: '🛋️ Sessão de Terapia & Reflexão',
+    url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    type: 'image' as const,
+    topic: 'Desabafando sobre escolhas de vida e autossabotagem',
+  },
+  {
+    name: '💻 Computador Retrô & Pane Geral',
     url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
     type: 'image' as const,
-    topic: 'Computador retrô com tela azul e colapso',
-  },
-  {
-    name: '🏖️ Praia vs Mente em Chamas',
-    url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-    type: 'image' as const,
-    topic: 'Paz no ambiente mas turbilhão psiquiátrico na mente',
+    topic: 'Nostalgia dos anos 2000 e colapso de sistema',
   }
 ];
 
@@ -150,7 +162,7 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
   const [extractedFrameUrl, setExtractedFrameUrl] = useState<string | null>(null);
 
   const [extraContext, setExtraContext] = useState<string>('');
-  const [selectedVibe, setSelectedVibe] = useState<string>('farmacologia-remedios');
+  const [selectedVibe, setSelectedVibe] = useState<string>('saude-mental-geral');
   const [displayMode, setDisplayMode] = useState<MediaDisplayMode>(
     currentConfig.mediaDisplayMode || 'tweet-media'
   );
@@ -159,6 +171,8 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [copiedCaption, setCopiedCaption] = useState<boolean>(false);
   const [copiedHashtags, setCopiedHashtags] = useState<boolean>(false);
+  const [generationCount, setGenerationCount] = useState<number>(1);
+  const [seenTexts, setSeenTexts] = useState<string[]>([]);
   const [analysisResult, setAnalysisResult] = useState<{
     detectedScene: string;
     identifiedTopic: string;
@@ -242,9 +256,52 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
     setAnalysisError(null);
   };
 
-  // Run AI multimodal analysis with Gemini 3.7 Flash
+  // Helper to optimize image resolution for AI vision without losing quality
+  const compressImageForVision = (dataUrl: string): Promise<string> => {
+    return new Promise((resolve) => {
+      if (!dataUrl || !dataUrl.startsWith('data:image/')) {
+        return resolve(dataUrl);
+      }
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const maxDim = 1024;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL('image/jpeg', 0.85);
+            return resolve(compressed);
+          }
+        } catch (e) {
+          console.warn('Compress warning, using original:', e);
+        }
+        resolve(dataUrl);
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    });
+  };
+
+  // Run AI multimodal analysis with Gemini Vision + fallback
   const handleAnalyze = async (customTemp?: number) => {
-    let imageToAnalyze = extractedFrameUrl;
+    let imageToAnalyze = extractedFrameUrl || mediaPreviewUrl || currentConfig.mediaUrl;
 
     // If it's a video, capture current scrubber frame first
     if (mediaType === 'video' && videoRef.current) {
@@ -261,30 +318,52 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
     setAnalysisError(null);
     setSelectedMemeIndex(0);
 
+    const nextIteration = generationCount + 1;
+    setGenerationCount(nextIteration);
+
     try {
       let base64Payload = imageToAnalyze;
       if (imageToAnalyze.startsWith('http')) {
-        const response = await fetch(imageToAnalyze);
-        const blob = await response.blob();
-        base64Payload = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(blob);
-        });
+        try {
+          const response = await fetch(imageToAnalyze);
+          const blob = await response.blob();
+          base64Payload = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(blob);
+          });
+        } catch (fetchErr) {
+          console.warn('Não foi possível converter URL remota via fetch, enviando payload direto:', fetchErr);
+        }
       }
+
+      // Optimize image for instant transmission
+      if (base64Payload && base64Payload.startsWith('data:image/')) {
+        base64Payload = await compressImageForVision(base64Payload);
+      }
+
+      // Abort controller with 32s timeout for comprehensive vision multimodal analysis
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 32000);
 
       const res = await fetch('/api/analyze-media', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           imageBase64: base64Payload,
           mimeType: 'image/jpeg',
           extraContext,
           vibe: selectedVibe,
-          temperature: customTemp || 1.05,
+          temperature: customTemp || (1.15 + (nextIteration % 4) * 0.08),
           mediaType,
+          iteration: nextIteration,
+          seed: `${Date.now()}_${Math.random().toString(36).substring(7)}`,
+          excludeTexts: seenTexts.slice(-24),
         }),
       });
+
+      clearTimeout(timeoutId);
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
@@ -293,15 +372,29 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
 
       const data = await res.json();
       if (data && (data.primaryMeme || data.alternativeMemes)) {
+        const newCollected: string[] = [];
+        if (data.primaryMeme?.text) newCollected.push(data.primaryMeme.text);
+        if (Array.isArray(data.alternativeMemes)) {
+          data.alternativeMemes.forEach((m: any) => {
+            if (m?.text) newCollected.push(m.text);
+          });
+        }
+        setSeenTexts((prev) => [...prev, ...newCollected]);
         setAnalysisResult(data);
+        setSelectedMemeIndex(0);
       } else {
         throw new Error('A IA não retornou o formato esperado de frases.');
       }
     } catch (err: any) {
       console.error('Erro na análise da mídia:', err);
-      setAnalysisError(
-        err.message || 'Não foi possível analisar a imagem. Tente novamente ou teste outra foto.'
-      );
+      // If abort error, give clear feedback
+      if (err.name === 'AbortError') {
+        setAnalysisError('A análise demorou mais que o esperado. Tente novamente.');
+      } else {
+        setAnalysisError(
+          err.message || 'Não foi possível analisar a imagem. Tente novamente ou teste outra foto.'
+        );
+      }
     } finally {
       setIsAnalyzing(false);
     }
@@ -345,19 +438,19 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
         <div className="p-4 sm:p-5 border-b border-gray-800 flex items-center justify-between bg-gradient-to-r from-blue-950/60 via-[#151926] to-[#12151E]">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-blue-600/30 text-blue-400 rounded-xl border border-blue-500/40">
-              <Pill className="w-6 h-6 text-yellow-300" />
+              <Brain className="w-6 h-6 text-yellow-300" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="font-bold text-lg text-white">
-                  Analisador Visual com IA: Psiquiatria, Farmácia & DSM-5
+                  Analisador Visual com IA: Saúde Mental & Vida Adulta
                 </h2>
                 <span className="text-[10px] font-mono bg-blue-600 text-white px-2 py-0.5 rounded font-bold tracking-wider">
-                  VISÃO PSICOLÓGICA & FARMACOLÓGICA
+                  MEMES VISUAIS CONTEXTUAIS
                 </span>
               </div>
               <p className="text-xs text-gray-400">
-                A IA analisa a cena visual e gera 8 opções de memes com foco em antidepressivos, efeitos colaterais, CID-10, terapia e psicologia
+                A IA analisa a cena da sua foto/vídeo e gera 8 memes personalizados sobre ansiedade, depressão, crise dos 30 anos, meia-idade, burnout e terapia
               </p>
             </div>
           </div>
@@ -502,14 +595,14 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
 
           {/* Right Column: AI Analysis & Meme Generation (7 Cols) */}
           <div className="md:col-span-7 flex flex-col gap-4">
-            {/* Escolha da Vibe / Estilo Psiquiátrico */}
+            {/* Escolha da Vibe / Estilo de Saúde Mental */}
             <div className="bg-[#141824] p-4 rounded-xl border border-gray-800 flex flex-col gap-3">
               <div>
                 <label className="block text-xs font-semibold text-gray-300 mb-1.5 flex items-center justify-between">
-                  <span>Foco Psiquiátrico / Farmacológico:</span>
+                  <span>Foco de Humor & Saúde Mental:</span>
                   <span className="text-[10px] text-yellow-400 font-mono">SELEÇÃO DIRETA</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                   {HUMOR_VIBES.map((vibe) => (
                     <button
                       key={vibe.id}
@@ -530,11 +623,11 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
               {/* Contexto Opcional */}
               <div>
                 <label className="block text-xs font-semibold text-gray-300 mb-1">
-                  Detalhe ou remédio específico (opcional - ex: Escitalopram, Zolpidem, Sertralina, Terapia):
+                  Detalhe ou contexto da sua mente (opcional - ex: crise dos 30 anos, insônia às 3h, burnout de segunda-feira):
                 </label>
                 <input
                   type="text"
-                  placeholder="ex: tomando 15mg de escitalopram, libido zero, fingindo sanidade mental..."
+                  placeholder="ex: encarando o teto sem dormir, fingindo sanidade na reunião, cansaço extremo..."
                   value={extraContext}
                   onChange={(e) => setExtraContext(e.target.value)}
                   className="w-full bg-[#0E1118] border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500 placeholder:text-gray-500"
@@ -550,13 +643,13 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                 {isAnalyzing ? (
                   <>
                     <RefreshCw className="w-5 h-5 animate-spin text-yellow-300" />
-                    <span className="font-bold">Diagnosticando a imagem e gerando 8 opções psiquiátricas...</span>
+                    <span className="font-bold">Analisando sua imagem e gerando 8 memes de saúde mental...</span>
                   </>
                 ) : (
                   <>
                     <Wand2 className="w-5 h-5 text-yellow-300 animate-pulse" />
                     <span className="text-sm font-bold uppercase tracking-wider">
-                      {analysisResult ? 'Gerar Outras Ideias Psiquiátricas' : 'Analisar Imagem & Gerar 8 Memes de Psiquiatria'}
+                      {analysisResult ? 'Gerar Outras Ideias de Memes' : 'Analisar Imagem & Gerar 8 Memes de Saúde Mental'}
                     </span>
                   </>
                 )}
@@ -673,15 +766,25 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                 {/* Botões de Ação Rápida */}
                 <div className="flex justify-between items-center text-xs text-gray-400">
                   <span className="font-bold text-white">
-                    Escolha uma das {allMemeOptions.length} opções psiquiátricas geradas:
+                    Escolha uma das {allMemeOptions.length} opções geradas para a sua foto:
                   </span>
                   <button
-                    onClick={() => handleAnalyze(1.2)}
+                    onClick={() => handleAnalyze(1.25)}
                     disabled={isAnalyzing}
-                    className="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1 font-bold bg-[#1C2236] px-2.5 py-1 rounded-lg border border-yellow-500/30 transition hover:bg-[#252E48]"
+                    className="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1.5 font-bold bg-[#1C2236] px-3 py-1.5 rounded-lg border border-yellow-500/40 transition hover:bg-[#252E48] active:scale-95 disabled:opacity-50 shadow-sm"
+                    title="Clique para gerar 8 opções 100% novas e inéditas"
                   >
-                    <Dice5 className="w-3.5 h-3.5" />
-                    <span>Regerar Mais Ideias (+8)</span>
+                    {isAnalyzing ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin text-yellow-400" />
+                        <span>Gerando Mais Ideias...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Dice5 className="w-3.5 h-3.5 text-yellow-400" />
+                        <span>Gerar Mais Ideias (+8 Novas)</span>
+                      </>
+                    )}
                   </button>
                 </div>
 
@@ -712,6 +815,33 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                       <p className="text-white font-impact text-base uppercase leading-snug my-1 whitespace-pre-line tracking-wide">
                         {meme.text}
                       </p>
+
+                      {/* Título da Barra Superior / Janela do Sistema */}
+                      <div className="flex items-center justify-between text-[11px] font-mono bg-[#0D1018] p-2 rounded-lg border border-gray-800 my-1.5">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <Laptop className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                          <span className="text-gray-400 flex-shrink-0">Barra Superior:</span>
+                          <span className="text-cyan-200 font-bold truncate">
+                            {meme.systemTitle || 'Erro Fatal - sobrecarga_emocional.exe'}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const rand = getRandomSystemTitle();
+                            meme.systemTitle = rand.title;
+                            meme.windowButtonText = rand.buttonText || meme.windowButtonText;
+                            if (analysisResult) {
+                              setAnalysisResult({ ...analysisResult });
+                            }
+                          }}
+                          className="text-[10px] text-yellow-300 hover:text-yellow-200 bg-yellow-950/50 border border-yellow-700/60 px-2 py-0.5 rounded flex items-center gap-1 flex-shrink-0 ml-1.5 transition active:scale-95"
+                          title="Sortear outro título de erro / ato falho para esta opção"
+                        >
+                          <RefreshCw className="w-2.5 h-2.5" /> 🎲 Trocar Título
+                        </button>
+                      </div>
 
                       <div className="mt-2 pt-2 border-t border-gray-800/80 flex items-center justify-between flex-wrap gap-2">
                         <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-yellow-400 text-black font-bold">
@@ -744,12 +874,12 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
 
             {!analysisResult && !isAnalyzing && (
               <div className="h-56 border border-dashed border-gray-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center text-gray-500 bg-[#10131B]">
-                <Pill className="w-10 h-10 mb-2 opacity-30 text-blue-400" />
+                <Brain className="w-10 h-10 mb-2 opacity-30 text-blue-400" />
                 <p className="text-sm font-semibold text-gray-300">
-                  Suba sua foto ou vídeo e gere frases sobre psiquiatria, remédios e saúde mental
+                  Envie sua foto ou vídeo para gerar memes focados em saúde mental e vida adulta
                 </p>
                 <p className="text-xs text-gray-500 mt-1 max-w-md">
-                  A IA analisa a expressão facial, olhar, postura e ambiente da imagem para gerar piadas de antidepressivos (Escitalopram, Sertralina, Zolpidem), laudos do DSM-5/CID e sessões de terapia.
+                  A IA analisa a expressão facial, olhar, pose e ambiente da sua foto para criar piadas sobre depressão, ansiedade, crise dos 30 anos, crise da meia-idade, burnout, bateria social e dilemas da vida real.
                 </p>
               </div>
             )}

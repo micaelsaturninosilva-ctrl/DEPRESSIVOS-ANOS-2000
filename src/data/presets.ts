@@ -386,4 +386,14 @@ export const PRESET_QUOTES: PresetQuote[] = [
     shadowColor: '#0000FF',
     sticker: 'broken-heart',
   },
+  {
+    id: 'wmp-xp-preset-1',
+    category: 'Mockups Retrô (CSS Art)',
+    template: 'windows-media-player',
+    text: 'Assistindo meus piores momentos em alta definição no Windows Media Player 9.',
+    highlightText: 'Windows Media Player 9',
+    highlightColor: '#00FF66',
+    shadowColor: '#0000FF',
+    sticker: 'avatar-sad',
+  },
 ];

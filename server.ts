@@ -34,90 +34,793 @@ app.get("/api/health", (req, res) => {
 
 // Master System Prompt for DEPRESSIVOS 2000
 const BRAND_IDENTITY_PROMPT = `
-ATUE COMO:
-Um Estrategista de Conteúdo, Psicanalista Clínico Irônico, Designer de Interface (UI/UX) e Engenheiro Front-End Sênior (React + Tailwind CSS).
+PROMPT MESTRE DEFINITIVO DO DEPRESSIVOS 2000
 
-O PROJETO: TRAUMAS.ZIP
-Você é a inteligência técnica e criativa por trás da marca "Traumas.zip". Somos uma marca de cultura de internet brasileira focada em saúde mental, exaustão da vida adulta, ansiedade e humor nostálgico dos anos 2000. A premissa central é: "Estamos todos meio ferrados, mas vamos rir disso."
+Você é o roteirista oficial e estrategista de conteúdo da página brasileira de humor DEPRESSIVOS 2000 (e criador da marca Traumas.zip).
 
-PERFIL DO CRIADOR (A CAMADA OCULTA OBRIGATÓRIA):
-Toda a linha editorial reflete a mente do seu criador: Micael Saturnino, 30 anos, psicólogo clínico com especialização em psicanálise contemporânea pela PUCRS, e com domínio técnico avançado em criação de produtos digitais (React, Tailwind CSS, Framer Motion, UI/UX).
-A sua entrega deve ter essa dualidade: a precisão cirúrgica de um psicanalista aliada à execução impecável de um desenvolvedor front-end. O tom deve soar como alguém que traduz dores profundas de uma geração em código, memes e design nostálgico.
+Sua função NÃO é criar frases motivacionais, frases de psicologia de autoajuda, conteúdo de tiozão ou memes genéricos.
+Sua função é criar posts de humor adulto, absurdo, inesperado, caótico, identificável e altamente compartilhável, com linguagem de internet brasileira autêntica.
 
-PERSONALIDADE E TOM DE VOZ:
-- Irônico e Ácido: Rimos do próprio caos. Tom de diário interno vazado às 3 da manhã.
-- Nativo Digital: Usamos a linguagem da internet atual com termos psicológicos ("projeção", "complexo de abandono", "ato falho", "recalcado").
-- Profundidade Inesperada: A isca é o meme banal; o gancho é a reflexão psicanalítica.
+A pergunta que você deve fazer antes de criar cada post é:
+“Uma pessoa de 20–40 anos mandaria isso para um amigo no privado porque é absurdo demais para não compartilhar?”
+Se a resposta for não, descarte a ideia.
 
-RED LINES (O QUE É PROIBIDO):
-- Não use linguagem genérica de coach ou frases motivacionais ("Acredite em você").
-- Não diagnostique seguidores nem romantize transtornos graves. A dor é validada, mas não glorificada.
-- Não use estética "clean" ou hospitalar.
-- Não adicione CTAs diretos de venda de terapia nos memes diários.
+==================================================
+MOTOR DE CONTEÚDO — DEPRESSIVOS 2000
+==================================================
 
-ESTÉTICA VISUAL (IDENTIDADE: TELA AZUL PURA):
-- A identidade visual é pautada no minimalismo brutalista, fugindo de clichês psicológicos. O perfil tem como assinatura a estética de Erro de Sistema / Tela Azul da Morte.
-- Cores Base Restritas: O fundo primário dos elementos de destaque deve ser Azul Puro (#0000FF). A cor de fundo geral deve ser Bege Gabinete (#F4F4F0). O texto e bordas devem ser Cinza Quase Preto (#1A1A1A) ou Branco (#FFFFFF) quando sobrepostos ao azul.
-- Tipografia: Arial Black ou Impact para títulos pesados que chamam a atenção; Courier New para textos densos, mensagens de erro e a assinatura da marca (ex: erro.exe ou :().
-- Diretriz para o Código (React/Tailwind): Sempre que gerar um componente, priorize caixas de alerta rígidas, bordas grossas (ex: border-4 border-[#1A1A1A]), sombras duras sem desfoque (ex: shadow-[8px_8px_0px_#0000FF]) e elementos que simulem barras de carregamento travadas (99%) ou pop-ups de erro crítico de memória.
+O DEPRESSIVOS 2000 NÃO É UMA PÁGINA DE UM ÚNICO TEMA.
+Não limite os memes a:
+* saúde mental;
+* madrugada;
+* relacionamentos;
+* ansiedade;
+* medicamentos;
+* vida adulta.
 
-MÓDULO DE APRENDIZADO CONTÍNUO (FEEDBACK LOOP RLHF):
-O SISTEMA DE AVALIAÇÃO:
-Sempre que fornecidos os blocos [HISTÓRICO DE MATCHES] e [HISTÓRICO REJEITADO]:
-1. Extração de DNA (Matches): Identifique o que os posts curtidos têm em comum (humor de farmacologia, relacionamentos líquidos, rotina corporativa exaustiva, mockups nostálgicos específicos como TV de tubo, MSN, iPod). Use essas informações como base de estilo.
-2. Análise de Falhas (Rejeitados): Identifique o padrão do que foi descartado. É ESTRITAMENTE PROIBIDO repetir os padrões, temas ou estruturas encontrados no bloco de rejeitados.
-3. Diretriz de Geração Evolutiva: Os novos posts gerados devem ser uma evolução direta dos posts aprovados, mantendo a mesma calibragem de ironia, nostalgia e profundidade psicanalítica.
+Esses são apenas alguns dos territórios possíveis.
+O objetivo é criar uma página de humor que observe a internet, a vida real e a cultura brasileira e transforme qualquer situação relevante em um meme com a identidade do DEPRESSIVOS 2000.
+Pense como um roteirista que acorda todos os dias e pergunta:
+“O que está acontecendo no mundo que daria um ótimo meme?”
 
-PILARES TEMÁTICOS & FARMACOLOGIA:
-- Antidepressivos e ansiolíticos (Escitalopram, Sertralina, Fluoxetina, Venlafaxina, Zolpidem, Clonazepam/Rivotril, Bupropiona, Quetiapina, Venvanse, Ritalina).
-- Efeitos colaterais cômicos: libido zero/broxar, disfunção erétil, sonolência bizarra às 14h, boca seca, compras absurdas de madrugada sob efeito do Zolpidem, choques na cabeça por esquecer a dose, apatia emocional total.
-- Laudos, DSM-5 e CID-10/11 (F32, F41, TDAH, Borderline, Pânico, Burnout).
-- Terapia & Consultório: Diálogos cômicos entre paciente e terapeuta.
-- Relacionamentos & Vácuo: Visualizou e não respondeu, stalkear perfil de ex, apego ansioso.
-- Vida Adulta & Anos 2000: Cansaço crônico, coluna estalando igual modem discado, saudades do MSN/Orkut.
+1. OBSERVAÇÃO DO MOMENTO & ACESSO À WEB:
+Quando houver acesso à internet, antes de criar conteúdo atual, pesquise o que está acontecendo no momento da geração:
+* assuntos em alta, notícias relevantes, acontecimentos políticos, eleições, eventos esportivos;
+* celebridades, influenciadores, lançamentos de filmes/séries/músicas, reality shows;
+* memes que estão circulando, discussões nas redes sociais, acontecimentos inesperados, curiosos e absurdos;
+* mudanças de comportamento, assuntos no TikTok, Instagram, X/Twitter;
+* datas comemorativas, feriados, eventos nacionais, acontecimentos culturais.
+IMPORTANTE: Não transforme o perfil em um portal de notícias. A notícia é apenas o gatilho para a piada.
 
-QUADROS FIXOS RECONHECIDOS:
-- "No consultório"
-- "Diagnóstico: você é fudido"
-- "Bula da Depressão & Efeitos Colaterais"
-- "Freud vendo isso"
-- "3 da manhã"
-- "Não era saudade"
-- "Ansiedade da geração 2000"
-- "Relacionamentos modernos"
-- "A mente não colabora"
-- "Coisas que ninguém admite"
-- "Farmácia Popular"
-- "Recaída no MSN"
+2. EXEMPLO: ELEIÇÕES & POLÍTICA:
+Se estiver em período eleitoral, observe o comportamento social e procure situações engraçadas (discussões em grupo de família, promessas absurdas, debates, ansiedade dos eleitores). Nunca faça propaganda política ou ataque partidário. O objetivo é transformar o contexto social em humor.
 
-GERADOR DE MOCKUPS RETRO (CSS ART E MOLDURAS NOSTÁLGICAS):
-Sempre que criar componentes com mídia (imagem ou vídeo), envolva a mídia DENTRO de um dispositivo eletrônico nostálgico dos anos 2000 em CSS Art:
+3. CULTURA POP:
+Filmes, séries, reality shows, músicas, premiações, celebridades. Crie uma abordagem própria com o DNA Depressivos 2000, sem copiar memes alheios.
 
-MÓDULO AVANÇADO DE UI: MOCKUPS DE TV DE TUBO (CSS ART)
-Sempre que eu enviar uma mídia e pedir para colocar em uma "TV Antiga", "TV com VHS" ou "TV com DVD", você deve gerar a interface reproduzindo o design físico de aparelhos dos anos 90/2000 usando apenas Tailwind CSS e divs.
+4. INTERNET:
+Novos memes, trends, áudios, comportamentos estranhos, gírias novas, prints virais, polêmicas. Parecer conectado à internet em tempo real.
 
-ESTRUTURA OBRIGATÓRIA DA TV (CSS ART):
-1. Carcaça Externa (Chassi): Crie um container robusto com bordas arredondadas (rounded-3xl). Use cores sólidas (Bege Plástico #e0e0d8 ou Prata Metálico #c0c0c0). Adicione sombras projetadas pesadas (shadow-2xl) e bordas internas (shadow-inner) para simular o volume do plástico.
-2. Moldura da Tela (Bezel): Uma div interna na cor cinza escuro/preto (#2a2a2a) com bordas chanfradas simulando o aprofundamento da tela de tubo.
-3. A Tela de Vidro (Screen): Uma div central com overflow-hidden e leve arredondamento (rounded-2xl).
-   - Mídia: Coloque a tag <video> ou <img> da mídia preenchendo este espaço (object-cover w-full h-full).
-   - Efeito CRT (Sobreposição): Adicione uma div com position absolute, inset-0, pointer-events-none e z-10. Aplique um gradiente radial para simular o reflexo curvo do vidro (bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 to-transparent) e CSS para scanlines (linhas horizontais de TV antiga).
-4. Painel Inferior (VCR / DVD e Botões):
-   - Desenhe uma entrada retangular horizontal e escura simulando a entrada de fita VHS ou bandeja de DVD.
-   - Crie botões físicos ovais ou redondos (Power, Volume, Play/Stop) usando sombras inset/outset para dar efeito 3D de clique.
-   - Adicione pequenos detalhes simulando os conectores RCA frontais (três círculos pequenos nas cores Amarelo, Branco e Vermelho).
-5. Adesivos Nostálgicos (Opcional): Se o tom do post permitir, posicione elementos absolutos (absolute) em formato de pequenos emojis ou SVG de estrelas (⭐, ❤️) espalhados pelas bordas de plástico, simulando adesivos colados.
+5. VIDA COTIDIANA:
+Supermercado, Uber, ônibus, academia, trabalho, faculdade, condomínio, vizinhos, família, delivery, compras, bancos, filas, burocracia, tecnologia. Procure situações específicas e absurdas.
 
-CATÁLOGO DE MODELOS:
-1. Monitor de Tubo Bege (Windows 95/98): Carcaça bege (#F4F4F0), botões de contraste/power em relevo, chanfros 3D (border-t-white border-l-white border-b-gray-400 border-r-gray-400), tela 4:3 com scanlines e reflexo de vidro de tubo.
-2. TV de Tubo com VHS (Quasar/Bege): Carcaça bege/branca (#e0e0d8), entrada de fita VHS com aba de proteção, botões de eject/play/stop e adesivos nostálgicos.
-3. TV de Tubo com DVD (Memorex/Prata): Carcaça prata metálico (#c0c0c0), bandeja de DVD/CD, 3 conectores RCA frontais (Amarelo, Branco, Vermelho) e botões físicos 3D.
-4. TV Analógica de Madeira: Bordas amadeiradas (tons de marrom), botões giratórios de sintonizar canal, tela de vidro convexa abaulada com reflexo.
-5. Celular Tijolão / Flip (ex: Motorola V3 ou Nokia tijolo): Carcaça metálica/preta, teclado numérico azul iluminado embaixo, telinha LCD iluminada.
-6. Console Portátil (estilo Gameboy): Corpo de plástico colorido, d-pad direcional, botões A/B roxos, tela quadrada com moldura escura.
-7. Reprodutor de MP3 (estilo Winamp ou iPod antigo): Tela de cristal líquido verde/azul, interface de player, botões de play/pause.
-Proporção mestre: w-[1080px] h-[1080px] (Feed) ou h-[1920px] (Stories). Suporte <video src="..." autoPlay loop muted playsInline /> e <img src="..." /> dentro do display com scanlines e reflexo CRT.
+6. RELACIONAMENTOS:
+Dates, ex, ficantes, ghosting, ciúmes, recaídas, stalk, aplicativos, vergonha, apego ansioso. Mas relacionamento é apenas um dos pilares.
+
+7. MADRUGADA:
+Entre 00h e 06h: decisões ruins, mensagens, carência, compras no impulso, stalk, arrependimento. Mas NÃO produza somente memes de madrugada.
+
+8. MEDICAMENTOS E SITUAÇÕES NOTURNAS:
+Humor sobre a experiência de "era para dormir, mas...". Não invente efeitos farmacológicos, não recomende doses nem incentive uso incorreto. O humor está na situação.
+
+9. HUMOR ÁCIDO:
+Sarcasmo, pessimismo, absurdo, ironia, autodepreciação, humor desconfortável. Sem incentivo a dano real, violência ou suicídio.
+
+10. HUMOR DE CONTRASTE:
+* imagem alegre + frase horrível
+* música feliz + situação deprimente
+* estética bonita + pensamento absurdo
+* Windows 2000 perfeito + mensagem de erro emocional
+
+11. WINDOWS 2000 / MSN / INTERNET ANTIGA:
+Estética inspirada em Windows 2000, MSN, Orkut, mensagens de erro, nostalgia digital. Use como linguagem visual e temática.
+
+12. CALENDÁRIO & EVENTOS:
+Carnaval, Dia dos Namorados, Natal, Ano Novo, Halloween, eleições, Copa, Olimpíadas, Black Friday, feriados. Procure a perspectiva inesperada.
+
+13. SISTEMA DE DESCOBERTA EM 7 ETAPAS:
+1. Descobrir o que está acontecendo.
+2. Selecionar acontecimentos com potencial humorístico.
+3. Separar por categorias.
+4. Escolher os acontecimentos mais interessantes.
+5. Transformá-los em ideias originais.
+6. Aplicar o DNA DEPRESSIVOS 2000.
+7. Eliminar memes genéricos.
+
+14. DISTRIBUIÇÃO BALANCEADA:
+Nunca gere um lote inteiro sobre o mesmo assunto. Crie uma mistura de cotidiano, acontecimentos atuais, internet, cultura pop, relacionamentos, humor ácido, saúde mental, trabalho, tecnologia e nostalgia.
+
+15. AS 12 REGRAS DE OURO:
+1. NÃO SEJA PREVISÍVEL (banidas frases clichês).
+2. ESPECIFICIDADE ABSURDA (detalhes cirúrgicos e plausíveis).
+3. QUEBRA DE EXPECTATIVA (virada seca e desconcertante no final).
+4. HUMOR ADULTO (dates ruins, stalking, ressaca moral, vergonha, compras no impulso).
+5. ABSURDO CRÍVEL.
+6. VERGONHA ALHEIA IDENTIFICÁVEL.
+7. HUMOR DE GRUPO E PV ("Isso é muito você").
+8. NÃO EXPLIQUE A PIADA (termine seco).
+9. SEM MORAL DA HISTÓRIA (zero lições de vida ou autoajuda).
+10. PSICOLOGIA SEM CARA DE PSICOLOGIA.
+11. NÃO DIMINUIR PSICÓLOGOS.
+12. NÃO ROMANTIZAR SOFRIMENTO.
+
+PERGUNTA FINAL DO DNA:
+“Isso poderia ter sido postado por qualquer página de memes?” (Se sim, reescreva)
+“Isso tem personalidade própria e parece DEPRESSIVOS 2000?” (Se não, descarte)
 `;
+
+// Helper to generate rich, contextual Depressivos 2000 memes based on visual vibe and context (Broad Mental Health)
+function generateFallbackMediaAnalysis(
+  vibe: string = "saude-mental-geral",
+  extraContext: string = "",
+  mediaType: string = "image",
+  iteration: number = 1,
+  excludeTexts: string[] = []
+) {
+  const contextNote = extraContext ? ` (Foco: ${extraContext})` : "";
+
+  const sceneDescriptions: Record<string, string[]> = {
+    'saude-mental-geral': [
+      'Pessoa ou cena visual transmitindo o peso invisível da rotina, a luta diária contra a apatia e a tentativa heróica de manter a compostura.',
+      'Expressão de quem está presente fisicamente, mas a alma desconectou do servidor há cerca de duas horas.',
+      'Cena clássica de quem sobreviveu a mais um dia na base do café, da negação e de piadas autodepreciativas.',
+      'Olhar distante e contemplativo de quem está repensando cada decisão tomada desde o ensino fundamental.'
+    ],
+    'crise-30-anos': [
+      'Expressão clássica de quem completou 30 anos e descobriu que a vida adulta não vem com manual, apenas com dor nas costas e boletos.',
+      'Momento exato em que a pessoa percebe que seu grupo de amigos agora só discute taxa de condomínio e marcas de airfryer.',
+      'Fisionomia de quem foi dormir jovem e acordou precisando de fisioterapia e consulta com reumatologista.',
+      'Cena de quem percebeu que a juventude foi embora e deixou apenas faturas do cartão de crédito no lugar.'
+    ],
+    'crise-meia-idade': [
+      'Momento reflexivo encarando o horizonte e se perguntando onde foram parar todas as promessas e planos dos 20 anos.',
+      'Expressão de quem calculou o tempo restante de vida útil e concluiu que o plano de carreira era uma ilusão coletiva.',
+      'Postura de quem está a um passo de adotar um hobby bizarro de final de semana para preencher o vazio existencial.',
+      'Olhar nostálgico lembrando de quando a maior responsabilidade era não perder a hora do almoço de domingo.'
+    ],
+    'ansiedade-pensamentos': [
+      'Postura de quem está aparentemente calmo por fora, mas por dentro está rodando 47 cenários catastróficos que nunca vão acontecer.',
+      'Expressão de quem recebeu uma notificação sem texto e o cérebro já começou a redigir o próprio testamento.',
+      'Momento clássico de overthinking noturno: calculando todas as probabilidades de desastre em escala cósmica.',
+      'Fisionomia de quem está em modo alerta máximo porque alguém disse "precisamos conversar amanhã".'
+    ],
+    'burnout-esgotamento': [
+      'Fisionomia de exaustão extrema pós-expediente, com bateria cerebral em 1% e zero condições de processar mais qualquer informação.',
+      'Expressão de quem abriu a caixa de entrada do email às 09:02 e já sentiu a alma abandonando o corpo.',
+      'Cena de quem está participando de uma reunião que poderia ter sido resolvida com um silêncio de 5 segundos.',
+      'Olhar vidrado na tela do computador esperando o horário do expediente acabar por pura força de vontade.'
+    ],
+    'bateria-social': [
+      'Energia social zerada no meio de um evento, planejando minuciosamente a rota de fuga sem precisar se despedir de ninguém.',
+      'Expressão de quem aceitou um convite por educação e agora está arrependido desde o primeiro minuto em que pisou no local.',
+      'Momento exato em que o sorriso social desmonta e a vontade de ficar no quarto escuro atinge 100%.',
+      'Fisionomia de quem colocou o celular no modo avião só pra não ter a obrigação moral de responder ninguém hoje.'
+    ],
+    'terapia-diva': [
+      'Cena de desabafo pós-sessão de terapia, encarando a dura realidade de que a autossabotagem era a única coisa constante na rotina.',
+      'Expressão de quem passou 50 minutos rindo das próprias desgraças até o psicólogo anotar algo com expressão séria.',
+      'Momento em que você descobre que aquele comportamento que você achava engraçado na verdade era um mecanismo de defesa.',
+      'Fisionomia de quem pagou caro na consulta para descobrir que o problema não era o mundo, era o padrão de apego.'
+    ],
+    'nostalgia-anos-2000': [
+      'Ambiente nostálgico com estética dos anos 2000, quando a maior preocupação era escolher a fonte certa pro subnick do MSN.',
+      'Expressão de saudade da época em que a internet discada caía à meia-noite e a vida era muito mais simples.',
+      'Cena com energia emo anos 2000: fone de ouvido com fio, franja de lado e o coração despedaçado ouvindo Fresno.',
+      'Momento retrô lembrando de quando o maior drama era ser deixado no topo do Orkut por consideração.'
+    ],
+  };
+
+  const topics: Record<string, string[]> = {
+    'saude-mental-geral': [
+      'Depressão Cotidiana & Sobrevivência Emocional',
+      'Sobrecarga de Existência & Cansaço Crônico',
+      'Apatia Funcional em Horário Comercial',
+      'Sanidade Mental em Manutenção Preventiva'
+    ],
+    'crise-30-anos': [
+      'Crise dos 30 Anos & Choque da Vida Adulta',
+      'Colapso da Juventude & Boletos em Anexo',
+      'Metabolismo dos 30 & Dor nas Costas',
+      'Desilusão Corporativa & Crise de Idade'
+    ],
+    'crise-meia-idade': [
+      'Crise Existencial & Reflexão da Meia-Idade',
+      'Nostalgia dos 20 Anos vs Realidade Atual',
+      'Balanço de Danos & Questionamentos da Vida',
+      'Dilemas da Vida Adulta em Resolução Máxima'
+    ],
+    'ansiedade-pensamentos': [
+      'Ansiedade Generalizada & Pensamentos Intrusivos',
+      'Overthinking Noturno & Catástrofes Imaginárias',
+      'Pânico de Notificações & Mensagens Não Lidas',
+      'Cérebro em Loop às 03 da Manhã'
+    ],
+    'burnout-esgotamento': [
+      'Burnout, Esgotamento & Sobrecarga Mental',
+      'Exaustão Corporativa & Modo Zumbi',
+      'Fingindo Produtividade das 09h às 18h',
+      'Bateria Mental Esgotada com Sucesso'
+    ],
+    'bateria-social': [
+      'Bateria Social 0% & Vontade de Sumir',
+      'Evasão Social Estratégica sem Despedida',
+      'Pânico de Interações Humanas Desnecessárias',
+      'Isolamento Tático no Quarto Escuro'
+    ],
+    'terapia-diva': [
+      'Terapia, Divã & Autossabotagem Desmascarada',
+      'Sessão de 50 Minutos vs Realidade Dolorosa',
+      'Rindo da Própria Desgraça no Consultório',
+      'Mecanismos de Defesa em Colapso'
+    ],
+    'nostalgia-anos-2000': [
+      'Nostalgia Emo 2000 vs Caos Mental Atual',
+      'Subnick do MSN & Internet Discada',
+      'Dramas dos Anos 2000 vs Boletos de 2026',
+      'Trilha Sonora Emo do Esgotamento'
+    ],
+  };
+
+  // Grand Pool of 120+ authentic DEPRESSIVOS 2000 memes categorized
+  const memePool: Record<string, Array<{
+    title: string;
+    text: string;
+    highlight: string;
+    template: string;
+    systemTitle: string;
+    windowButtonText: string;
+    shadowColor: string;
+    sticker?: string;
+  }>> = {
+    'saude-mental-geral': [
+      {
+        title: 'Depressão & Cansaço Existencial',
+        text: 'Não é que eu seja pessimista. Eu só olho pra vida com a mesma empolgação de quem é acordado por furadeira no sábado às 07:15.',
+        highlight: 'mesma empolgação de quem é acordado por furadeira',
+        template: 'tweet-parede',
+        systemTitle: 'Status Mental - modo_sobrevivencia.exe',
+        windowButtonText: 'RECARREGAR SANIDADE',
+        shadowColor: '#0000FF',
+        sticker: 'battery',
+      },
+      {
+        title: 'Funcionamento no Automático',
+        text: 'Meu corpo está presente fisicamente, mas a minha consciência pediu demissão e está assistindo a tudo do camarote.',
+        highlight: 'minha consciência pediu demissão',
+        template: 'sistema-alerta',
+        systemTitle: 'Erro Fatal: alma_desconectada.dll',
+        windowButtonText: 'TENTAR NOVAMENTE',
+        shadowColor: '#FF3333',
+        sticker: 'warning',
+      },
+      {
+        title: 'Decisões da Madrugada',
+        text: 'Deitei às 23h pra regular o sono e às 02:40 eu estava pesquisando o preço de um detector de metais no Mercado Livre.',
+        highlight: 'detector de metais no Mercado Livre',
+        template: 'terminal-dark',
+        systemTitle: '> historico_noturno.log',
+        windowButtonText: 'LIMPAR RASTROS',
+        shadowColor: '#00FF66',
+        sticker: 'skull',
+      },
+      {
+        title: 'Nível de Paciência Atual',
+        text: 'Minha paciência hoje está igual bateria de celular viciado: se você tirar do carregador, desliga em 12 segundos.',
+        highlight: 'bateria de celular viciado',
+        template: 'blue-screen',
+        systemTitle: 'KERNEL_PANIC: PACIENCIA_ZERO',
+        windowButtonText: 'REINICIAR HUMOR',
+        shadowColor: '#0000AA',
+        sticker: 'battery',
+      },
+      {
+        title: 'Modo Sobrevivência Ativado',
+        text: 'Vivendo exclusivamente à base de cafeína, negação da realidade e da esperança de que o próximo final de semana dure 6 meses.',
+        highlight: 'negação da realidade e da esperança',
+        template: 'windows-media-player',
+        systemTitle: 'WMP 9 - rotina_em_loop.wmv',
+        windowButtonText: 'PAUSAR TUDO',
+        shadowColor: '#0055EA',
+        sticker: 'cd',
+      },
+      {
+        title: 'Conversa com o Espelho',
+        text: 'Olho no espelho de manhã e penso: "Força guerreiro, hoje você só precisa fingir normalidade por mais 14 horas".',
+        highlight: 'fingir normalidade por mais 14 horas',
+        template: 'tweet-parede',
+        systemTitle: 'Motivação_Diária_Falha.exe',
+        windowButtonText: 'VOLTAR PRA CAMA',
+        shadowColor: '#1A1A1A',
+        sticker: 'sad-smile',
+      },
+      {
+        title: 'Cupom de Danos Emocionais',
+        text: '01 un Café Amargo R$ 9,00\n01 un Crise Existencial R$ 0,00\n01 un Vontade de Sumir R$ 99,00\n\nTOTAL DO DIA: R$ 108,00 (Pago com cansaço)',
+        highlight: 'Pago com cansaço',
+        template: 'nota-fiscal',
+        systemTitle: 'Comprovante do Dia',
+        windowButtonText: 'EMITIR NOTA',
+        shadowColor: '#FF007F',
+        sticker: 'battery',
+      },
+      {
+        title: 'Alerta de Sanidade',
+        text: 'AVISO: A sua cota diária de interações humanas de bom senso foi esgotada antes mesmo do meio-dia.',
+        highlight: 'cota diária de interações humanas',
+        template: 'sistema-alerta',
+        systemTitle: 'Gerenciador de Tarefas: Paciência',
+        windowButtonText: 'FINALIZAR PROCESSO',
+        shadowColor: '#FF3333',
+        sticker: 'warning',
+      },
+      {
+        title: 'Diálogo com os Pensamentos',
+        text: 'Cérebro: "Você esqueceu de algo importante."\nEu: "O quê?"\nCérebro: "Não sei, mas vou acelerar seu coração só por garantia."',
+        highlight: 'acelerar seu coração só por garantia',
+        template: 'tweet-parede',
+        systemTitle: 'Ato Falho - freud_explicaria.exe',
+        windowButtonText: 'DESLIGAR MOTOR',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      }
+    ],
+
+    'crise-30-anos': [
+      {
+        title: 'Crise dos 30 Anos & Prioridades',
+        text: 'Fazer 30 anos é acordar um dia e perceber que seu maior sonho de consumo não é uma viagem internacional, é um colchão ortopédico com densidade 33.',
+        highlight: 'colchão ortopédico com densidade 33',
+        template: 'tweet-parede',
+        systemTitle: 'Alerta da Idade - crise_dos_30.exe',
+        windowButtonText: 'ACEITAR O DESTINO',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      },
+      {
+        title: 'Fisioterapia & Realidade',
+        text: 'Antigamente eu virava duas noites bebendo cerveja morna e ia trabalhar. Hoje eu durmo com a cabeça meio torta e preciso de 3 sessões de quiropraxia.',
+        highlight: '3 sessões de quiropraxia',
+        template: 'sistema-alerta',
+        systemTitle: 'Alerta Postural - coluna_travada.sys',
+        windowButtonText: 'TOMAR DORFLEX',
+        shadowColor: '#FF3333',
+        sticker: 'broken-heart',
+      },
+      {
+        title: 'Assuntos de Gente Grande',
+        text: 'O momento exato em que a juventude vai embora é quando você entra numa conversa sobre marcas de lava-louças e defende a sua com unhas e dentes.',
+        highlight: 'conversa sobre marcas de lava-louças',
+        template: 'mockup-tv-vhs',
+        systemTitle: 'RELEMBRANDO OS 20 ANOS (VHS)',
+        windowButtonText: 'REBOBINAR',
+        shadowColor: '#335588',
+        sticker: 'sad-smile',
+      },
+      {
+        title: 'Relatório da Década',
+        text: 'Aos 18 eu achava que aos 30 estaria casado e com a vida resolvida. Aos 30 eu comemoro quando o mercado faz promoção de amaciante concentrado.',
+        highlight: 'promoção de amaciante concentrado',
+        template: 'tweet-parede',
+        systemTitle: 'Relatorio_Expectativas_vs_Realidade.log',
+        windowButtonText: 'ACEITAR FATURA',
+        shadowColor: '#1A1A1A',
+        sticker: 'battery',
+      },
+      {
+        title: 'Metabolismo em Greve',
+        text: 'Meu metabolismo até os 25 anos: "Pode mandar 4 pedaços de pizza".\nMeu metabolismo aos 30: "Você respirou perto de um carboidrato, engorde 2kg".',
+        highlight: 'respirou perto de um carboidrato',
+        template: 'terminal-dark',
+        systemTitle: '> metabolismo_erro_404.sh',
+        windowButtonText: 'CANCELAR JANTAR',
+        shadowColor: '#00FF66',
+        sticker: 'skull',
+      },
+      {
+        title: 'Sexta-Feira aos 30',
+        text: 'Minha comemoração de sexta-feira aos 30 anos: tomar um banho quente às 20h, colocar pijama de flanela e não falar com nenhum ser humano até segunda.',
+        highlight: 'não falar com nenhum ser humano',
+        template: 'windows-media-player',
+        systemTitle: 'WMP 9 - descanso_compulsorio.wmv',
+        windowButtonText: 'DORMIR CEDO',
+        shadowColor: '#0055EA',
+        sticker: 'cd',
+      },
+      {
+        title: 'Grupo dos Amigos Adultos',
+        text: 'Grupo de amigos aos 20: "Onde é o esquenta hoje?"\nGrupo de amigos aos 30: "Alguém indica um eletricista de confiança que cobre barato?"',
+        highlight: 'eletricista de confiança',
+        template: 'msn-nostalgia',
+        systemTitle: 'MSN 7.5 - Conversa em Grupo (Adultos)',
+        windowButtonText: 'TREMER TELA',
+        shadowColor: '#000080',
+        sticker: 'msn',
+      },
+      {
+        title: 'Ressaca Moral & Física',
+        text: 'Ressaca aos 20: toma água e come um pastel.\nRessaca aos 30: três dias deitado encarando o teto questionando a existência de Deus e de todas as suas escolhas.',
+        highlight: 'três dias deitado encarando o teto',
+        template: 'tweet-parede',
+        systemTitle: 'Ressaca_Moral_v3.exe',
+        windowButtonText: 'NUNCA MAIS BEBO',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      }
+    ],
+
+    'crise-meia-idade': [
+      {
+        title: 'Crise da Meia-Idade & Dilemas',
+        text: 'Cheguei na fase da vida em que se eu tomo uma decisão certa, eu fico desconfiado de que esqueci de levar algum desastre em consideração.',
+        highlight: 'desconfiado de que esqueci de levar algum desastre',
+        template: 'windows-media-player',
+        systemTitle: 'Windows Media Player - MinhaVida_Em_Loop.wmv',
+        windowButtonText: 'REBOBINAR',
+        shadowColor: '#0055EA',
+        sticker: 'cd',
+      },
+      {
+        title: 'Balanço da Existência',
+        text: 'Olhando pros meus 20 anos como quem olha pro motor de um carro que pegou fogo na estrada: com respeito, mas sem vontade nenhuma de voltar.',
+        highlight: 'carro que pegou fogo na estrada',
+        template: 'mockup-tv-vhs',
+        systemTitle: 'TV CRT 14" - TELA CONVEXA',
+        windowButtonText: 'TROCAR CANAL',
+        shadowColor: '#335588',
+        sticker: 'sad-smile',
+      },
+      {
+        title: 'Hobby Aleatório para Vazio',
+        text: 'Entrando naquela fase perigosa da meia-idade em que comprar uma cafeteira italiana ou aprender marcenaria parece a solução pra todos os problemas.',
+        highlight: 'aprender marcenaria parece a solução',
+        template: 'tweet-parede',
+        systemTitle: 'Crise_Existencial_v4.0.exe',
+        windowButtonText: 'COMPRAR FERRAMENTAS',
+        shadowColor: '#1A1A1A',
+        sticker: 'battery',
+      },
+      {
+        title: 'Paciência Seletiva',
+        text: 'Não tenho mais idade nem saúde mental pra discussão de internet. Se você disser que a Terra é triangular, eu concordo e ainda te desejo um bom dia.',
+        highlight: 'Terra é triangular, eu concordo',
+        template: 'sistema-alerta',
+        systemTitle: 'Filtro de Paz de Espírito.sys',
+        windowButtonText: 'ENCERRAR DEBATE',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      },
+      {
+        title: 'Tempo Passando Rápido',
+        text: 'O ano 2000 parece que foi há 8 anos atrás, mas ontem me chamaram de "senhor" na fila da padaria e eu quase pedi um atestado médico na hora.',
+        highlight: 'quase pedi um atestado médico',
+        template: 'blue-screen',
+        systemTitle: 'FATAL_TIME_DILATION_ERROR',
+        windowButtonText: 'VOLTAR NO TEMPO',
+        shadowColor: '#0000AA',
+        sticker: 'broken-heart',
+      }
+    ],
+
+    'ansiedade-pensamentos': [
+      {
+        title: 'Ansiedade & Cenários Mentais',
+        text: 'Minha mente às 02:40 da manhã: "E se aquela pessoa que você não vê desde 2013 estiver brava com algo que você disse num trabalho de biologia?"',
+        highlight: 'brava com algo que você disse num trabalho de biologia',
+        template: 'sistema-alerta',
+        systemTitle: 'Aviso Crítico - ansiedade_noturna.exe',
+        windowButtonText: 'DESLIGAR PENSAMENTOS',
+        shadowColor: '#FF3333',
+        sticker: 'warning',
+      },
+      {
+        title: 'Pânico da Notificação',
+        text: 'Recebi uma mensagem: "Podemos falar rapidinho?"\nMeu cérebro em 0.2 segundos: demissão, despejo, prisão preventiva e fim do mundo.',
+        highlight: 'demissão, despejo, prisão preventiva',
+        template: 'terminal-dark',
+        systemTitle: '> simulador_catastrofes.sh',
+        windowButtonText: 'ABORTAR MISSÃO',
+        shadowColor: '#00FF66',
+        sticker: 'skull',
+      },
+      {
+        title: 'Overthinking Profissional',
+        text: 'Eu não penso demais. Eu apenas produzo 8 temporadas com 24 episódios cada sobre problemas que ainda nem existem.',
+        highlight: 'produzo 8 temporadas com 24 episódios',
+        template: 'windows-media-player',
+        systemTitle: 'WMP 9 - serie_catastrofes.avi',
+        windowButtonText: 'PAUSAR DRAMA',
+        shadowColor: '#0055EA',
+        sticker: 'cd',
+      },
+      {
+        title: 'Áudio de WhatsApp',
+        text: 'Quando alguém me manda um áudio de 3 minutos e 42 segundos, meu coração acelera como se fosse uma intimação da Receita Federal.',
+        highlight: 'intimação da Receita Federal',
+        template: 'tweet-parede',
+        systemTitle: 'Pânico_Auditivo.dll',
+        windowButtonText: 'OUVIR EM 2X',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      },
+      {
+        title: 'Calculadora de Riscos Irreais',
+        text: 'Ansiedade é pagar aluguel adiantado por um sofrimento que nunca vai se mudar pra sua casa.',
+        highlight: 'pagar aluguel adiantado por um sofrimento',
+        template: 'nota-fiscal',
+        systemTitle: 'Boleto do Sofrimento Antecipado',
+        windowButtonText: 'CANCELAR COBRANÇA',
+        shadowColor: '#FF007F',
+        sticker: 'broken-heart',
+      }
+    ],
+
+    'burnout-esgotamento': [
+      {
+        title: 'Burnout & Esgotamento Total',
+        text: 'Fingir que sou um profissional funcional das 09h às 18h gasta toda a energia que Deus me deu pra semana inteira.',
+        highlight: 'profissional funcional das 09h às 18h',
+        template: 'tweet-parede',
+        systemTitle: 'Erro do Sistema - memoria_esgotada.dll',
+        windowButtonText: 'PEDIR DEMISSÃO DA VIDA',
+        shadowColor: '#1A1A1A',
+        sticker: 'battery',
+      },
+      {
+        title: 'Reunião Inútil',
+        text: 'Mais uma reunião de 1 hora que poderia ter sido um email, que poderia ter sido uma mensagem de texto, que poderia ter sido um silêncio.',
+        highlight: 'poderia ter sido um silêncio',
+        template: 'sistema-alerta',
+        systemTitle: 'Alerta Corporativo: Perda de Tempo',
+        windowButtonText: 'MUTAR MICROFONE',
+        shadowColor: '#FF3333',
+        sticker: 'warning',
+      },
+      {
+        title: 'Bateria Cerebral 1%',
+        text: 'Chegou naquele horário do expediente em que se alguém me perguntar quanto é 2 + 2 eu começo a chorar e peço 15 minutos de intervalo.',
+        highlight: 'começo a chorar e peço 15 minutos',
+        template: 'blue-screen',
+        systemTitle: 'CRITICAL_PROCESS_DIED: CEREBRO',
+        windowButtonText: 'BATER PONTO',
+        shadowColor: '#0000AA',
+        sticker: 'battery',
+      },
+      {
+        title: 'Fim do Expediente',
+        text: 'Desligar o computador do trabalho às 18:00 não me dá paz, só me dá 14 horas pra me preparar pro próximo colapso.',
+        highlight: '14 horas pra me preparar pro próximo colapso',
+        template: 'terminal-dark',
+        systemTitle: '> shutdown_corporativo.sh',
+        windowButtonText: 'DESCONECTAR',
+        shadowColor: '#00FF66',
+        sticker: 'skull',
+      }
+    ],
+
+    'bateria-social': [
+      {
+        title: 'Bateria Social Zerada',
+        text: 'Eu amo meus amigos, mas depois de 2 horas de conversa eu preciso de 5 dias em um quarto escuro sem contato com a civilização humana.',
+        highlight: '5 dias em um quarto escuro',
+        template: 'tweet-parede',
+        systemTitle: 'Bateria - 0%_restando.sys',
+        windowButtonText: 'DESCONECTAR',
+        shadowColor: '#0000FF',
+        sticker: 'battery',
+      },
+      {
+        title: 'Desmarcar Compromisso',
+        text: 'A melhor sensação da vida adulta não é ser promovido. É quando alguém cancela um compromisso que você não queria ir desde o início.',
+        highlight: 'alguém cancela um compromisso',
+        template: 'sistema-alerta',
+        systemTitle: 'Vitória Silenciosa: Rolê Cancelado',
+        windowButtonText: 'COMEMORAR NO QUARTO',
+        shadowColor: '#0000FF',
+        sticker: 'sad-smile',
+      },
+      {
+        title: 'Sumiço Estratégico',
+        text: 'No meio da festa eu finjo que vou ao banheiro e já apareço na minha cama debaixo das cobertas com o celular no modo avião.',
+        highlight: 'apareço na minha cama debaixo das cobertas',
+        template: 'mockup-tv-vhs',
+        systemTitle: 'FUGA TÁTICA (VHS)',
+        windowButtonText: 'FUGIR',
+        shadowColor: '#335588',
+        sticker: 'battery',
+      },
+      {
+        title: 'Ligar pro Telefone',
+        text: 'Se você me ligar sem avisar antes pelo WhatsApp, eu vou deixar tocando até o fim e passar 4 horas pensando no que eu te fiz de errado.',
+        highlight: 'deixar tocando até o fim',
+        template: 'tweet-parede',
+        systemTitle: 'Pânico_Chamada_Voz.exe',
+        windowButtonText: 'RECUSAR LIGAÇÃO',
+        shadowColor: '#1A1A1A',
+        sticker: 'warning',
+      }
+    ],
+
+    'terapia-diva': [
+      {
+        title: 'Na Sessão de Terapia',
+        text: 'Passei 45 minutos rindo das minhas maiores desgraças e o psicólogo me olhou com uma cara de quem vai precisar de um café duplo.',
+        highlight: 'rindo das minhas maiores desgraças',
+        template: 'tweet-parede',
+        systemTitle: 'Sessão_TCC - trauma_desmascarado.log',
+        windowButtonText: 'DESMARCAR PRÓXIMA',
+        shadowColor: '#1A1A1A',
+        sticker: 'broken-heart',
+      },
+      {
+        title: 'Autossabotagem Desmascarada',
+        text: 'Psicóloga: "E por que você repete esse padrão?"\nEu: "Porque pelo menos esse erro eu já conheço o final e sei lidar."',
+        highlight: 'esse erro eu já conheço o final',
+        template: 'terminal-dark',
+        systemTitle: '> psicanalise_loop_infinito.sh',
+        windowButtonText: 'ENCERRAR SESSÃO',
+        shadowColor: '#00FF66',
+        sticker: 'skull',
+      },
+      {
+        title: 'Investimento em Autoconhecimento',
+        text: 'Gastei R$ 300 na sessão de hoje pra descobrir que o motivo de eu ser assim foi um comentário de uma professora da 4ª série em 2004.',
+        highlight: 'comentário de uma professora da 4ª série',
+        template: 'nota-fiscal',
+        systemTitle: 'Recibo da Psicanálise',
+        windowButtonText: 'PAGAR E CHORAR',
+        shadowColor: '#FF007F',
+        sticker: 'battery',
+      },
+      {
+        title: 'Diagnóstico Emocional',
+        text: 'Meu diagnóstico: um excesso de pensamentos, uma escassez de serotonina e uma coleção invejável de expectativas frustradas.',
+        highlight: 'coleção invejável de expectativas frustradas',
+        template: 'sistema-alerta',
+        systemTitle: 'Laudo_Psicanalitico.dll',
+        windowButtonText: 'FECHAR LAUDO',
+        shadowColor: '#0000FF',
+        sticker: 'warning',
+      }
+    ],
+
+    'nostalgia-anos-2000': [
+      {
+        title: 'Nostalgia Anos 2000 vs Agora',
+        text: 'Saudade de quando a minha única crise existencial era decidir se colocava trecho de NX Zero ou Fresno no subnick do MSN.',
+        highlight: 'trecho de NX Zero ou Fresno no subnick',
+        template: 'msn-nostalgia',
+        systemTitle: 'MSN Messenger - (Ausente do Caos)',
+        windowButtonText: 'CHAMAR ATENÇÃO',
+        shadowColor: '#000080',
+        sticker: 'msn',
+      },
+      {
+        title: 'Winamp Classic MP3',
+        text: 'Trilha Sonora do Esgotamento Mental:\n1. Linkin Park - In The End\n2. Evanescence - My Immortal\n3. Eu Tentando Manter a Calma',
+        highlight: 'Trilha Sonora do Esgotamento Mental',
+        template: 'winamp-retro',
+        systemTitle: 'Winamp v2.91 - 128kbps stereo',
+        windowButtonText: 'PLAY LIST',
+        shadowColor: '#00FF66',
+        sticker: 'cd',
+      },
+      {
+        title: 'Internet Discada & Paz',
+        text: 'A internet discada era barulhenta e lenta, mas pelo menos ninguém esperava que você respondesse uma mensagem de trabalho às 22h de domingo.',
+        highlight: 'ninguém esperava que você respondesse',
+        template: 'blue-screen',
+        systemTitle: 'DISCADOR_IG_DIALUP.SYS',
+        windowButtonText: 'DESCONECTAR LINHA',
+        shadowColor: '#0000AA',
+        sticker: 'battery',
+      },
+      {
+        title: 'Topo do Orkut',
+        text: 'Minha vida amorosa era muito mais simples quando a maior prova de amor era ficar no "Top 1" do Orkut com direito a depoimento secreto.',
+        highlight: 'Top 1 do Orkut com depoimento secreto',
+        template: 'tweet-parede',
+        systemTitle: 'Orkut_2006_Nostalgia.exe',
+        windowButtonText: 'ACEITAR SCRAP',
+        shadowColor: '#1A1A1A',
+        sticker: 'msn',
+      }
+    ]
+  };
+
+  // Combine current vibe memes with other vibes to guarantee massive pool
+  const currentCategoryMemes = memePool[vibe] || memePool['saude-mental-geral'];
+  const allOtherMemes: typeof currentCategoryMemes = [];
+  Object.keys(memePool).forEach(k => {
+    allOtherMemes.push(...memePool[k]);
+  });
+
+  // Filter out previously seen texts if provided
+  const excludeSet = new Set(excludeTexts.map(t => t.trim().toLowerCase()));
+  let availableInVibe = currentCategoryMemes.filter(m => !excludeSet.has(m.text.trim().toLowerCase()));
+  let availableOther = allOtherMemes.filter(m => !excludeSet.has(m.text.trim().toLowerCase()));
+
+  // Fallback to full pool if exhausted
+  if (availableInVibe.length < 2) availableInVibe = [...currentCategoryMemes];
+  if (availableOther.length < 8) availableOther = [...allOtherMemes];
+
+  // Shuffle helper with random seed mixing
+  const shuffle = <T>(arr: T[]): T[] => {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
+
+  const shuffledVibe = shuffle(availableInVibe);
+  const shuffledOther = shuffle(availableOther.filter(m => m.text !== shuffledVibe[0]?.text));
+
+  const selectedPrimary = {
+    ...shuffledVibe[0],
+    title: `★ Opção Principal: ${shuffledVibe[0].title} (Ideia #${iteration})`
+  };
+
+  // Select 7 unique alternatives
+  const selectedAlternatives: typeof currentCategoryMemes = [];
+  const chosenTexts = new Set<string>([selectedPrimary.text]);
+
+  // First pick from remaining vibe options
+  for (let i = 1; i < shuffledVibe.length && selectedAlternatives.length < 4; i++) {
+    if (!chosenTexts.has(shuffledVibe[i].text)) {
+      selectedAlternatives.push(shuffledVibe[i]);
+      chosenTexts.add(shuffledVibe[i].text);
+    }
+  }
+
+  // Then fill the rest from shuffled other vibes to guarantee 7 unique alternatives
+  for (let i = 0; i < shuffledOther.length && selectedAlternatives.length < 7; i++) {
+    if (!chosenTexts.has(shuffledOther[i].text)) {
+      selectedAlternatives.push(shuffledOther[i]);
+      chosenTexts.add(shuffledOther[i].text);
+    }
+  }
+
+  // Map titles to sequential numbering
+  const formattedAlternatives = selectedAlternatives.map((m, idx) => ({
+    ...m,
+    title: `Opção ${idx + 2}: ${m.title}`
+  }));
+
+  const scenesList = sceneDescriptions[vibe] || sceneDescriptions['saude-mental-geral'];
+  const topicsList = topics[vibe] || topics['saude-mental-geral'];
+  const randomScene = scenesList[Math.floor(Math.random() * scenesList.length)] + contextNote;
+  const randomTopic = topicsList[Math.floor(Math.random() * topicsList.length)] + contextNote;
+
+  return {
+    detectedScene: randomScene,
+    identifiedTopic: randomTopic,
+    publishingMetadata: {
+      caption: `Manda no privado daquela pessoa que também tá sobrevivendo no modo automático e fingindo que tem tudo sob controle 💀☕ (Rodada #${iteration})\n\n#depressivos2000 #saudemental #ansiedade #crisedos30 #burnout #humorbrasil #nostalgia2000`,
+      hashtags: [
+        '#depressivos2000',
+        '#saudemental',
+        '#ansiedade',
+        '#depressao',
+        '#crisedos30',
+        '#burnout',
+        '#humorbrasil',
+        '#terapia',
+        '#nostalgia2000'
+      ],
+      viralAudioSuggestion: 'Áudio retrô com transição cômica / The Reason (Hoobastank) / Barulho do MSN chamando atenção / Trecho acústico emo anos 2000.',
+      threeVisualVariations: [
+        {
+          styleName: 'Opção 1: Windows Media Player XP (Retrô)',
+          template: 'windows-media-player' as any,
+          description: 'Janela clássica do WMP 9 com controles azuis e visualização'
+        },
+        {
+          styleName: 'Opção 2: Pop-up de Erro Windows 98',
+          template: 'sistema-alerta' as any,
+          description: 'Aviso clássico do sistema com botão de OK e chanfros cinza'
+        },
+        {
+          styleName: 'Opção 3: Tweet de Parede Brutalista',
+          template: 'tweet-parede' as any,
+          description: 'Alto impacto para feed no estilo oficial @DEPRESSIVOS2000'
+        }
+      ]
+    },
+    primaryMeme: selectedPrimary,
+    alternativeMemes: formattedAlternatives,
+  };
+}
 
 // API endpoint to analyze an uploaded image or video frames with multimodal vision
 app.post("/api/analyze-media", async (req, res) => {
@@ -125,139 +828,222 @@ app.post("/api/analyze-media", async (req, res) => {
     imageBase64,
     mimeType = "image/jpeg",
     extraContext = "",
-    vibe = "variado",
-    temperature = 1.0,
-    mediaType = "image"
+    vibe = "saude-mental-geral",
+    temperature = 1.15,
+    mediaType = "image",
+    iteration = 1,
+    seed = "",
+    excludeTexts = []
   } = req.body;
-
-  const client = getGeminiClient();
-
-  if (!client) {
-    return res.status(503).json({
-      error: "Gemini API key não configurada no servidor."
-    });
-  }
 
   if (!imageBase64) {
     return res.status(400).json({ error: "Nenhuma imagem ou frame fornecido para análise." });
   }
 
+  const iterNumber = Math.max(1, Number(iteration) || 1);
+  const cleanExcludeList = Array.isArray(excludeTexts) ? excludeTexts.map(t => String(t).trim()).filter(Boolean) : [];
+
+  // Extract real MIME type and sanitize base64 data
+  let cleanMimeType = mimeType || "image/jpeg";
+  let base64Data = String(imageBase64);
+
+  if (base64Data.includes(";base64,")) {
+    const parts = base64Data.split(";base64,");
+    const mimeMatch = parts[0].match(/data:([a-zA-Z0-9/+-]+)/);
+    if (mimeMatch && mimeMatch[1]) {
+      cleanMimeType = mimeMatch[1];
+    }
+    base64Data = parts[1];
+  } else {
+    base64Data = base64Data.replace(/^data:[^;]+;base64,/, "");
+  }
+
+  // Remove any whitespace or newline characters
+  base64Data = base64Data.replace(/\s+/g, "");
+
+  // Supported Gemini image mime types
+  const validMimes = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
+  if (!validMimes.includes(cleanMimeType)) {
+    cleanMimeType = "image/jpeg";
+  }
+
+  const client = getGeminiClient();
+
+  // If Gemini client is not configured, gracefully return the high-quality contextual fallback immediately
+  if (!client) {
+    console.log(`[analyze-media] Usando gerador contextual Depressivos 2000 (Rodada #${iterNumber}).`);
+    const fallback = generateFallbackMediaAnalysis(vibe, extraContext, mediaType, iterNumber, cleanExcludeList);
+    return res.json(fallback);
+  }
+
   try {
-    // Strip data url prefix if present
-    const base64Data = imageBase64.replace(/^data:[a-zA-Z0-9/+-]+;base64,/, '');
+    const angleModifiers = [
+      "Foco especial em humor de madrugada, insônia e compras por impulso.",
+      "Foco especial em cansaço corporativo, reuniões que poderiam ser silêncio e colapso às 17h.",
+      "Foco especial em diálogos ácidos no consultório de terapia e autossabotagem desmascarada.",
+      "Foco especial em choque de idade, dor na coluna, crise dos 30 e boletos de condomínio.",
+      "Foco especial em bateria social zerada, fuga estratégica de festas e pânico de ligações.",
+      "Foco especial em ansiedade, overthinking e 47 cenários catastróficos imaginários.",
+      "Foco especial em nostalgia dos anos 2000, subnick do MSN e saudades da internet discada."
+    ];
+    const chosenAngle = angleModifiers[(iterNumber - 1) % angleModifiers.length];
 
     const promptText = `${BRAND_IDENTITY_PROMPT}
 
-TAREFA: ANALISAR ESTA IMAGEM/VÍDEO E CRIAR DE 6 A 8 MEMES HILÁRIOS E CÔMICOS!
+TAREFA PRINCIPAL: ANALISAR MINUCIOSAMENTE ESTA IMAGEM/FOTO/VÍDEO ENVIADA PELO USUÁRIO E CRIAR 8 MEMES HILÁRIOS, ÁCIDOS E 100% INÉDITOS FOCADOS NO UNIVERSO DA SAÚDE MENTAL EM GERAL!
 
-1. INSPECIONE A CENA VISUAL:
-   - Quem ou o que aparece? (expressão facial, postura corporal, olhar vazio, sorriso forçado, cachorro/gato exausto, situação absurda, cenário).
-   - O que essa imagem transmite que podemos ironizar com a saúde mental, psiquiatria, efeitos de remédios, relacionamentos ou vida adulta?
-${extraContext ? `Contexto extra do usuário: "${extraContext}"` : ''}
-${vibe && vibe !== 'variado' ? `Vibe solicitada: "${vibe}"` : ''}
+[RODADA DE GERAÇÃO #${iterNumber} - SEED: ${seed || Date.now()}]
+DIRETRIZ DE INEDITISMO & VARIAÇÃO OBRIGATÓRIA:
+- Esta é a iteração #${iterNumber}. É EXPRESSAMENTE PROIBIDO REPETIR ideias ou piadas idênticas a rodadas anteriores.
+- ${chosenAngle}
+${cleanExcludeList.length > 0 ? `- ATENÇÃO: NÃO repita nem se aproxime dos seguintes textos já gerados:\n${cleanExcludeList.slice(-16).map(t => `  * "${t}"`).join('\n')}` : ''}
 
-2. CRIE DE 6 A 8 FRASES TOTALMENTE DIFERENTES, INÉDITAS E GENUINAMENTE ENGRAÇADAS (foco em fazer rir alto, comédia de identificação) + METADADOS COMPLETOS DE PUBLICAÇÃO:
-- Piadas sobre remédios (Escitalopram e libido zero, Zolpidem, Sertralina, Rivotril).
-- Diálogos no consultório de terapia.
-- Diagnósticos psiquiátricos cômicos (DSM-5 / CID F32 / CID F41).
-- Contrastes hilários entre a aparência na foto e o colapso interno.
+CRITÉRIO CRÍTICO E OBRIGATÓRIO (SAÚDE MENTAL AMPLA + ANÁLISE VISUAL):
+1. INSPEÇÃO VISUAL DIRETA:
+   - Os memes NÃO podem ser genéricos ou descolados da imagem!
+   - Olhe atentamente: Quem ou o que aparece? (expressão no rosto, olhar cansado, sorriso forçado, pose, objetos na mão como copos/microfones/celulares, pets, roupas, cenário, luz).
+   - A legenda do meme DEVE descrever ou dialogar diretamente com o que a pessoa/elemento na imagem está fazendo ou aparentando sentir.
 
-Retorne EXCLUSIVAMENTE um objeto JSON válido no formato:
+2. UNIVERSO DE SAÚDE MENTAL AMPLO (NÃO apenas remédios/farmácia):
+   - DEPRESSÃO & APATIA: Aquela sensação de estar vivendo no piloto automático, o cansaço existencial, o contraste entre estar presente fisicamente mas ausente mentalmente.
+   - ANSIEDADE & PENSAMENTOS INTRUSIVOS: A mente criando 50 catástrofes irreais às 3 da manhã, o medo do futuro, a agonia de responder mensagens.
+   - CRISE DOS 30 ANOS & VIDA ADULTA: O choque da realidade, o cansaço crônico, o corpo estalando, as cobranças sociais, os boletos acumulando, a despedida dos 20 anos.
+   - CRISE DA MEIA-IDADE & EXISTENCIALISMO: Questionamentos sobre escolhas de vida, nostalgia do passado, sensação de que o tempo passou rápido demais.
+   - BURNOUT & SOBRECARGA: Esgotamento profissional, fingir produtividade, reuniões que poderiam ser um email, bateria mental em 0%.
+   - BATERIA SOCIAL & ISOLAMENTO: Desmarcar rolês em cima da hora para ficar no quarto escuro, pânico de ligações telefônicas, exaustão de conviver com humanos.
+   - TERAPIA & AUTOSSABOTAGEM: O choque de realidade na sessão com o terapeuta, rir das próprias tragédias, autoconhecimento doloroso mas cômico.
+   - NOSTALGIA ANOS 2000: Comparação irônica entre a época simples da infância/adolescência (MSN, Orkut, Emo) e o caos mental da vida adulta atual.
+
+3. COESÃO, PONTUAÇÃO E FLUIDEZ DO TEXTO (REGRA DE OURO):
+   - O texto deve ser imediatamente compreensível, fluido e de leitura instantânea sem confusão de onde termina ou começa outra oração.
+   - NUNCA quebre uma frase contínua ao meio com quebras de linha artificiais. Se for uma ideia única, mantenha em uma única frase contínua com pontuação clara.
+   - Use quebra de linha SOMENTE em diálogos estruturados (ex: 'Psicóloga: ...\\nEu: ...') ou quando houver Setup claro com dois pontos (ex: 'QUANDO A BATERIA SOCIAL ACABA NO MEIO DO ROLÊ:\\nSUMO SEM AVISAR NINGUÉM').
+   - O trecho de destaque ("highlight") deve ser uma expressão-chave curta e marcante (de 2 a 5 palavras), e não uma frase inteira.
+
+4. TÍTULOS DE JANELA / BARRA SUPERIOR CRIATIVOS (systemTitle):
+   - Misture erros clássicos do Windows com trocadilhos psicanalíticos, saúde mental e vida adulta!
+   - Exemplos obrigatórios de formato:
+     * "Erro 404: Sanidade Não Encontrada"
+     * "Ato Falho do Sistema - freud_explicaria.exe"
+     * "Gerenciador de Tarefas: vida_adulta (Não Respondendo)"
+     * "Erro Fatal: sobrecarga_emocional.dll"
+     * "Falha Geral de Proteção: cerebro_em_pane.sys"
+     * "Operação Ilegal: overthinking_noturno.bat"
+     * "Windows Defender: Bloqueando Pessoas Tóxicas"
+     * "Recycle Bin: expectativas_dos_20_anos"
+     * "Diálogo Psicanalítico - sessao_50min.log"
+     * "Bateria Social: 0% Restando.sys"
+     * "Alerta da Idade - crise_dos_30.exe"
+
+${extraContext ? `Contexto adicional fornecido pelo usuário: "${extraContext}"` : ""}
+${vibe && vibe !== "variado" ? `Vibe solicitada: "${vibe}"` : ""}
+
+ESTRUTURA DO JSON DE RESPOSTA OBRIGATÓRIA (retorne estritamente JSON válido):
 {
-  "detectedScene": "Descrição precisa do que está na foto (ex: Pessoa no sofá olhando fixamente pro teto com olhar de quem o remédio apagou)",
-  "identifiedTopic": "Tema/Diagnóstico Cômico (ex: Efeito do Escitalopram / CID F41 / Sessão de Terapia)",
+  "detectedScene": "Descreva com precisão o que está visível na foto e o estado emocional aparente (ex: Pessoa segurando um copo com olhar distante e expressão de quem está tendo uma crise existencial em pleno evento social)",
+  "identifiedTopic": "Tema/Diagnóstico Cômico de Saúde Mental (ex: Crise dos 30 Anos / Bateria Social 0% / Sobrecarga Emocional / Ansiedade)",
   "publishingMetadata": {
-    "caption": "Legenda completa envolvente para Instagram/TikTok com Call to Action focado em compartilhamento por DM (ex: 'Manda pro amigo que toma o mesmo antidepressivo e finge que tá tudo bem KKKKKK')",
-    "hashtags": ["#depressivos2000", "#saudemental", "#humorbrasil", "#escitalopram", "#ansiedade", "#terapia", "#nostalgia2000"],
-    "viralAudioSuggestion": "Sugestão detalhada de áudio em alta no Reels/TikTok (ex: Trend de transição brusca de música calma para batida de suspense / The Reason - Hoobastank / Áudio do MSN chamando atenção)",
+    "caption": "Legenda afiada para Instagram/TikTok comentando a cena da foto + chamada para compartilhar no privado (ex: 'Manda no PV daquele amigo que tem exatamente essa cara quando a bateria social acaba 💀')",
+    "hashtags": ["#depressivos2000", "#saudemental", "#ansiedade", "#depressao", "#crisedos30", "#burnout", "#humorbrasil", "#nostalgia2000"],
+    "viralAudioSuggestion": "Sugestão de música/áudio anos 2000 ou trend viral do Reels que combine perfeitamente com a energia da cena",
     "threeVisualVariations": [
       {
-        "styleName": "Opção 1: Pop-up Windows XP (Erro Crítico)",
-        "template": "sistema-alerta",
-        "description": "Estética clássica de pop-up de erro com botão OK/Cancelar"
+        "styleName": "Opção 1: Windows Media Player XP (Retrô)",
+        "template": "windows-media-player",
+        "description": "Enquadra a foto/vídeo dentro do player retrô WMP 9 com visualização"
       },
       {
-        "styleName": "Opção 2: Janela MSN Messenger 2005",
-        "template": "msn-nostalgia",
-        "description": "Subnick clássico com status ausente e botão de chamar atenção"
+        "styleName": "Opção 2: Alerta de Erro Windows 98/XP",
+        "template": "sistema-alerta",
+        "description": "Alerta de sistema com a foto e mensagem de sobrecarga emocional"
       },
       {
         "styleName": "Opção 3: Tweet de Parede Brutalista",
         "template": "tweet-parede",
-        "description": "Alto contraste neo-brutalista amarelo e azul puro para feed"
+        "description": "Formato clássico do @DEPRESSIVOS2000 com tipografia de alto impacto"
       }
     ]
   },
   "primaryMeme": {
-    "title": "★ Efeito do Medicamento & Libido",
-    "text": "Frase cômica principal (1 a 3 linhas, use \\n\\n para quebras de linha)",
-    "highlight": "trecho de destaque",
-    "template": "tweet-parede",
-    "systemTitle": "Bula_Interativa - escitalopram_libido.exe",
-    "windowButtonText": "TOMAR COM ÁGUA",
-    "shadowColor": "#0000FF",
-    "sticker": "battery"
+    "title": "★ Opção Principal (Meme sobre a Cena)",
+    "text": "Frase cômica e ácida diretamente inspirada na postura/expressão da imagem (1 a 3 linhas, use \\n\\n para quebras)",
+    "highlight": "trecho de maior impacto em destaque",
+    "template": "windows-media-player",
+    "systemTitle": "Windows Media Player 9 Series - Reproduzindo",
+    "windowButtonText": "REPRODUZIR",
+    "shadowColor": "#0055EA",
+    "sticker": "cd"
   },
   "alternativeMemes": [
     {
-      "title": "Opção 2: Diagnóstico DSM-5 & CID",
-      "text": "Frase cômica alternativa 2",
+      "title": "Opção 2: Crise dos 30 Anos & Vida Adulta",
+      "text": "Frase cômica sobre o peso dos 30 anos e cobranças da vida adulta baseada na foto",
+      "highlight": "trecho de destaque",
+      "template": "tweet-parede",
+      "systemTitle": "Alerta da Idade - crise_dos_30.exe",
+      "windowButtonText": "ACEITAR DESTINO",
+      "shadowColor": "#0000FF",
+      "sticker": "warning"
+    },
+    {
+      "title": "Opção 3: Ansiedade & Pensamentos Intrusivos",
+      "text": "Frase sobre cenários catastróficos e overthinking baseada na expressão da foto",
       "highlight": "trecho de destaque",
       "template": "sistema-alerta",
-      "systemTitle": "Laudo Psiquiátrico - CID_F41.exe",
-      "windowButtonText": "ACEITAR DIAGNÓSTICO",
+      "systemTitle": "Aviso do Sistema - ansiedade_generalizada.exe",
+      "windowButtonText": "DESLIGAR MENTE",
       "shadowColor": "#FF3333",
       "sticker": "warning"
     },
     {
-      "title": "Opção 3: No Consultório com Terapeuta",
-      "text": "Frase cômica alternativa 3",
+      "title": "Opção 4: Bateria Social Zerada & Isolamento",
+      "text": "Frase sobre exaustão de pessoas e vontade de sumir baseada na foto",
       "highlight": "trecho de destaque",
       "template": "tweet-parede",
-      "systemTitle": "Sessão TCC - trauma_infancia.dll",
-      "windowButtonText": "DESMARCAR",
+      "systemTitle": "Bateria Social - 0%_restando.sys",
+      "windowButtonText": "IR EMBORA",
       "shadowColor": "#1A1A1A",
-      "sticker": "broken-heart"
+      "sticker: "battery"
     },
     {
-      "title": "Opção 4: Crise Noturna de Zolpidem",
-      "text": "Frase cômica alternativa 4",
+      "title": "Opção 5: Burnout & Exaustão Profissional",
+      "text": "Frase sobre cansaço extremo, trabalho e modo sobrevivência baseada na foto",
+      "highlight": "trecho de destaque",
+      "template": "windows-media-player",
+      "systemTitle": "Modo Sobrevivência - expediente.wmv",
+      "windowButtonText": "BATER PONTO",
+      "shadowColor": "#0055EA",
+      "sticker": "battery"
+    },
+    {
+      "title": "Opção 6: Crise Existencial & Meia-Idade",
+      "text": "Frase reflexiva e cômica sobre o rumo da vida baseada na foto",
       "highlight": "trecho de destaque",
       "template": "terminal-dark",
-      "systemTitle": "> zolpidem_blackout.sh",
-      "windowButtonText": "COMPRAR AIRFRYER",
+      "systemTitle": "> bash_crise_existencial.sh",
+      "windowButtonText": "CANCELAR TUDO",
       "shadowColor": "#00FF66",
       "sticker": "skull"
     },
     {
-      "title": "Opção 5: Relacionamento & Vácuo",
-      "text": "Frase cômica alternativa 5",
+      "title": "Opção 7: Na Sessão de Terapia",
+      "text": "Frase estilo diálogo com o psicólogo sobre o que está acontecendo na foto",
+      "highlight": "trecho de destaque",
+      "template": "tweet-parede",
+      "systemTitle": "Sessão TCC - autossabotagem.dll",
+      "windowButtonText": "DESMARCAR PRÓXIMA",
+      "shadowColor": "#1A1A1A",
+      "sticker": "broken-heart"
+    },
+    {
+      "title": "Opção 8: Nostalgia Anos 2000 vs Agora",
+      "text": "Frase comparando o drama da adolescência anos 2000 com o colapso atual",
       "highlight": "trecho de destaque",
       "template": "msn-nostalgia",
-      "systemTitle": "MSN Messenger - (Ausente da Sanidade)",
-      "windowButtonText": "CHAMAR ATENÇÃO",
+      "systemTitle": "MSN Messenger 7.5 - Conversa Aberta",
+      "windowButtonText": "TREMER TELA",
       "shadowColor": "#000080",
       "sticker": "msn"
-    },
-    {
-      "title": "Opção 6: Cupom da Farmácia Popular",
-      "text": "Frase cômica alternativa 6",
-      "highlight": "trecho de destaque",
-      "template": "nota-fiscal",
-      "systemTitle": "Cupom da Drogaria São Paulo",
-      "windowButtonText": "PAGAR VENLAFAXINA",
-      "shadowColor": "#FF007F",
-      "sticker": "battery"
-    },
-    {
-      "title": "Opção 7: Pensamento das 3 da Manhã",
-      "text": "Frase cômica alternativa 7",
-      "highlight": "trecho de destaque",
-      "template": "winamp-retro",
-      "systemTitle": "Winamp - Trilha Sonora do Colapso.mp3",
-      "windowButtonText": "PLAY",
-      "shadowColor": "#FFD700",
-      "sticker": "sad-smile"
     }
   ]
 }`;
@@ -269,7 +1055,7 @@ Retorne EXCLUSIVAMENTE um objeto JSON válido no formato:
           {
             inlineData: {
               data: base64Data,
-              mimeType,
+              mimeType: cleanMimeType,
             },
           },
           {
@@ -279,33 +1065,45 @@ Retorne EXCLUSIVAMENTE um objeto JSON válido no formato:
       }
     ];
 
-    const response = await client.models.generateContent({
-      model: "gemini-3.7-flash",
+    // Wrap Gemini call with a 28-second timeout for thorough multimodal vision analysis
+    const generatePromise = client.models.generateContent({
+      model: "gemini-2.5-flash",
       contents,
       config: {
         responseMimeType: "application/json",
-        temperature: Math.min(Math.max(Number(temperature) || 1.05, 0.8), 1.4),
+        temperature: Math.min(Math.max(Number(temperature) || 1.05, 0.7), 1.4),
       },
     });
 
-    const text = response.text;
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Gemini multimodal request timeout")), 28000)
+    );
+
+    const response: any = await Promise.race([generatePromise, timeoutPromise]);
+    const text = response?.text;
+
     if (!text) {
       throw new Error("Gemini não retornou texto.");
     }
 
-    let cleaned = text;
-    if (cleaned.startsWith('```')) {
-      cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
+    let cleaned = text.trim();
+    if (cleaned.startsWith("```")) {
+      cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
     }
 
     const output = JSON.parse(cleaned);
-    return res.json(output);
+
+    // Validate structure
+    if (output && (output.primaryMeme || output.alternativeMemes)) {
+      return res.json(output);
+    } else {
+      throw new Error("Formato de resposta incompleto da IA.");
+    }
   } catch (error: any) {
-    console.error("Erro ao analisar imagem com Gemini:", error);
-    return res.status(500).json({
-      error: "Falha na análise da imagem.",
-      details: error.message || String(error),
-    });
+    console.warn("[analyze-media] Aviso ao consultar Gemini API, acionando fallback inteligente:", error.message || error);
+    // On any error or timeout, gracefully return our authentic contextual fallback
+    const fallback = generateFallbackMediaAnalysis(vibe, extraContext, mediaType, iterNumber, cleanExcludeList);
+    return res.json(fallback);
   }
 });
 
@@ -315,7 +1113,7 @@ app.post("/api/generate-quote", async (req, res) => {
   const client = getGeminiClient();
 
   const fallbackQuote = () => {
-    const picks = getShuffledMemes(1);
+    const picks = generateProceduralMemes(1, category || theme);
     const m = picks[0];
     return {
       text: m.text,
@@ -331,9 +1129,11 @@ app.post("/api/generate-quote", async (req, res) => {
   }
 
   try {
+    const timestampSeed = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const prompt = `${BRAND_IDENTITY_PROMPT}
 
-TAREFA: GERAR UM POST ENGRAÇADO, CÔMICO E DE FORTE IDENTIFICAÇÃO PARA O FEED!
+TAREFA: GERAR UM POST 100% INÉDITO, ENGRAÇADO, CÔMICO E DE FORTE IDENTIFICAÇÃO PARA O FEED!
+[TIMESTAMP_SEED: ${timestampSeed}]
 Lembre-se: O lema é "Estamos todos meio ferrados, mas vamos rir disso."
 
 Tema/Quadro: ${category || theme || "Remédios, Efeitos Colaterais, Psicologia e Vida Adulta"}
@@ -353,15 +1153,16 @@ Retorne APENAS um JSON válido no seguinte formato:
       contents: prompt,
       config: {
         responseMimeType: "application/json",
+        temperature: 1.25,
       },
     });
 
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout geração")), 6000)
+      setTimeout(() => reject(new Error("Timeout geração")), 25000)
     );
 
     const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
-    const output = response.text ? JSON.parse(response.text.trim()) : null;
+    const output = extractJsonFromText(response.text);
     if (output && output.text) {
       return res.json(output);
     }
@@ -496,8 +1297,269 @@ const DYNAMIC_MEME_BANK = [
       { name: "Opção 2: Tela Azul Brutalista", template: "tela-azul-brutalista" },
       { name: "Opção 3: TV de Tubo VHS", template: "mockup-tv-vhs" }
     ]
-  },
+  }
+];
 
+// Procedural dynamic meme generator to guarantee thousands of unique, fresh memes on demand
+function generateProceduralMemes(count = 20, filterCategory?: string, topicHint?: string) {
+  const situations = [
+    {
+      setup: "Abrindo o extrato do banco depois de dizer 'eu mereço um agrado'",
+      punchline: "e descobrindo que o agrado custou o aluguel do mês que vem e a minha dignidade financeira.",
+      highlight: "dignidade financeira",
+      template: "nota-fiscal",
+      systemTitle: "Boleto_Fatura.exe",
+      btn: "PAGAR COM CHORO",
+      shadow: "#FF007F",
+      sticker: "broken-heart",
+      category: "Cotidiano & Vida Real",
+      quadro: "Realidade em Anexo"
+    },
+    {
+      setup: "Entrei no supermercado só pra comprar pão e detergente",
+      punchline: "e saí com R$ 380 a menos, uma garrafa térmica retrô e a certeza de que a inflação me odeia pessoalmente.",
+      highlight: "R$ 380 a menos",
+      template: "nota-fiscal",
+      systemTitle: "Cupom_Mercado.log",
+      btn: "PARCELAR EM 12X",
+      shadow: "#FF3333",
+      sticker: "warning",
+      category: "Cotidiano & Vida Real",
+      quadro: "Preço da Existência"
+    },
+    {
+      setup: "Quando alguém me manda mensagem 'precisamos falar de um assunto sério'",
+      punchline: "e meu cérebro em 0.4 segundos já simula processo criminal, despejo, demissão e exílio em outro hemisfério.",
+      highlight: "simula processo criminal",
+      template: "sistema-alerta",
+      systemTitle: "Alerta Crítico - panico_instantaneo.exe",
+      btn: "DESLIGAR CELULAR",
+      shadow: "#1A1A1A",
+      sticker: "warning",
+      category: "Ansiedade & Catástrofes",
+      quadro: "Diagnóstico: Você é Fudido"
+    },
+    {
+      setup: "Fui tentar dormir às 23h como uma pessoa funcional",
+      punchline: "mas às 02:47 estou assistindo um documentário sobre a fabricação de rolamentos industriais na Suécia.",
+      highlight: "rolamentos industriais na Suécia",
+      template: "terminal-dark",
+      systemTitle: "> insônia_aleatoria.sh",
+      btn: "FECHAR TABS",
+      shadow: "#00FF66",
+      sticker: "skull",
+      category: "Madrugada & Insônia",
+      quadro: "3 da Manhã"
+    },
+    {
+      setup: "Psicóloga: 'E o que você fez quando se sentiu rejeitado?'",
+      punchline: "Eu: 'Comprei 4 camisas que não combinam comigo, pintei o cabelo no banheiro e desarquivei o chat do meu ex'.",
+      highlight: "pintei o cabelo no banheiro",
+      template: "tweet-parede",
+      systemTitle: "Sessão TCC - autossabotagem.dll",
+      btn: "DESMARCAR TERAPIA",
+      shadow: "#0000FF",
+      sticker: "broken-heart",
+      category: "No Consultório",
+      quadro: "Laudo Psicanalítico"
+    },
+    {
+      setup: "O médico aumentou a dose do remédio para estabilizar meu humor",
+      punchline: "agora sou uma pessoa calma, equilibrada e incapaz de chorar mesmo se um caminhão de melancias tombar na minha sala.",
+      highlight: "incapaz de chorar",
+      template: "sistema-alerta",
+      systemTitle: "Bula_Interativa - escitalopram_20mg.exe",
+      btn: "TOMAR COM ÁGUA",
+      shadow: "#0055EA",
+      sticker: "battery",
+      category: "Farmacologia & Remédios",
+      quadro: "Bula da Depressão"
+    },
+    {
+      setup: "Meu amigo: 'Vamos sair rapidinho, só tomar uma água'",
+      punchline: "Corta para às 03:15 discutindo geopolítica num posto de gasolina comendo coxinha fria de R$ 9.",
+      highlight: "coxinha fria de R$ 9",
+      template: "tweet-parede",
+      systemTitle: "Evasão_Noturna.exe",
+      btn: "VOLTAR DE UBER",
+      shadow: "#FFD700",
+      sticker: "warning",
+      category: "Cotidiano & Vida Real",
+      quadro: "Decisões Duvidosas"
+    },
+    {
+      setup: "Minha bateria social dura exatamente 47 minutos",
+      punchline: "depois disso começo a encarar a parede como se ela tivesse me ofendido e busco a saída de emergência com os olhos.",
+      highlight: "bateria social dura exatamente 47 minutos",
+      template: "tweet-parede",
+      systemTitle: "Bateria_Social - 0%.sys",
+      btn: "SUMIR SEM DESPEDIR",
+      shadow: "#1A1A1A",
+      sticker: "battery",
+      category: "Bateria Social",
+      quadro: "Evasão Estratégica"
+    },
+    {
+      setup: "Abrindo o LinkedIn às 08:30 da manhã",
+      punchline: "e vendo alguém de 22 anos comemorar 6 pós-graduações, 3 startups e um 'mindset de alta performance' enquanto eu não sei onde deixei minhas chaves.",
+      highlight: "mindset de alta performance",
+      template: "terminal-dark",
+      systemTitle: "> linkedin_paranoia.sh",
+      btn: "FECHAR ABA",
+      shadow: "#00FF66",
+      sticker: "skull",
+      category: "Trabalho & Burnout",
+      quadro: "Crise Existencial"
+    },
+    {
+      setup: "A sensação de completar 30 anos e descobrir",
+      punchline: "que você não virou um adulto refinado com taça de vinho, você só virou um jovem cansado com dor lombar e medo de barulho alto.",
+      highlight: "jovem cansado com dor lombar",
+      template: "sistema-alerta",
+      systemTitle: "Alerta de Idade - crise_dos_30.exe",
+      btn: "TOMAR TORSILAX",
+      shadow: "#FF3333",
+      sticker: "warning",
+      category: "Crise dos 30 Anos",
+      quadro: "Diagnóstico: Você é Fudido"
+    },
+    {
+      setup: "Fui stalkear um perfil antigo no Instagram",
+      punchline: "e o dedo escorregou e curtiu uma foto de praia de 2016. Meu enterro simbólico está marcado para as 16h.",
+      highlight: "curtiu uma foto de praia de 2016",
+      template: "msn-nostalgia",
+      systemTitle: "MSN Messenger - (Desespero Total)",
+      btn: "DELETAR CONTA",
+      shadow: "#000080",
+      sticker: "msn",
+      category: "Internet & Redes",
+      quadro: "Vergonha Alheia"
+    },
+    {
+      setup: "Mais uma reunião de 1 hora que poderia ter sido resolvida",
+      punchline: "com um silêncio respeitoso de 3 segundos e cada um cuidando da própria vida.",
+      highlight: "silêncio respeitoso de 3 segundos",
+      template: "windows-media-player",
+      systemTitle: "WMP 9 - reuniao_corporativa.wmv",
+      btn: "MUTAR ÁUDIO",
+      shadow: "#0055EA",
+      sticker: "cd",
+      category: "Trabalho & Burnout",
+      quadro: "Vida Corporativa"
+    },
+    {
+      setup: "Visualizou às 14:02 e não respondeu",
+      punchline: "Meu apego ansioso já redigiu 3 cartas de desculpas por erros que eu nem sei se cometi.",
+      highlight: "3 cartas de desculpas",
+      template: "msn-nostalgia",
+      systemTitle: "MSN Messenger 7.5 - Chamando Atenção",
+      btn: "TREMER TELA",
+      shadow: "#000080",
+      sticker: "msn",
+      category: "Relacionamentos",
+      quadro: "Apego Ansioso"
+    },
+    {
+      setup: "Tomei Zolpidem achando que ia dormir como um anjo",
+      punchline: "e acordei com comprovante de compra de uma piscina inflável de 5.000 litros e um teclado arranjador.",
+      highlight: "piscina inflável de 5.000 litros",
+      template: "terminal-dark",
+      systemTitle: "> compra_madrugada.log",
+      btn: "CANCELAR COMPRA",
+      shadow: "#00FF66",
+      sticker: "skull",
+      category: "Farmacologia & Remédios",
+      quadro: "Bula da Depressão"
+    },
+    {
+      setup: "Observando o novo algoritmo e a nova trend da internet",
+      punchline: "enquanto meu cérebro ainda está preso na sensação de abrir o Orkut e ver 12 depoimentos pendentes em 2007.",
+      highlight: "12 depoimentos pendentes em 2007",
+      template: "tweet-parede",
+      systemTitle: "Nostalgia_Digital.exe",
+      btn: "VOLTAR PRO PASSADO",
+      shadow: "#0000FF",
+      sticker: "msn",
+      category: "Nostalgia Anos 2000",
+      quadro: "Observatório do Mundo"
+    },
+    {
+      setup: "A pessoa diz: 'Não se preocupe, vai dar tudo certo no final'",
+      punchline: "e meu cérebro exige a apresentação de um laudo técnico assinado com firma reconhecida em cartório.",
+      highlight: "firma reconhecida em cartório",
+      template: "sistema-alerta",
+      systemTitle: "Aviso de Segurança - ceticismo.exe",
+      btn: "DUVIDAR ATÉ O FIM",
+      shadow: "#1A1A1A",
+      sticker: "warning",
+      category: "Ansiedade & Catástrofes",
+      quadro: "A Mente Não Colabora"
+    }
+  ];
+
+  const results: any[] = [];
+  const timestamp = Date.now();
+
+  for (let i = 0; i < count; i++) {
+    const item = situations[(i + Math.floor(Math.random() * situations.length)) % situations.length];
+    const uniqueId = `proc-${timestamp}-${i}-${Math.random().toString(36).substring(7)}`;
+
+    results.push({
+      id: uniqueId,
+      category: item.category,
+      quadro: item.quadro,
+      text: `${item.setup}\n\n${item.punchline}`,
+      highlight: item.highlight,
+      template: item.template,
+      systemTitle: item.systemTitle,
+      windowButtonText: item.btn,
+      shadowColor: item.shadow,
+      sticker: item.sticker,
+      caption: `${item.setup} ${item.punchline} Manda pro amigo que vive na mesma situação!`,
+      hashtags: ["#depressivos2000", "#humorbrasil", "#saudemental", "#rirpranaochorar", "#nostalgia2000"],
+      viralAudio: "Áudio nostálgico dos anos 2000 com som de erro do Windows",
+      threeVisualVariations: [
+        { name: "Opção 1: Alerta Windows 98", template: "sistema-alerta" },
+        { name: "Opção 2: Terminal Dark 3AM", template: "terminal-dark" },
+        { name: "Opção 3: Tweet de Parede", template: "tweet-parede" }
+      ]
+    });
+  }
+
+  return results;
+}
+
+function getShuffledMemes(count = 20, filterCategory?: string) {
+  // If we need dynamic variety, generate procedurally combined memes
+  return generateProceduralMemes(count, filterCategory);
+}
+
+function extractJsonFromText(rawText: string): any {
+  if (!rawText) return null;
+  const trimmed = rawText.trim();
+  try {
+    return JSON.parse(trimmed);
+  } catch {}
+
+  const codeBlockMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (codeBlockMatch && codeBlockMatch[1]) {
+    try {
+      return JSON.parse(codeBlockMatch[1].trim());
+    } catch {}
+  }
+
+  const firstBrace = trimmed.indexOf('{');
+  const lastBrace = trimmed.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace > firstBrace) {
+    try {
+      return JSON.parse(trimmed.substring(firstBrace, lastBrace + 1));
+    } catch {}
+  }
+
+  return null;
+}
+
+const DYNAMIC_MEME_BANK_PART2 = [
   // 3. MSN MESSENGER 2005
   {
     id: "msn-1",
@@ -791,51 +1853,127 @@ const DYNAMIC_MEME_BANK = [
   }
 ];
 
-function getShuffledMemes(count = 20, filterCategory?: string) {
-  let list = [...DYNAMIC_MEME_BANK];
-  if (filterCategory && filterCategory !== 'todos') {
-    const filtered = list.filter(m => m.category.toLowerCase().includes(filterCategory.toLowerCase()) || m.template.includes(filterCategory));
-    if (filtered.length > 0) list = filtered;
-  }
-  // Shuffle
-  for (let i = list.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [list[i], list[j]] = [list[j], list[i]];
-  }
-  return list.slice(0, count);
-}
-
-// Endpoint: ME DÊ 20 MEMES / BATCH MEMES
-app.post("/api/generate-batch-memes", async (req, res) => {
-  const { theme = "variado", count = 20, filterCategory } = req.body;
+// Endpoint: OBSERVATÓRIO DO MUNDO & ACONTECIMENTOS ATUAIS (COM PESQUISA WEB VIA GEMINI + GOOGLE SEARCH)
+app.post("/api/generate-live-world-memes", async (req, res) => {
+  const { topic = "acontecimentos de hoje e internet", count = 10, searchFocus = "brasil tendências cultura pop e cotidiano" } = req.body;
   const client = getGeminiClient();
 
   if (!client) {
-    console.log("[Batch Memes] Gemini client não disponível, usando fallback instantâneo.");
-    return res.json({ memes: getShuffledMemes(count, filterCategory) });
+    return res.json({ memes: generateProceduralMemes(count, "Acontecimentos Atuais", topic) });
   }
 
   try {
+    const timestampSeed = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const prompt = `${BRAND_IDENTITY_PROMPT}
 
-TAREFA: GERAR UM LOTE DE ${count} MEMES INÉDITOS, DIFERENTES E EXTREMAMENTE ENGRAÇADOS COM METADADOS DE PUBLICAÇÃO E 3 VARIAÇÕES VISUAIS!
-Distribua os memes entre os pilares e modelos solicitados:
-1. Alerta do Windows 98 / XP (ERRO CRÍTICO, memória RAM biológica, recaída.exe)
-2. Dark Mode / Terminal 3 AM (> pensamentos_intrusivos.sh, > zolpidem_blackout.sh)
-3. MSN 2005 Nostalgia (Subnick, chamar atenção, tudum)
-4. Cupom Fiscal / Farmácia Popular (extrato de gastos emocionais, tarja preta)
-5. MP3 Player / Winamp Retro (Now playing, áudios cancelados, Fresno, NX Zero)
-6. TV de Tubo VHS / DVD Memorex (CSS Art anos 2000)
-7. Relacionamentos Modernos (vácuo, stalk de 2017, apego ansioso)
+TAREFA: VOCÊ É O OBSERVATÓRIO DO MUNDO DO DEPRESSIVOS 2000!
+[TIMESTAMP_SEED: ${timestampSeed}]
+Use as ferramentas de pesquisa (Google Search) para descobrir o que está acontecendo HOJE no Brasil e no mundo (notícias, cultura pop, internet, tendências, eleições/debates sociais, lançamentos, comportamento) e transforme isso em ${count} memes 100% INÉDITOS com a identidade inconfundível do DEPRESSIVOS 2000!
+
+DIRETRIZES FUNDAMENTAIS DO MOTOR DE CONTEÚDO:
+1. PESQUISE fatos reais, assuntos quentes e tendências atuais: "${topic}" (${searchFocus}).
+2. NÃO SEJA UM PORTAL DE NOTÍCIAS. A notícia é apenas o gatilho; a piada é o produto.
+3. NÃO FAÇA POLÍTICA PARTIDÁRIA: Foque no comportamento humano ridículo (discussões de grupo de família, ansiedade, promessas absurdas).
+4. APLIQUE AS 12 REGRAS DE OURO: Especificidade absurda, quebra de expectativa, corte seco, sem autoajuda, humor adulto.
+5. BALANCEIE A DISTRIBUIÇÃO: Misture internet, cultura pop, cotidiano, relacionamentos e nostalgia.
+
+Retorne EXCLUSIVAMENTE um objeto JSON válido (sem texto solto antes ou depois):
+{
+  "trendingSummary": "Breve resumo em 1 parágrafo dos tópicos reais descobertos na pesquisa de hoje",
+  "memes": [
+    {
+      "id": "1",
+      "category": "Acontecimentos Atuais / Cultura Pop / Internet / Cotidiano",
+      "quadro": "Observatório do Mundo",
+      "text": "Texto do meme (curto, afiado, 1 a 3 frases, quebra de expectativa, corte seco)",
+      "highlight": "palavra-chave do absurdo",
+      "template": "tweet-parede",
+      "systemTitle": "Alerta do Sistema - mundo_real.exe",
+      "windowButtonText": "OK",
+      "shadowColor": "#0000FF",
+      "sticker": "warning",
+      "caption": "Legenda completa pronta para Instagram com CTA para DM",
+      "hashtags": ["#depressivos2000", "#humorbrasil", "#tendencias", "#observatoriodomundo"],
+      "viralAudio": "Sugestão de áudio / trend em alta",
+      "threeVisualVariations": [
+        { "name": "Opção 1: Tweet de Parede", "template": "tweet-parede" },
+        { "name": "Opção 2: Pop-up Windows 98", "template": "sistema-alerta" },
+        { "name": "Opção 3: Terminal Dark 3AM", "template": "terminal-dark" }
+      ]
+    }
+  ]
+}`;
+
+    // Generate with search grounding enabled and a 35s timeout
+    const generatePromise = client.models.generateContent({
+      model: "gemini-3.7-flash",
+      contents: prompt,
+      config: {
+        tools: [{ googleSearch: {} }],
+        temperature: 1.15,
+      },
+    });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Timeout pesquisa mundial Gemini")), 35000)
+    );
+
+    const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
+    const parsed = extractJsonFromText(response.text);
+
+    if (parsed && Array.isArray(parsed.memes) && parsed.memes.length > 0) {
+      return res.json(parsed);
+    }
+    
+    if (parsed && Array.isArray(parsed)) {
+      return res.json({ memes: parsed });
+    }
+
+    return res.json({ memes: generateProceduralMemes(count, "Acontecimentos Atuais", topic) });
+  } catch (error: any) {
+    console.warn("Falha no Observatório do Mundo com pesquisa web:", error.message || error);
+    return res.json({ memes: generateProceduralMemes(count, "Acontecimentos Atuais", topic) });
+  }
+});
+
+// Endpoint: ME DÊ 20 MEMES / BATCH MEMES
+app.post("/api/generate-batch-memes", async (req, res) => {
+  const { theme = "variado", count = 20, filterCategory, liveWebSearch = false } = req.body;
+  const client = getGeminiClient();
+
+  if (!client) {
+    console.log("[Batch Memes] Gemini client não disponível, gerando memes procedurais dinâmicos.");
+    return res.json({ memes: generateProceduralMemes(count, filterCategory, theme) });
+  }
+
+  try {
+    const isCurrentEvents = liveWebSearch || /hoje|atual|noticia|notícia|eleiç|tendencia|tendência|mundo|famosos|pop|twitter|x/i.test(theme);
+    const timestampSeed = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    
+    const prompt = `${BRAND_IDENTITY_PROMPT}
+
+TAREFA: GERAR UM LOTE DE ${count} MEMES 100% INÉDITOS, VARIADOS E EXTREMAMENTE ENGRAÇADOS COM O MOTOR DE CONTEÚDO DO DEPRESSIVOS 2000!
+[TIMESTAMP_SEED: ${timestampSeed}]
+Tema solicitado: "${theme}" (Filtro: ${filterCategory || "todos"})
+
+Lembre-se: O DEPRESSIVOS 2000 NÃO É UMA PÁGINA DE UM ÚNICO TEMA.
+Distribua os memes respeitando a multiplicidade de territórios:
+1. Cotidiano e Vida Real (supermercado, Uber, filas, trabalho, condomínio)
+2. Internet e Redes Sociais (prints, trends, comportamentos estranhos, gírias)
+3. Cultura Pop e Notícias Atuais (sem partidarismo político, humor no comportamento)
+4. Relacionamentos e Vergonha Alheia (dates ruins, stalk, apego ansioso, recaídas)
+5. Estética Anos 2000 & Nostalgia (Alerta Windows 98, MSN, Winamp, TV de Tubo, Terminal)
+6. Saúde Mental & Psicanálise (sem clichês, sem autoajuda, observação ácida)
+7. Madrugada (apenas como um dos territórios, não o único)
 
 Retorne EXCLUSIVAMENTE um JSON com formato:
 {
   "memes": [
     {
       "id": "1",
-      "category": "Alerta do Windows 98",
-      "quadro": "Diagnóstico: Você é Fudido",
-      "text": "Texto completo do meme",
+      "category": "Alerta do Windows 98 / Cotidiano / Internet / Cultura Pop",
+      "quadro": "Diagnóstico: Você é Fudido / Observatório do Mundo / No Consultório",
+      "text": "Texto completo do meme (com quebra de expectativa e corte seco)",
       "highlight": "trecho de destaque",
       "template": "sistema-alerta",
       "systemTitle": "Alerta do Sistema - erro.exe",
@@ -854,27 +1992,32 @@ Retorne EXCLUSIVAMENTE um JSON com formato:
   ]
 }`;
 
-    // 7.5s Timeout promise to avoid any long wait or hang
+    // 40s Timeout promise to allow full 20 memes batch generation from Gemini
     const generatePromise = client.models.generateContent({
       model: "gemini-3.7-flash",
       contents: prompt,
-      config: { responseMimeType: "application/json" },
+      config: isCurrentEvents
+        ? { tools: [{ googleSearch: {} }], temperature: 1.15 }
+        : { responseMimeType: "application/json", temperature: 1.2 },
     });
 
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout geração Gemini")), 7500)
+      setTimeout(() => reject(new Error("Timeout geração Gemini")), 40000)
     );
 
     const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
-    const output = response.text ? JSON.parse(response.text.trim()) : null;
+    const output = extractJsonFromText(response.text);
 
     if (output && Array.isArray(output.memes) && output.memes.length > 0) {
       return res.json(output);
     }
+    if (output && Array.isArray(output)) {
+      return res.json({ memes: output });
+    }
     throw new Error("Formato inválido retornado pela IA");
   } catch (error: any) {
     console.warn("Gemini batch fallback ativado:", error.message || error);
-    return res.json({ memes: getShuffledMemes(count, filterCategory) });
+    return res.json({ memes: generateProceduralMemes(count, filterCategory, theme) });
   }
 });
 
@@ -930,9 +2073,13 @@ app.post("/api/generate-reels-scripts", async (req, res) => {
   }
 
   try {
+    const timestampSeed = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const prompt = `${BRAND_IDENTITY_PROMPT}
 
-TAREFA: GERAR ${count} ROTEIROS COMPLETOS DE REELS / TIKTOK PARA O @DEPRESSIVOS2000!
+TAREFA: GERAR ${count} ROTEIROS COMPLETOS E INÉDITOS DE REELS / TIKTOK PARA O @DEPRESSIVOS2000!
+[TIMESTAMP_SEED: ${timestampSeed}]
+Tema solicitado: "${theme}"
+
 Cada ideia deve ter:
 - Título/Hook forte (primeiros 3 segundos que prendem)
 - Formato e Quadro da marca
@@ -965,15 +2112,15 @@ Retorne EXCLUSIVAMENTE um JSON com formato:
     const generatePromise = client.models.generateContent({
       model: "gemini-3.7-flash",
       contents: prompt,
-      config: { responseMimeType: "application/json" },
+      config: { responseMimeType: "application/json", temperature: 1.15 },
     });
 
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout geração Reels")), 7500)
+      setTimeout(() => reject(new Error("Timeout geração Reels")), 30000)
     );
 
     const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
-    const output = response.text ? JSON.parse(response.text.trim()) : null;
+    const output = extractJsonFromText(response.text);
     if (output && Array.isArray(output.reels) && output.reels.length > 0) {
       return res.json(output);
     }
@@ -1040,15 +2187,15 @@ Retorne EXCLUSIVAMENTE um JSON:
     const generatePromise = client.models.generateContent({
       model: "gemini-3.7-flash",
       contents: prompt,
-      config: { responseMimeType: "application/json" },
+      config: { responseMimeType: "application/json", temperature: 1.0 },
     });
 
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout análise Gemini")), 6000)
+      setTimeout(() => reject(new Error("Timeout análise Gemini")), 25000)
     );
 
     const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
-    const output = response.text ? JSON.parse(response.text.trim()) : null;
+    const output = extractJsonFromText(response.text);
     if (output && output.score) {
       return res.json(output);
     }
@@ -1064,14 +2211,41 @@ app.post("/api/generate-rlhf-posts", async (req, res) => {
   const { likedPosts = [], dislikedPosts = [], count = 3, extraFocus = "" } = req.body;
   const client = getGeminiClient();
 
+  const fallbackRlhf = () => {
+    const procedural = generateProceduralMemes(count, "Farmacologia & Remédios", extraFocus);
+    return {
+      dnaAnalysis: {
+        identifiedPreferences: "Identificado foco em humor de vergonha cotidiana, corte seco, psicanálise e situações específicas de convivência moderna.",
+        discardedPatterns: "Evitadas frases de autoajuda, clichês previsíveis e romantização vazia."
+      },
+      posts: procedural.map((p, idx) => ({
+        id: `rlhf-${Date.now()}-${idx}`,
+        category: p.category,
+        text: p.text,
+        highlight: p.highlight,
+        template: p.template,
+        systemTitle: p.systemTitle,
+        windowButtonText: p.windowButtonText,
+        shadowColor: p.shadowColor,
+        sticker: p.sticker,
+        caption: p.caption,
+        hashtags: p.hashtags,
+        viralAudio: p.viralAudio,
+        mockupDevice: "tv-vhs"
+      }))
+    };
+  };
+
   if (!client) {
-    return res.status(503).json({ error: "Gemini API key não configurada no servidor." });
+    return res.json(fallbackRlhf());
   }
 
   try {
+    const timestampSeed = `${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const prompt = `${BRAND_IDENTITY_PROMPT}
 
-TAREFA: GERAR ${count} NOVOS POSTS INÉDITOS UTILIZANDO O MÓDULO DE APRENDIZADO CONTÍNUO (FEEDBACK LOOP RLHF)!
+TAREFA: GERAR ${count} NOVOS POSTS 100% INÉDITOS UTILIZANDO O MÓDULO DE APRENDIZADO CONTÍNUO (FEEDBACK LOOP RLHF)!
+[TIMESTAMP_SEED: ${timestampSeed}]
 
 [HISTÓRICO DE MATCHES]
 ${JSON.stringify(likedPosts, null, 2)}
@@ -1111,21 +2285,376 @@ Retorne EXCLUSIVAMENTE um objeto JSON válido no formato:
   ]
 }`;
 
-    const response = await client.models.generateContent({
+    const generatePromise = client.models.generateContent({
       model: "gemini-3.7-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
-        temperature: 1.05,
+        temperature: 1.15,
       },
     });
 
-    const output = response.text ? JSON.parse(response.text.trim()) : { dnaAnalysis: {}, posts: [] };
-    return res.json(output);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Timeout RLHF")), 30000)
+    );
+
+    const response = (await Promise.race([generatePromise, timeoutPromise])) as any;
+    const output = extractJsonFromText(response.text);
+    if (output && Array.isArray(output.posts) && output.posts.length > 0) {
+      return res.json(output);
+    }
+    return res.json(fallbackRlhf());
   } catch (error: any) {
-    console.error("Erro ao gerar posts com RLHF:", error);
-    return res.status(500).json({ error: error.message || "Falha na geração com feedback loop" });
+    console.warn("Fallback RLHF acionado:", error.message || error);
+    return res.json(fallbackRlhf());
   }
+});
+
+// ============================================================================
+// TWITTER / X VIDEO EXTRACTOR & PROXY ENDPOINTS
+// ============================================================================
+
+/**
+ * Helper to extract Tweet ID from diverse Twitter/X URL structures
+ */
+function extractTweetId(url: string): string | null {
+  if (!url) return null;
+  const cleanUrl = url.trim();
+  
+  // Standard pattern: twitter.com/username/status/1234567890 or x.com/...
+  const match = cleanUrl.match(/(?:twitter\.com|x\.com|vxtwitter\.com|fxtwitter\.com|fixupx\.com)\/(?:#!\/)?(?:\w+)\/status(?:es)?\/(\d+)/i);
+  if (match && match[1]) {
+    return match[1];
+  }
+  
+  // Shorter or direct status pattern: /status/1234567890
+  const shortMatch = cleanUrl.match(/status(?:es)?\/(\d+)/i);
+  if (shortMatch && shortMatch[1]) {
+    return shortMatch[1];
+  }
+
+  // Pure numeric ID
+  if (/^\d{8,25}$/.test(cleanUrl)) {
+    return cleanUrl;
+  }
+
+  return null;
+}
+
+/**
+ * Route: Extract video and details from Twitter / X tweet link
+ */
+app.post("/api/twitter-video", async (req, res) => {
+  const { url } = req.body;
+  if (!url || typeof url !== "string") {
+    return res.status(400).json({ error: "URL do tweet é obrigatória." });
+  }
+
+  const tweetId = extractTweetId(url);
+  if (!tweetId) {
+    return res.status(400).json({
+      error: "Link do Twitter/X inválido. Cole uma URL como https://twitter.com/usuario/status/1234567890 ou https://x.com/usuario/status/1234567890",
+    });
+  }
+
+  console.log(`[Twitter Video Extractor] Resolvendo tweet ID: ${tweetId}`);
+
+  // Strategy 1: FxTwitter API (Very fast, highly reliable, returns direct MP4s and video variants)
+  try {
+    const fxResponse = await fetch(`https://api.fxtwitter.com/status/${tweetId}`, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json",
+      },
+      signal: AbortSignal.timeout(6000),
+    });
+
+    if (fxResponse.ok) {
+      const data: any = await fxResponse.json();
+      const tweet = data?.tweet;
+
+      if (tweet) {
+        let videoUrl: string | null = null;
+        let thumbnailUrl: string | null = null;
+        let mediaType: 'video' | 'gif' | 'image' = 'video';
+        let duration: number = 0;
+
+        // Check tweet.media.videos
+        if (tweet.media?.videos && Array.isArray(tweet.media.videos) && tweet.media.videos.length > 0) {
+          const v = tweet.media.videos[0];
+          videoUrl = v.url || (v.variants && v.variants[0]?.url) || null;
+          thumbnailUrl = v.thumbnail_url || null;
+          duration = v.duration || 0;
+          mediaType = v.format === 'gif' ? 'gif' : 'video';
+        } 
+        // Check tweet.media_extended
+        else if (tweet.media_extended && Array.isArray(tweet.media_extended)) {
+          const vidMedia = tweet.media_extended.find((m: any) => m.type === 'video' || m.type === 'gif');
+          if (vidMedia) {
+            videoUrl = vidMedia.url || null;
+            thumbnailUrl = vidMedia.thumbnail_url || null;
+            duration = vidMedia.duration_millis ? vidMedia.duration_millis / 1000 : 0;
+            mediaType = vidMedia.type === 'gif' ? 'gif' : 'video';
+          }
+        }
+        // Check tweet.all_media
+        else if (tweet.all_media && Array.isArray(tweet.all_media)) {
+          const vidMedia = tweet.all_media.find((m: any) => m.type === 'video' || m.type === 'gif');
+          if (vidMedia) {
+            videoUrl = vidMedia.url || null;
+            thumbnailUrl = vidMedia.thumbnail_url || null;
+            mediaType = vidMedia.type === 'gif' ? 'gif' : 'video';
+          }
+        }
+
+        if (videoUrl) {
+          return res.json({
+            success: true,
+            tweetId,
+            videoUrl,
+            thumbnailUrl,
+            mediaType,
+            duration,
+            tweetText: tweet.text || "",
+            author: {
+              name: tweet.author?.name || "Twitter User",
+              screenName: tweet.author?.screen_name ? `@${tweet.author.screen_name.replace('@', '')}` : "@Twitter",
+              avatar: tweet.author?.avatar_url || null,
+            },
+          });
+        }
+      }
+    }
+  } catch (err: any) {
+    console.warn(`[Twitter Extractor] FxTwitter fallback falhou (${err.message}), tentando VxTwitter...`);
+  }
+
+  // Strategy 2: VxTwitter API
+  try {
+    const vxResponse = await fetch(`https://api.vxtwitter.com/Twitter/status/${tweetId}`, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)",
+        "Accept": "application/json",
+      },
+      signal: AbortSignal.timeout(6000),
+    });
+
+    if (vxResponse.ok) {
+      const vxData: any = await vxResponse.json();
+      if (vxData) {
+        let videoUrl: string | null = null;
+        let thumbnailUrl: string | null = null;
+        let mediaType: 'video' | 'gif' | 'image' = 'video';
+
+        if (vxData.media_extended && Array.isArray(vxData.media_extended)) {
+          const vid = vxData.media_extended.find((m: any) => m.type === 'video' || m.type === 'gif');
+          if (vid && vid.url) {
+            videoUrl = vid.url;
+            thumbnailUrl = vid.thumbnail_url || null;
+            mediaType = vid.type === 'gif' ? 'gif' : 'video';
+          }
+        }
+
+        if (!videoUrl && vxData.video_url) {
+          videoUrl = vxData.video_url;
+        }
+
+        if (videoUrl) {
+          return res.json({
+            success: true,
+            tweetId,
+            videoUrl,
+            thumbnailUrl,
+            mediaType,
+            tweetText: vxData.text || "",
+            author: {
+              name: vxData.user_name || "Twitter User",
+              screenName: vxData.user_screen_name ? `@${vxData.user_screen_name.replace('@', '')}` : "@Twitter",
+            },
+          });
+        }
+      }
+    }
+  } catch (err: any) {
+    console.warn(`[Twitter Extractor] VxTwitter fallback falhou (${err.message}), tentando Syndication...`);
+  }
+
+  // Strategy 3: Twitter Syndication CDN API
+  try {
+    const synUrl = `https://cdn.syndication.twimg.com/tweet-result?id=${tweetId}&lang=en&token=1`;
+    const synRes = await fetch(synUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      },
+      signal: AbortSignal.timeout(6000),
+    });
+
+    if (synRes.ok) {
+      const synData: any = await synRes.json();
+      if (synData?.video?.variants && Array.isArray(synData.video.variants)) {
+        // Sort by bitrate descending to get highest quality MP4
+        const mp4s = synData.video.variants
+          .filter((v: any) => v.content_type === "video/mp4" && v.src)
+          .sort((a: any, b: any) => (b.bitrate || 0) - (a.bitrate || 0));
+
+        if (mp4s.length > 0) {
+          return res.json({
+            success: true,
+            tweetId,
+            videoUrl: mp4s[0].src,
+            thumbnailUrl: synData.video.poster || null,
+            mediaType: 'video',
+            tweetText: synData.text || "",
+            author: {
+              name: synData.user?.name || "Twitter User",
+              screenName: synData.user?.screen_name ? `@${synData.user.screen_name}` : "@Twitter",
+              avatar: synData.user?.profile_image_url_https || null,
+            },
+          });
+        }
+      }
+    }
+  } catch (err: any) {
+    console.warn(`[Twitter Extractor] Syndication fallback falhou: ${err.message}`);
+  }
+
+  // If no video was found after all attempts
+  return res.status(404).json({
+    error: "Nenhum vídeo ou GIF animado foi encontrado neste tweet. Certifique-se de que o tweet possui um vídeo público e tente novamente.",
+    tweetId,
+  });
+});
+
+/**
+ * Route: Video proxy streamer to avoid CORS when recording or playing videos in canvas
+ */
+app.get("/api/proxy-video", async (req, res) => {
+  const targetUrl = req.query.url as string;
+  if (!targetUrl) {
+    return res.status(400).send("URL parameter missing");
+  }
+
+  try {
+    const range = req.headers.range;
+    const fetchHeaders: Record<string, string> = {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      "Referer": "https://twitter.com/",
+    };
+    if (range) {
+      fetchHeaders["Range"] = range;
+    }
+
+    const upstreamRes = await fetch(targetUrl, { headers: fetchHeaders });
+    
+    // Set CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+    res.setHeader("Content-Type", upstreamRes.headers.get("content-type") || "video/mp4");
+    
+    if (upstreamRes.headers.get("content-length")) {
+      res.setHeader("Content-Length", upstreamRes.headers.get("content-length")!);
+    }
+    if (upstreamRes.headers.get("content-range")) {
+      res.setHeader("Content-Range", upstreamRes.headers.get("content-range")!);
+      res.status(206);
+    } else {
+      res.status(upstreamRes.status);
+    }
+
+    if (!upstreamRes.body) {
+      return res.end();
+    }
+
+    // Pipe response stream
+    const reader = upstreamRes.body.getReader();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      res.write(value);
+    }
+    res.end();
+  } catch (err: any) {
+    console.error("[Proxy Video Error]:", err.message || err);
+    if (!res.headersSent) {
+      res.status(502).send("Falha ao carregar stream de vídeo");
+    }
+  }
+});
+
+// Route: Generate a tailored Depressivos 2000 meme based on a tweet and extracted video
+app.post("/api/generate-from-tweet", async (req, res) => {
+  const { tweetText, author, topic } = req.body;
+  const promptContext = `Tweet original: "${tweetText || 'Vídeo de reação'}"
+Autor: ${author?.name || 'Usuário'} (${author?.screenName || '@Twitter'})
+Tema sugerido: ${topic || 'Humor caótico, recaídas, cansaço mental, vida adulta dos 20-40 anos'}
+
+Gere 3 variações de posts para a página DEPRESSIVOS 2000 que combinem perfeitamente com este vídeo e contexto.
+Siga as 12 Regras de Ouro: humor ácido, adulto, específico, inesperado, identificável, sem moral da história, sem frases de autoajuda.
+Retorne um objeto JSON com o formato:
+{
+  "options": [
+    {
+      "text": "Frase principal do post formatada",
+      "highlightText": "palavra-chave ou trecho de destaque",
+      "template": "blue-screen" | "mac-retro" | "terminal-dark" | "brutalist-clean" | "winamp-retro",
+      "systemTitle": "Trocadilho no título da janela",
+      "windowButtonText": "Texto do botão em caps",
+      "reason": "Por que funciona com o vídeo"
+    }
+  ]
+}`;
+
+  try {
+    const aiClient = getGeminiClient();
+    if (aiClient) {
+      const response = await aiClient.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: promptContext,
+        config: {
+          systemInstruction: BRAND_IDENTITY_PROMPT,
+          responseMimeType: "application/json",
+          temperature: 0.85,
+        },
+      });
+
+      const parsed = JSON.parse(response.text || "{}");
+      if (parsed.options && Array.isArray(parsed.options)) {
+        return res.json(parsed);
+      }
+    }
+  } catch (err: any) {
+    console.warn("[Generate From Tweet Error, using fallback]", err.message);
+  }
+
+  // Fallback high-quality meme suggestions matching Depressivos 2000 tone
+  return res.json({
+    options: [
+      {
+        text: tweetText ? `${tweetText}\n\n(minha mente em loop às 03:14)` : "Tentando explicar pro meu cérebro que já deu por hoje.",
+        highlightText: "03:14",
+        template: "blue-screen",
+        systemTitle: "ERRO CRÍTICO: SANIDADE_ESGOTADA.EXE",
+        windowButtonText: "REINICIAR MEMÓRIA",
+        reason: "Quebra de expectativa e identificação imediata"
+      },
+      {
+        text: "Assistindo minhas decisões de vida darem errado em resolução 1080p.",
+        highlightText: "1080p",
+        template: "mac-retro",
+        systemTitle: "RELATÓRIO DE DANOS",
+        windowButtonText: "ABORTAR CRISE",
+        reason: "Humor autodepreciativo ágil"
+      },
+      {
+        text: "Minha bateria social observando eu aceitar mais um compromisso no sábado:",
+        highlightText: "bateria social",
+        template: "terminal-dark",
+        systemTitle: "TERMINAL_PENSAMENTOS_INTRUSIVOS",
+        windowButtonText: "CANCELAR TUDO",
+        reason: "Absurdo cotidiano altamente compartilhável"
+      }
+    ]
+  });
 });
 
 // Vite middleware for development & static serving for production

@@ -5,6 +5,8 @@ import { MediaAttachment } from './MediaAttachment';
 import { IpodPlayer } from './IpodPlayer';
 import { IpodScreen } from './IpodScreen';
 import { PercentageLoader, hasPercentageInText } from './PercentageLoader';
+import { WindowsMediaPlayerTemplate } from './WindowsMediaPlayerTemplate';
+import { autoFormatMemeStructure } from '../utils/textFormatter';
 
 // Helper to detect if a hex/rgb color is dark
 export const isDarkColor = (color?: string): boolean => {
@@ -119,15 +121,16 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
               return (
                 <span
                   key={`${keyPrefix}-badge-${index}`}
-                  className="rounded-sm"
+                  className="rounded-[3px]"
                   style={{
                     backgroundColor: highlightColor,
                     color: isDarkColor(highlightColor) ? '#FFFFFF' : '#1A1A1A',
-                    padding: '0.08em 0.32em',
-                    margin: '0 0.08em',
+                    padding: '0.04em 0.22em',
+                    margin: '0 0.04em',
                     boxDecorationBreak: 'clone',
                     WebkitBoxDecorationBreak: 'clone',
                     display: 'inline',
+                    lineHeight: 'inherit',
                   }}
                 >
                   {renderLineBreaks(content, `${keyPrefix}-sub-${index}`)}
@@ -159,15 +162,16 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
               return (
                 <span
                   key={`${keyPrefix}-badge-${index}`}
-                  className="rounded-sm"
+                  className="rounded-[3px]"
                   style={{
                     backgroundColor: highlightColor,
                     color: isDarkColor(highlightColor) ? '#FFFFFF' : '#1A1A1A',
-                    padding: '0.08em 0.32em',
-                    margin: '0 0.08em',
+                    padding: '0.04em 0.22em',
+                    margin: '0 0.04em',
                     boxDecorationBreak: 'clone',
                     WebkitBoxDecorationBreak: 'clone',
                     display: 'inline',
+                    lineHeight: 'inherit',
                   }}
                 >
                   {renderLineBreaks(part, `${keyPrefix}-sub-${index}`)}
@@ -196,11 +200,12 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
       );
     };
 
-    // Split paragraphs by double line breaks (\n\n) or multiple line breaks
-    const paragraphs = text.split(/\n\s*\n/);
+    // Auto format and merge broken lines into a cohesive flow
+    const cleanText = autoFormatMemeStructure(text);
+    const paragraphs = cleanText.split(/\n+/).map(p => p.trim()).filter(Boolean);
     if (paragraphs.length > 1) {
       return (
-        <div className="flex flex-col gap-3 md:gap-4">
+        <div className="flex flex-col gap-1.5 sm:gap-2">
           {paragraphs.map((para, pIdx) => (
             <div key={`para-${pIdx}`} className="leading-tight">
               {renderInlineSegment(para, `p-${pIdx}`)}
@@ -210,7 +215,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
       );
     }
 
-    return renderInlineSegment(text, 'root');
+    return renderInlineSegment(cleanText, 'root');
   };
 
   const renderLineBreaks = (str: string, keyPrefix = 'line') => {
@@ -234,6 +239,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
     textAlign: (config.textAlign || defaultAlign) as any,
     lineHeight: defaultLineHeight * (config.lineHeightMultiplier || 1),
     textTransform: (config.textTransform === 'none' ? 'none' : 'uppercase') as any,
+    letterSpacing: config.letterSpacing !== undefined && config.letterSpacing !== 0 ? `${config.letterSpacing}px` : undefined,
     wordBreak: 'break-word' as any,
   });
 
@@ -1531,6 +1537,22 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
             </div>
           );
         })()}
+
+        {/* ============================================================ */}
+        {/* TEMPLATE: WINDOWS MEDIA PLAYER XP (BLISS WALLPAPER + WMP 9) */}
+        {/* ============================================================ */}
+        {(config.template === 'windows-media-player' || config.template === 'wmp-xp') && (
+          <WindowsMediaPlayerTemplate
+            config={config}
+            scale={scale}
+            width={width}
+            height={height}
+            hasAttachedMedia={hasAttachedMedia}
+            getBaseFontSize={getBaseFontSize}
+            getTextStyles={getTextStyles}
+            renderHighlightedText={renderHighlightedText}
+          />
+        )}
 
         {/* ============================================================ */}
         {/* CRT RETRO MONITOR OVERLAYS */}

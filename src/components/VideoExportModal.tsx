@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { PostConfig } from '../types';
+import { PostConfig, AspectRatioType } from '../types';
 import { 
   exportNodeToVideo, 
   getSupportedVideoMimeType,
+  getDimensionsForAspectRatio,
   VideoExportResult 
 } from '../utils/videoExporter';
 import { resolveAudioPreview } from '../data/albumCovers';
@@ -24,15 +25,19 @@ import {
   Layers,
   Smartphone,
   Square,
+  RectangleVertical,
+  Tv,
   Sliders,
   RotateCcw,
-  Loader2
+  Loader2,
+  Check
 } from 'lucide-react';
 
 interface VideoExportModalProps {
   isOpen: boolean;
   onClose: () => void;
   config: PostConfig;
+  onUpdateConfig?: (partial: Partial<PostConfig>) => void;
   canvasRef: React.RefObject<HTMLDivElement | null>;
   onShowToast: (msg: string) => void;
 }
@@ -41,6 +46,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
   isOpen,
   onClose,
   config,
+  onUpdateConfig,
   canvasRef,
   onShowToast,
 }) => {
@@ -48,7 +54,10 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
   const [fps, setFps] = useState<number>(30);
   const [format, setFormat] = useState<'mp4' | 'webm'>('mp4');
   const [includeAudio, setIncludeAudio] = useState<boolean>(true);
-  const [aspectRatio, setAspectRatio] = useState<'1:1' | '9:16' | '4:5'>('1:1');
+  
+  // Single source of truth for aspect ratio: inherit directly from config
+  const currentRatio: AspectRatioType = config.aspectRatio || '1:1';
+  const ratioInfo = getDimensionsForAspectRatio(currentRatio);
   
   // Export status
   const [isExporting, setIsExporting] = useState<boolean>(false);
@@ -59,7 +68,6 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
 
   // Preview video player
   const videoPreviewRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlayingPreview, setIsPlayingPreview] = useState<boolean>(false);
 
   // Resolve active audio track
   const activeAudioUrl = resolveAudioPreview(
@@ -68,9 +76,6 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
     undefined,
     config.audioPreviewUrl
   );
-
-  // Supported format check
-  const supportedMime = getSupportedVideoMimeType(format);
 
   useEffect(() => {
     if (!isOpen) {
@@ -82,6 +87,12 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  const handleSelectRatio = (newRatio: AspectRatioType) => {
+    if (onUpdateConfig) {
+      onUpdateConfig({ aspectRatio: newRatio });
+    }
+  };
 
   const handleStartExport = async () => {
     const node = canvasRef.current;
@@ -95,24 +106,16 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
     setErrorMessage(null);
     setExportResult(null);
 
-    // Determine dimensions
-    let targetWidth = 1080;
-    let targetHeight = 1080;
-    if (aspectRatio === '9:16') {
-      targetWidth = 1080;
-      targetHeight = 1920;
-    } else if (aspectRatio === '4:5') {
-      targetWidth = 1080;
-      targetHeight = 1350;
-    }
+    const activeRatioInfo = getDimensionsForAspectRatio(currentRatio);
 
     try {
       const result = await exportNodeToVideo(node, {
         durationSeconds: duration,
         fps,
         format,
-        targetWidth,
-        targetHeight,
+        aspectRatio: currentRatio,
+        targetWidth: activeRatioInfo.width,
+        targetHeight: activeRatioInfo.height,
         includeAudio: includeAudio && !!activeAudioUrl,
         audioUrl: activeAudioUrl,
         onProgress: (p, msg) => {
@@ -138,7 +141,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
         colors: ['#0000FF', '#FF3333', '#FFD700', '#00FF66'],
       });
 
-      onShowToast(`🎬 Vídeo MP4 (${duration}s) baixado com sucesso!`);
+      onShowToast(`🎬 Vídeo MP4 (${activeRatioInfo.label}) baixado com sucesso!`);
     } catch (err: unknown) {
       console.error('Erro na renderização do vídeo:', err);
       const errMsg = err instanceof Error ? err.message : 'Falha ao renderizar vídeo';
@@ -173,11 +176,11 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
               <h2 className="font-impact text-lg text-white tracking-wide uppercase flex items-center gap-2">
                 <span>EXPORTAR POST EM VÍDEO (MP4)</span>
                 <span className="font-mono text-[10px] bg-black text-[#00FF66] px-1.5 py-0.5 rounded border border-[#00FF66]">
-                  1080p HD
+                  {ratioInfo.width}x{ratioInfo.height}
                 </span>
               </h2>
               <p className="font-mono text-[11px] text-blue-100">
-                Gere vídeos animados e com áudio para Instagram Reels, TikTok e Stories
+                Gere vídeos animados e com áudio para Instagram Reels, TikTok, Feed e Stories
               </p>
             </div>
           </div>
@@ -240,7 +243,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
 
               <div className="flex justify-between items-center text-xs font-mono text-gray-400">
                 <span className="truncate pr-2">{statusMessage || 'Processando quadros de alta resolução...'}</span>
-                <span className="text-[#FFD700] font-bold shrink-0">{duration}s @ {fps}fps</span>
+                <span className="text-[#FFD700] font-bold shrink-0">{duration}s @ {fps}fps • {ratioInfo.width}x{ratioInfo.height}</span>
               </div>
             </div>
           )}
@@ -256,7 +259,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
                   </span>
                 </div>
                 <span className="font-mono text-xs text-gray-300">
-                  {exportResult.durationSeconds}s • {exportResult.format.toUpperCase()}
+                  {exportResult.durationSeconds}s • {exportResult.width}x{exportResult.height} • {exportResult.format.toUpperCase()}
                 </span>
               </div>
 
@@ -298,29 +301,91 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
           {!isExporting && (
             <div className="space-y-5">
               
-              {/* 1. DURATION SELECTOR */}
+              {/* 1. PROPORTION & RESOLUTION (AUTOMATICALLY INHERITED FROM POST) */}
+              <div className="bg-[#181C26] border-2 border-blue-500/40 rounded-xl p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="p-1.5 bg-blue-600/30 text-blue-400 rounded-lg border border-blue-500/30">
+                      <Smartphone className="w-4 h-4 text-blue-400" />
+                    </span>
+                    <div>
+                      <span className="text-xs font-mono font-bold text-white uppercase block">
+                        Formato e Proporção do Post
+                      </span>
+                      <span className="text-[11px] text-blue-300 font-mono">
+                        Sincronizado automaticamente com o editor
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-700/60 flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5" />
+                    {ratioInfo.width} × {ratioInfo.height} px
+                  </span>
+                </div>
+
+                {/* 4 Proportion Presets matching Post config */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                  {[
+                    { id: '1:1' as AspectRatioType, label: 'Feed Quadrado', ratio: '1:1', res: '1080x1080', icon: <Square className="w-4 h-4" /> },
+                    { id: '4:5' as AspectRatioType, label: 'Feed Retrato', ratio: '4:5', res: '1080x1350', icon: <RectangleVertical className="w-4 h-4" /> },
+                    { id: '9:16' as AspectRatioType, label: 'Reels / Stories', ratio: '9:16', res: '1080x1920', icon: <Smartphone className="w-4 h-4" /> },
+                    { id: '16:9' as AspectRatioType, label: 'Widescreen', ratio: '16:9', res: '1920x1080', icon: <Tv className="w-4 h-4" /> },
+                  ].map((item) => {
+                    const isSelected = currentRatio === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleSelectRatio(item.id)}
+                        className={`p-2.5 rounded-lg border-2 font-mono transition text-left flex flex-col justify-between gap-1 ${
+                          isSelected
+                            ? 'bg-[#0000FF] border-black text-white shadow-[3px_3px_0px_#00FF66] ring-1 ring-[#00FF66]'
+                            : 'bg-[#12141C] border-gray-800 text-gray-400 hover:bg-[#1A1E2B] hover:text-gray-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          {item.icon}
+                          <span className={`text-[9px] px-1 rounded font-bold ${
+                            isSelected ? 'bg-[#00FF66] text-black' : 'bg-gray-800 text-gray-400'
+                          }`}>
+                            {item.ratio}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="font-bold text-xs block text-white">{item.label}</span>
+                          <span className="text-[10px] text-gray-400 font-mono">{item.res}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 2. DURATION SELECTOR (MÁXIMO 10S PARA LOOPING) */}
               <div className="space-y-2">
-                <label className="flex items-center justify-between text-xs font-mono font-bold text-gray-300 uppercase">
+                <div className="flex items-center justify-between text-xs font-mono font-bold text-gray-300 uppercase">
                   <span className="flex items-center gap-1.5">
                     <Clock className="w-4 h-4 text-[#FFD700]" />
-                    Duração do Vídeo:
+                    Duração do Looping:
                   </span>
-                  <span className="text-[#FFD700]">{duration} Segundos</span>
-                </label>
+                  <span className="text-[#FFD700] bg-[#181C26] px-2 py-0.5 rounded border border-[#FFD700]/40">
+                    {duration}s (Máx. 10s)
+                  </span>
+                </div>
 
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   {[
-                    { sec: 3, label: '3s', desc: 'Loop' },
-                    { sec: 5, label: '5s', desc: 'Feed' },
-                    { sec: 10, label: '10s', desc: 'Reels' },
-                    { sec: 15, label: '15s', desc: 'Stories' },
-                    { sec: 30, label: '30s', desc: 'Música' },
+                    { sec: 3, label: '3s', desc: 'Loop Curto' },
+                    { sec: 5, label: '5s', desc: 'Padrão / Feed' },
+                    { sec: 7, label: '7s', desc: 'Reels / Shorts' },
+                    { sec: 10, label: '10s', desc: 'Loop Máximo' },
                   ].map((item) => (
                     <button
                       key={item.sec}
                       type="button"
                       onClick={() => setDuration(item.sec)}
-                      className={`p-2 rounded-lg border-2 font-mono transition text-center flex flex-col items-center justify-center ${
+                      className={`p-2.5 rounded-lg border-2 font-mono transition text-center flex flex-col items-center justify-center ${
                         duration === item.sec
                           ? 'bg-[#0000FF] border-black text-white shadow-[3px_3px_0px_#FFD700]'
                           : 'bg-[#181C26] border-gray-800 text-gray-300 hover:bg-[#222736]'
@@ -331,60 +396,9 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* 2. PROPORTION & RESOLUTION */}
-              <div className="space-y-2">
-                <label className="flex items-center justify-between text-xs font-mono font-bold text-gray-300 uppercase">
-                  <span className="flex items-center gap-1.5">
-                    <Smartphone className="w-4 h-4 text-[#00FF66]" />
-                    Proporção de Saída:
-                  </span>
-                  <span className="text-gray-400">
-                    {aspectRatio === '1:1' ? '1080x1080 (Quadrado)' : aspectRatio === '9:16' ? '1080x1920 (Vertical)' : '1080x1350 (4:5)'}
-                  </span>
-                </label>
-
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setAspectRatio('1:1')}
-                    className={`p-2.5 rounded-lg border-2 font-mono text-xs transition flex items-center justify-center gap-2 ${
-                      aspectRatio === '1:1'
-                        ? 'bg-[#0000FF] border-black text-white shadow-[3px_3px_0px_#00FF66]'
-                        : 'bg-[#181C26] border-gray-800 text-gray-300 hover:bg-[#222736]'
-                    }`}
-                  >
-                    <Square className="w-4 h-4" />
-                    <span>Feed (1:1)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setAspectRatio('9:16')}
-                    className={`p-2.5 rounded-lg border-2 font-mono text-xs transition flex items-center justify-center gap-2 ${
-                      aspectRatio === '9:16'
-                        ? 'bg-[#0000FF] border-black text-white shadow-[3px_3px_0px_#00FF66]'
-                        : 'bg-[#181C26] border-gray-800 text-gray-300 hover:bg-[#222736]'
-                    }`}
-                  >
-                    <Smartphone className="w-4 h-4" />
-                    <span>Reels / Stories (9:16)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setAspectRatio('4:5')}
-                    className={`p-2.5 rounded-lg border-2 font-mono text-xs transition flex items-center justify-center gap-2 ${
-                      aspectRatio === '4:5'
-                        ? 'bg-[#0000FF] border-black text-white shadow-[3px_3px_0px_#00FF66]'
-                        : 'bg-[#181C26] border-gray-800 text-gray-300 hover:bg-[#222736]'
-                    }`}
-                  >
-                    <Layers className="w-4 h-4" />
-                    <span>Retrato (4:5)</span>
-                  </button>
-                </div>
+                <p className="text-[11px] font-mono text-gray-400">
+                  ⚡ Vídeo em looping contínuo limitado a no máximo 10s para exportação rápida e leve no Reels/TikTok/Feed.
+                </p>
               </div>
 
               {/* 3. FORMAT & FPS */}
@@ -506,7 +520,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
               className="flex-1 py-3 px-6 bg-gradient-to-r from-[#0000FF] to-[#2563EB] hover:from-[#1D4ED8] hover:to-[#1E40AF] active:scale-95 text-white font-impact tracking-wide text-base uppercase rounded-xl border-2 border-black shadow-[5px_5px_0px_#FFD700] flex items-center justify-center gap-2.5 transition disabled:opacity-50"
             >
               <Video className="w-5 h-5 text-[#FFD700]" />
-              <span>{isExporting ? 'GERANDO VÍDEO...' : `RENDERIZAR E BAIXAR VÍDEO (.${format.toUpperCase()})`}</span>
+              <span>{isExporting ? 'GERANDO VÍDEO...' : `RENDERIZAR E BAIXAR VÍDEO (${ratioInfo.label.split(' ')[0]} • .${format.toUpperCase()})`}</span>
             </button>
           </div>
 

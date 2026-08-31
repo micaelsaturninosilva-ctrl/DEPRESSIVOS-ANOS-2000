@@ -48,7 +48,15 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
     const combinedStyle = { ...getFilterStyle(), ...customStyle };
 
     if (mediaUrl) {
-      const isVideo = mediaType === 'video' || mediaUrl.startsWith('data:video') || mediaUrl.endsWith('.mp4') || mediaUrl.endsWith('.webm');
+      const isVideo =
+        mediaType === 'video' ||
+        mediaUrl.startsWith('data:video') ||
+        mediaUrl.endsWith('.mp4') ||
+        mediaUrl.endsWith('.webm') ||
+        mediaUrl.endsWith('.mov') ||
+        mediaUrl.endsWith('.ogg') ||
+        mediaUrl.includes('video');
+
       if (isVideo) {
         return (
           <video
@@ -69,6 +77,7 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
           alt={caption || "Mídia Anos 2000"}
           className={className}
           style={combinedStyle}
+          referrerPolicy="no-referrer"
         />
       );
     }
