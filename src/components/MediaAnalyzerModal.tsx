@@ -28,7 +28,11 @@ import {
   Hash,
   Share2,
   Layers,
-  Laptop
+  Laptop,
+  ZoomIn,
+  ZoomOut,
+  Crop,
+  Move
 } from 'lucide-react';
 import { getRandomSystemTitle, SYSTEM_TITLES_DATA } from '../data/systemTitles';
 
@@ -48,6 +52,7 @@ interface MediaAnalyzerModalProps {
     mediaDisplayMode: MediaDisplayMode;
     mediaCaption?: string;
     detectedTopic?: string;
+    mediaZoom?: number;
   }) => void;
   currentConfig: PostConfig;
 }
@@ -160,6 +165,11 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
   const [videoCurrentTime, setVideoCurrentTime] = useState<number>(0);
   const [videoDuration, setVideoDuration] = useState<number>(0);
   const [extractedFrameUrl, setExtractedFrameUrl] = useState<string | null>(null);
+
+  const initialZoom = currentConfig.mediaZoom
+    ? (currentConfig.mediaZoom > 10 ? currentConfig.mediaZoom / 100 : currentConfig.mediaZoom)
+    : 1.0;
+  const [mediaZoom, setMediaZoom] = useState<number>(initialZoom);
 
   const [extraContext, setExtraContext] = useState<string>('');
   const [selectedVibe, setSelectedVibe] = useState<string>('saude-mental-geral');
@@ -418,6 +428,7 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
       mediaDisplayMode: displayMode,
       mediaCaption: analysisResult?.identifiedTopic || undefined,
       detectedTopic: analysisResult?.identifiedTopic,
+      mediaZoom: mediaZoom,
     });
 
     onClose();
@@ -489,20 +500,32 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                 <div className="w-full flex flex-col items-center">
                   {mediaType === 'video' ? (
                     <div className="w-full">
-                      <video
-                        ref={videoRef}
-                        src={mediaPreviewUrl}
-                        controls
-                        onLoadedMetadata={(e) => {
-                          setVideoDuration(e.currentTarget.duration);
-                          captureVideoFrame();
-                        }}
-                        onTimeUpdate={(e) => {
-                          setVideoCurrentTime(e.currentTarget.currentTime);
-                          captureVideoFrame();
-                        }}
-                        className="w-full max-h-[180px] rounded-lg object-contain bg-black"
-                      />
+                      <div className="w-full max-h-[180px] rounded-lg overflow-hidden bg-black flex items-center justify-center relative">
+                        <video
+                          ref={videoRef}
+                          src={mediaPreviewUrl}
+                          controls
+                          onLoadedMetadata={(e) => {
+                            setVideoDuration(e.currentTarget.duration);
+                            captureVideoFrame();
+                          }}
+                          onTimeUpdate={(e) => {
+                            setVideoCurrentTime(e.currentTarget.currentTime);
+                            captureVideoFrame();
+                          }}
+                          style={{
+                            transform: `scale(${mediaZoom})`,
+                            transformOrigin: 'center center',
+                            transition: 'transform 0.1s ease-out',
+                          }}
+                          className="w-full max-h-[180px] object-contain"
+                        />
+                        {mediaZoom !== 1 && (
+                          <div className="absolute top-2 right-2 bg-yellow-500/90 text-black text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shadow pointer-events-none z-10">
+                            {mediaZoom.toFixed(2)}x
+                          </div>
+                        )}
+                      </div>
                       <div className="mt-2 flex items-center justify-between text-[11px] text-gray-400 font-mono">
                         <span className="flex items-center gap-1 text-blue-400">
                           <Film className="w-3.5 h-3.5" /> Vídeo Carregado
@@ -512,11 +535,23 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                     </div>
                   ) : (
                     <div className="relative w-full flex flex-col items-center">
-                      <img
-                        src={mediaPreviewUrl}
-                        alt="Preview"
-                        className="max-h-[180px] w-auto max-w-full rounded-lg object-contain border border-gray-700 shadow-md"
-                      />
+                      <div className="max-h-[180px] w-full rounded-lg overflow-hidden bg-black/40 flex items-center justify-center border border-gray-700 shadow-md relative py-1">
+                        <img
+                          src={mediaPreviewUrl}
+                          alt="Preview"
+                          style={{
+                            transform: `scale(${mediaZoom})`,
+                            transformOrigin: 'center center',
+                            transition: 'transform 0.1s ease-out',
+                          }}
+                          className="max-h-[170px] w-auto max-w-full object-contain"
+                        />
+                        {mediaZoom !== 1 && (
+                          <div className="absolute top-2 right-2 bg-yellow-500/90 text-black text-[10px] font-mono font-bold px-1.5 py-0.5 rounded shadow pointer-events-none z-10">
+                            {mediaZoom.toFixed(2)}x
+                          </div>
+                        )}
+                      </div>
                       <span className="text-[11px] text-gray-400 mt-2 font-mono">
                         Clique para trocar de foto/vídeo
                       </span>
@@ -539,6 +574,92 @@ export const MediaAnalyzerModal: React.FC<MediaAnalyzerModalProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Slider de Zoom & Escala da Mídia (0.5x a 3x) em Tempo Real */}
+            {mediaPreviewUrl && (
+              <div className="bg-[#141824] p-3.5 rounded-xl border border-blue-500/40 flex flex-col gap-2.5 shadow-md">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-200 font-mono">
+                    <ZoomIn className="w-3.5 h-3.5 text-yellow-400" />
+                    <span className="font-bold">Zoom da Mídia (Scale):</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = Math.max(0.5, Number((mediaZoom - 0.1).toFixed(2)));
+                        setMediaZoom(next);
+                      }}
+                      className="w-6 h-6 rounded bg-[#1E2536] hover:bg-[#2A344C] text-white border border-gray-700 flex items-center justify-center text-xs font-bold font-mono transition active:scale-95"
+                      title="Diminuir Zoom (-0.1x)"
+                    >
+                      -
+                    </button>
+                    <span className="bg-yellow-950/80 text-yellow-300 border border-yellow-800/80 font-mono text-xs font-bold px-2 py-0.5 rounded min-w-[54px] text-center">
+                      {mediaZoom.toFixed(2)}x
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = Math.min(3.0, Number((mediaZoom + 0.1).toFixed(2)));
+                        setMediaZoom(next);
+                      }}
+                      className="w-6 h-6 rounded bg-[#1E2536] hover:bg-[#2A344C] text-white border border-gray-700 flex items-center justify-center text-xs font-bold font-mono transition active:scale-95"
+                      title="Aumentar Zoom (+0.1x)"
+                    >
+                      +
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMediaZoom(1.0)}
+                      className="text-[10px] font-mono text-gray-300 hover:text-white px-2 py-0.5 rounded bg-[#1E2536] hover:bg-[#2A344C] border border-gray-700 ml-1 transition active:scale-95"
+                      title="Resetar Zoom para 1.0x (Padrão)"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+
+                {/* Range Slider 0.5x a 3.0x */}
+                <input
+                  type="range"
+                  min="0.5"
+                  max="3.0"
+                  step="0.05"
+                  value={mediaZoom}
+                  onChange={(e) => setMediaZoom(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-yellow-400"
+                />
+
+                {/* Presets Rápidos de Zoom */}
+                <div className="grid grid-cols-6 gap-1 font-mono text-[10px]">
+                  {[
+                    { label: '0.5x', val: 0.5 },
+                    { label: '0.75x', val: 0.75 },
+                    { label: '1.0x', val: 1.0 },
+                    { label: '1.5x', val: 1.5 },
+                    { label: '2.0x', val: 2.0 },
+                    { label: '3.0x', val: 3.0 },
+                  ].map((z) => {
+                    const isActive = Math.abs(mediaZoom - z.val) < 0.04;
+                    return (
+                      <button
+                        key={z.label}
+                        type="button"
+                        onClick={() => setMediaZoom(z.val)}
+                        className={`py-1 rounded border text-center transition ${
+                          isActive
+                            ? 'bg-yellow-500 text-black font-bold border-yellow-300 shadow'
+                            : 'bg-[#191F30] text-gray-400 border-gray-800 hover:bg-[#222B42] hover:text-white'
+                        }`}
+                      >
+                        {z.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Presets Rápidos de Exemplo */}
             <div>

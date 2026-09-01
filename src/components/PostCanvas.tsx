@@ -257,6 +257,30 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
     return classes.join(' ');
   };
 
+  // Helper to render media attachment with complete framing, zoom & positioning support
+  const renderMediaAttachment = (customShadow?: string, customBorder?: number) => {
+    if (!hasAttachedMedia || !config.mediaUrl) return null;
+    return (
+      <MediaAttachment
+        mediaUrl={config.mediaUrl}
+        audioPreviewUrl={config.audioPreviewUrl}
+        displayMode={config.mediaDisplayMode || 'tweet-media'}
+        filter={config.mediaFilter}
+        caption={config.mediaCaption}
+        shadowColor={customShadow || config.shadowColor || '#0000FF'}
+        borderWidth={customBorder ?? config.borderWidth ?? 4}
+        mediaType={config.mediaType}
+        mediaFit={config.mediaFit}
+        mediaZoom={config.mediaZoom}
+        mediaPositionX={config.mediaPositionX}
+        mediaPositionY={config.mediaPositionY}
+        mediaAspectRatio={config.mediaAspectRatio}
+        mediaHeight={config.mediaHeight}
+        mediaRotate={config.mediaRotate}
+      />
+    );
+  };
+
   return (
     <div
       style={{
@@ -283,6 +307,13 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
             mediaUrl={config.mediaUrl}
             displayMode="background"
             filter={config.mediaFilter}
+            mediaFit={config.mediaFit}
+            mediaZoom={config.mediaZoom}
+            mediaPositionX={config.mediaPositionX}
+            mediaPositionY={config.mediaPositionY}
+            mediaAspectRatio={config.mediaAspectRatio}
+            mediaHeight={config.mediaHeight}
+            mediaRotate={config.mediaRotate}
           />
         )}
 
@@ -357,19 +388,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                 </h1>
 
                 {/* Attached Media if any */}
-                {hasAttachedMedia && config.mediaUrl && (
-                  <div className="my-4 flex justify-center">
-                    <MediaAttachment
-                      mediaUrl={config.mediaUrl}
-                      displayMode={config.mediaDisplayMode || 'tweet-media'}
-                      filter={config.mediaFilter}
-                      caption={config.mediaCaption}
-                      shadowColor={config.shadowColor || '#0000FF'}
-                      borderWidth={4}
-                      mediaType={config.mediaType}
-                    />
-                  </div>
-                )}
+                {renderMediaAttachment(config.shadowColor || '#0000FF', 4)}
 
                 {/* Barra de Progresso Dinâmica se houver % no texto ou ativado */}
                 {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -583,19 +602,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                 </h2>
 
                 {/* Attached Media if any */}
-                {hasAttachedMedia && config.mediaUrl && (
-                  <div className="my-4 flex justify-center">
-                    <MediaAttachment
-                      mediaUrl={config.mediaUrl}
-                      displayMode={config.mediaDisplayMode || 'tweet-media'}
-                      filter={config.mediaFilter}
-                      caption={config.mediaCaption}
-                      shadowColor="#FFFFFF"
-                      borderWidth={4}
-                      mediaType={config.mediaType}
-                    />
-                  </div>
-                )}
+                {renderMediaAttachment('#FFFFFF', 4)}
 
                 {/* Barra de Porcentagem Dinâmica */}
                 {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -796,20 +803,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
               </h1>
 
               {/* Attached Media */}
-              {hasAttachedMedia && config.mediaUrl && (
-                <div className="my-3 flex justify-center">
-                  <MediaAttachment
-                    mediaUrl={config.mediaUrl}
-                    audioPreviewUrl={config.audioPreviewUrl}
-                    displayMode={config.mediaDisplayMode || 'tweet-media'}
-                    filter={config.mediaFilter}
-                    caption={config.mediaCaption}
-                    shadowColor={config.shadowColor}
-                    borderWidth={config.borderWidth}
-                    mediaType={config.mediaType}
-                  />
-                </div>
-              )}
+              {renderMediaAttachment()}
 
               {/* Handle Footer */}
               <div className="mt-8 border-t-8 border-[#1A1A1A] pt-6 w-full flex justify-between items-center">
@@ -888,19 +882,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                 </h1>
 
                 {/* Attached Media in receipt */}
-                {hasAttachedMedia && config.mediaUrl && (
-                  <div className="mt-4 max-w-[500px]">
-                    <MediaAttachment
-                      mediaUrl={config.mediaUrl}
-                      displayMode={config.mediaDisplayMode || 'polaroid'}
-                      filter={config.mediaFilter}
-                      caption={config.mediaCaption}
-                      shadowColor={config.shadowColor}
-                      borderWidth={config.borderWidth}
-                      mediaType={config.mediaType}
-                    />
-                  </div>
-                )}
+                {renderMediaAttachment()}
 
                 {/* Barra de Porcentagem Dinâmica no Cupom */}
                 {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -1010,20 +992,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                 </h1>
 
                 {/* Attached Media */}
-                {hasAttachedMedia && config.mediaUrl && (
-                  <div className="my-2 w-full flex justify-center">
-                    <MediaAttachment
-                      mediaUrl={config.mediaUrl}
-                      audioPreviewUrl={config.audioPreviewUrl}
-                      displayMode={config.mediaDisplayMode || 'win-viewer'}
-                      filter={config.mediaFilter}
-                      caption={config.mediaCaption}
-                      shadowColor={config.shadowColor}
-                      borderWidth={config.borderWidth}
-                      mediaType={config.mediaType}
-                    />
-                  </div>
-                )}
+                {renderMediaAttachment()}
 
                 {/* Barra de Progresso Win98 Dinâmica */}
                 {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -1189,20 +1158,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                 )}
 
                 {/* Attached Media */}
-                {hasAttachedMedia && config.mediaUrl && (
-                  <div className="my-2 w-full flex justify-center">
-                    <MediaAttachment
-                      mediaUrl={config.mediaUrl}
-                      audioPreviewUrl={config.audioPreviewUrl}
-                      displayMode={config.mediaDisplayMode || 'win-viewer'}
-                      filter={config.mediaFilter}
-                      caption={config.mediaCaption}
-                      shadowColor={config.shadowColor}
-                      borderWidth={config.borderWidth}
-                      mediaType={config.mediaType}
-                    />
-                  </div>
-                )}
+                {renderMediaAttachment()}
 
                 {/* Barra de Progresso de Erro Fatal Dinâmica */}
                 {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -1311,20 +1267,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
                   </h1>
 
                   {/* Attached Media inside MSN chat */}
-                  {hasAttachedMedia && config.mediaUrl && (
-                    <div className="mt-4 flex justify-center">
-                      <MediaAttachment
-                        mediaUrl={config.mediaUrl}
-                        audioPreviewUrl={config.audioPreviewUrl}
-                        displayMode={config.mediaDisplayMode || 'msn-webcam'}
-                        filter={config.mediaFilter}
-                        caption={config.mediaCaption}
-                        shadowColor={config.shadowColor}
-                        borderWidth={config.borderWidth}
-                        mediaType={config.mediaType}
-                      />
-                    </div>
-                  )}
+                  {renderMediaAttachment()}
 
                   {/* Barra de Progresso MSN Dinâmica */}
                   {(config.showPercentageBar || hasPercentageInText(config.text)) && (
@@ -1444,20 +1387,7 @@ export const PostCanvas: React.FC<PostCanvasProps> = ({
               </div>
 
               {/* Attached Media if any */}
-              {hasAttachedMedia && config.mediaUrl && (
-                <div className="my-3 flex justify-center">
-                  <MediaAttachment
-                    mediaUrl={config.mediaUrl}
-                    audioPreviewUrl={config.audioPreviewUrl}
-                    displayMode={config.mediaDisplayMode || 'tweet-media'}
-                    filter={config.mediaFilter}
-                    caption={config.mediaCaption}
-                    shadowColor={config.shadowColor || '#FF3333'}
-                    borderWidth={config.borderWidth || 4}
-                    mediaType={config.mediaType}
-                  />
-                </div>
-              )}
+              {renderMediaAttachment(config.shadowColor || '#FF3333', config.borderWidth || 4)}
 
               {/* Footer with handle */}
               <div className="border-t-4 border-gray-800 pt-5 w-full flex justify-between items-center font-mono">

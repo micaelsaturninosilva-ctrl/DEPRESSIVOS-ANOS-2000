@@ -57,7 +57,16 @@ import {
   Tablet,
   Copy,
   ExternalLink,
-  CornerDownRight
+  CornerDownRight,
+  ZoomIn,
+  ZoomOut,
+  Move,
+  Crop,
+  RotateCw,
+  Maximize2,
+  Minimize2,
+  Scan,
+  Frame
 } from 'lucide-react';
 import { Sticker } from './Stickers';
 import { extractPercentageFromText, hasPercentageInText } from './PercentageLoader';
@@ -86,6 +95,7 @@ interface EditorControlsProps {
   onOpenPresets: () => void;
   onOpenAiGenerator: () => void;
   onOpenMediaAnalyzer: () => void;
+  onOpenImageStudio?: () => void;
   onOpenVideoExport?: () => void;
   onOpenRlhfCurator?: () => void;
   onRandomQuote: () => void;
@@ -559,6 +569,7 @@ export const EditorControls: React.FC<EditorControlsProps> = ({
   onOpenPresets,
   onOpenAiGenerator,
   onOpenMediaAnalyzer,
+  onOpenImageStudio,
   onOpenVideoExport,
   onOpenRlhfCurator,
   onRandomQuote,
@@ -916,31 +927,53 @@ export const EditorControls: React.FC<EditorControlsProps> = ({
       )}
 
       {/* Feature Banner: Upload Media & AI Visual Humor */}
-      <button
-        onClick={onOpenMediaAnalyzer}
-        id="btn-open-media-analyzer-banner"
-        className="w-full p-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 active:scale-[0.99] text-white rounded-xl shadow-lg border border-blue-400/40 flex items-center justify-between transition group"
-      >
-        <div className="flex items-center gap-3 text-left">
-          <div className="p-2.5 bg-black/30 rounded-lg group-hover:scale-110 transition flex-shrink-0">
-            <ImageIcon className="w-5 h-5 text-yellow-300" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-sm text-white">
-                Subir Foto / Vídeo + IA Contextual
-              </span>
-              <span className="text-[10px] font-mono font-bold bg-yellow-400 text-black px-1.5 py-0.2 rounded">
-                NOVO
-              </span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <button
+          onClick={onOpenImageStudio || onOpenMediaAnalyzer}
+          id="btn-open-image-effects-banner"
+          className="w-full p-3 bg-gradient-to-r from-amber-600 via-yellow-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 active:scale-[0.99] text-black font-extrabold rounded-xl shadow-lg border border-yellow-300 flex items-center justify-between transition group"
+        >
+          <div className="flex items-center gap-2.5 text-left">
+            <div className="p-2 bg-black/20 rounded-lg group-hover:scale-110 transition flex-shrink-0 text-black">
+              <Film className="w-5 h-5" />
             </div>
-            <p className="text-xs text-blue-100/90">
-              Analisa o que está na imagem e cria piadas no contexto exato
-            </p>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-xs uppercase tracking-wider text-black">
+                  Colocar Imagem + TV VHS / DVD
+                </span>
+              </div>
+              <p className="text-[11px] text-black/80 font-mono font-medium">
+                Efeitos de Tubo CRT, Quasar, Memorex & Scanlines
+              </p>
+            </div>
           </div>
-        </div>
-        <Wand2 className="w-5 h-5 text-yellow-300 flex-shrink-0 mr-1 animate-pulse" />
-      </button>
+          <Tv className="w-5 h-5 text-black flex-shrink-0 mr-1" />
+        </button>
+
+        <button
+          onClick={onOpenMediaAnalyzer}
+          id="btn-open-media-analyzer-banner"
+          className="w-full p-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 active:scale-[0.99] text-white rounded-xl shadow-lg border border-blue-400/40 flex items-center justify-between transition group"
+        >
+          <div className="flex items-center gap-2.5 text-left">
+            <div className="p-2 bg-black/30 rounded-lg group-hover:scale-110 transition flex-shrink-0">
+              <ImageIcon className="w-5 h-5 text-yellow-300" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-xs uppercase tracking-wider text-white">
+                  Subir Foto + Meme Contextual
+                </span>
+              </div>
+              <p className="text-[11px] text-blue-100/90 font-mono">
+                Cria piadas de acordo com o que está na foto
+              </p>
+            </div>
+          </div>
+          <Wand2 className="w-5 h-5 text-yellow-300 flex-shrink-0 mr-1 animate-pulse" />
+        </button>
+      </div>
 
       {/* Quick Action Bar: Randomizer & AI & Presets & Media */}
       <div className="grid grid-cols-4 gap-2 bg-[#1A1D24] p-2.5 rounded-xl border border-gray-800">
@@ -1524,43 +1557,82 @@ export const EditorControls: React.FC<EditorControlsProps> = ({
           </div>
         )}
 
-        {/* SELETOR DOS APARELHOS NOSTÁLGICOS E MOLDURAS */}
+        {/* SELETOR DE EFEITOS DE TV / FILTROS E MOLDURAS */}
         <div className="pt-2 border-t border-gray-800">
           <label className="text-xs text-gray-300 font-semibold block mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <span>Como exibir no Post (Moldura / Dispositivo):</span>
+              <span>Filtro Visual na Imagem (Efeito de TV / Foto Antiga):</span>
             </span>
-            <span className="text-[10px] text-yellow-400 font-mono font-bold">13 MODELOS</span>
+            <span className="text-[10px] text-yellow-400 font-mono font-bold">FILTROS PUROS</span>
           </label>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-mono">
-            {[
-              { id: 'tweet-media', label: '⬛ No Post (Embaixo da Frase)' },
-              { id: 'tv-vhs', label: '📼 TV VHS Quasar' },
-              { id: 'tv-dvd', label: '💿 TV DVD Memorex' },
-              { id: 'monitor-bege', label: '🖥️ Monitor Tubo Bege' },
-              { id: 'celular-flip', label: '📱 Celular Flip / V3' },
-              { id: 'tv-madeira', label: '📺 TV Madeira Analógica' },
-              { id: 'gameboy-retro', label: '🎮 Portátil Gameboy' },
-              { id: 'mp3-player', label: '🎵 MP3 Player / iPod' },
-              { id: 'win-viewer', label: '🪟 Windows 98 Foto' },
-              { id: 'polaroid', label: '📷 Foto Polaroid' },
-              { id: 'msn-webcam', label: '📹 MSN Webcam' },
-              { id: 'background', label: '🌌 Fundo do Post' },
-              { id: 'none', label: '🚫 Apenas Frase (Sem Mídia)' },
-            ].map((mode) => (
-              <button
-                key={mode.id}
-                onClick={() => update({ mediaDisplayMode: mode.id as MediaDisplayMode })}
-                className={`p-2 rounded-lg text-left transition font-medium border flex items-center gap-1.5 ${
-                  (config.mediaDisplayMode || 'tweet-media') === mode.id
-                    ? 'bg-blue-600 text-white border-blue-400 shadow-md font-bold'
-                    : 'bg-[#1F2536] text-gray-300 border-gray-700 hover:text-white hover:bg-gray-800'
-                }`}
-              >
-                <span className="text-xs truncate">{mode.label}</span>
-              </button>
-            ))}
+          {/* 1. SEÇÃO PRINCIPAL: FILTROS PUROS (SEM MOCKUP / SEM TEXTO / SEM DATA E HORA) */}
+          <div className="mb-2">
+            <span className="text-[10px] font-mono text-yellow-300 font-bold block mb-1.5">
+              ⭐ FILTRO PURO NA IMAGEM (SEM MOCKUP & SEM TEXTOS):
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs font-mono">
+              {[
+                { id: 'filter-crt-tv', label: '📺 Foto/Print TV CRT' },
+                { id: 'filter-vhs-tape', label: '📼 Fita VHS Analógica' },
+                { id: 'filter-cell-screen', label: '📱 Visor Celular LCD' },
+                { id: 'filter-pc-monitor', label: '🖥️ Monitor CRT PC' },
+                { id: 'filter-tv-dvd', label: '💿 TV Analógica 480i' },
+                { id: 'filter-tv-static', label: '⚡ TV com Estática' },
+                { id: 'filter-film-photo', label: '📷 Filme Analógico 35mm' },
+                { id: 'filter-security-screen', label: '🚨 Monitor CFTV P&B' },
+                { id: 'filter-lcd-game', label: '🎮 Visor LCD 8-Bit' },
+                { id: 'tweet-media', label: '⬛ Foto Direta (Limpa)' },
+                { id: 'background', label: '🌌 Fundo do Post' },
+                { id: 'none', label: '🚫 Ocultar Mídia' },
+              ].map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => update({ mediaDisplayMode: mode.id as MediaDisplayMode })}
+                  className={`p-2 rounded-lg text-left transition font-medium border flex items-center gap-1.5 ${
+                    (config.mediaDisplayMode || 'filter-crt-tv') === mode.id ||
+                    (mode.id === 'filter-crt-tv' && config.mediaDisplayMode === 'effect-crt') ||
+                    (mode.id === 'filter-vhs-tape' && config.mediaDisplayMode === 'effect-vhs') ||
+                    (mode.id === 'filter-tv-dvd' && config.mediaDisplayMode === 'effect-dvd')
+                      ? 'bg-yellow-500 text-black border-yellow-300 shadow-md font-black'
+                      : 'bg-[#181F30] text-gray-300 border-gray-700 hover:text-white hover:bg-gray-800'
+                  }`}
+                >
+                  <span className="text-xs truncate">{mode.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 2. SEÇÃO SECUNDÁRIA: MOCKUPS FÍSICOS DE APARELHOS (OPCIONAIS) */}
+          <div>
+            <span className="text-[10px] font-mono text-gray-400 font-bold block mb-1">
+              📺 MOCKUPS DE APARELHOS (COM CARCAÇA DE PLÁSTICO):
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 text-[11px] font-mono">
+              {[
+                { id: 'tv-vhs', label: '📺 TV VHS Quasar' },
+                { id: 'tv-dvd', label: '📺 TV DVD Memorex' },
+                { id: 'monitor-bege', label: '🖥️ Monitor Tubo' },
+                { id: 'celular-flip', label: '📱 Celular Flip' },
+                { id: 'polaroid', label: '📷 Polaroid' },
+                { id: 'win-viewer', label: '🪟 Janela Win98' },
+                { id: 'gameboy-retro', label: '🎮 Game Boy' },
+                { id: 'mp3-player', label: '🎵 iPod Player' },
+              ].map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => update({ mediaDisplayMode: mode.id as MediaDisplayMode })}
+                  className={`p-1.5 rounded-md text-left transition border flex items-center gap-1 ${
+                    config.mediaDisplayMode === mode.id
+                      ? 'bg-blue-600 text-white border-blue-400 font-bold'
+                      : 'bg-[#121622] text-gray-400 border-gray-800 hover:text-gray-200'
+                  }`}
+                >
+                  <span className="truncate">{mode.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -1591,6 +1663,305 @@ export const EditorControls: React.FC<EditorControlsProps> = ({
             ))}
           </div>
         </div>
+
+        {/* CONTROLES AVANÇADOS DE ENQUADRAMENTO, ZOOM E POSICIONAMENTO DA MÍDIA (FOTO / VÍDEO) */}
+        {config.mediaUrl && config.mediaDisplayMode !== 'none' && (
+          <div className="bg-[#0F1422] p-3.5 rounded-xl border-2 border-cyan-500/50 flex flex-col gap-3 shadow-lg shadow-cyan-950/30">
+            <div className="flex items-center justify-between border-b border-gray-800 pb-2.5">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 bg-cyan-600/30 text-cyan-300 rounded-lg border border-cyan-500/30">
+                  <Crop className="w-4 h-4" />
+                </span>
+                <div>
+                  <label className="font-bold text-white flex items-center gap-2 text-xs uppercase tracking-wider font-mono">
+                    Enquadramento & Zoom da Mídia
+                  </label>
+                  <span className="text-[10px] text-cyan-300 font-mono">
+                    Ajuste isolado do vídeo ou foto no post
+                  </span>
+                </div>
+              </div>
+
+              {/* Botão Resetar Enquadramento */}
+              <button
+                type="button"
+                onClick={() => {
+                  update({
+                    mediaZoom: 1,
+                    mediaFit: 'cover',
+                    mediaPositionX: 50,
+                    mediaPositionY: 50,
+                    mediaAspectRatio: 'auto',
+                    mediaHeight: undefined,
+                    mediaRotate: 0,
+                  });
+                  setMediaActionFeedback('✓ Enquadramento resetado para o padrão!');
+                  setTimeout(() => setMediaActionFeedback(null), 3000);
+                }}
+                className="text-[10px] font-mono bg-[#1E2638] hover:bg-[#2B354C] text-gray-300 hover:text-white px-2.5 py-1 rounded-md border border-gray-700 transition active:scale-95 flex items-center gap-1"
+                title="Resetar Zoom, Posição e Enquadramento"
+              >
+                <RefreshCw className="w-3 h-3 text-cyan-400" />
+                <span>Resetar</span>
+              </button>
+            </div>
+
+            {/* 1. CONTROLE DE ZOOM / ESCALA */}
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-xs text-gray-200 font-mono">
+                  <ZoomIn className="w-3.5 h-3.5 text-yellow-400" />
+                  <span className="font-bold">Zoom da Mídia:</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = config.mediaZoom ?? 1;
+                      const next = Math.max(0.5, Number((current - 0.1).toFixed(2)));
+                      update({ mediaZoom: next });
+                    }}
+                    className="w-6 h-6 rounded bg-[#1A2234] hover:bg-[#26314A] text-white border border-gray-700 flex items-center justify-center text-xs font-bold font-mono transition"
+                    title="Diminuir Zoom"
+                  >
+                    -
+                  </button>
+                  <span className="bg-yellow-950/80 text-yellow-300 border border-yellow-800/80 font-mono text-xs font-bold px-2 py-0.5 rounded min-w-[52px] text-center">
+                    {(config.mediaZoom ?? 1).toFixed(2)}x
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = config.mediaZoom ?? 1;
+                      const next = Math.min(3.0, Number((current + 0.1).toFixed(2)));
+                      update({ mediaZoom: next });
+                    }}
+                    className="w-6 h-6 rounded bg-[#1A2234] hover:bg-[#26314A] text-white border border-gray-700 flex items-center justify-center text-xs font-bold font-mono transition"
+                    title="Aumentar Zoom"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Slider de Zoom */}
+              <input
+                type="range"
+                min="0.5"
+                max="3.0"
+                step="0.05"
+                value={config.mediaZoom ?? 1}
+                onChange={(e) => update({ mediaZoom: parseFloat(e.target.value) })}
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-yellow-400"
+              />
+
+              {/* Presets Rápidos de Zoom */}
+              <div className="grid grid-cols-6 gap-1 font-mono text-[10px]">
+                {[
+                  { label: '0.75x', val: 0.75 },
+                  { label: '1.0x (Padrão)', val: 1.0 },
+                  { label: '1.25x', val: 1.25 },
+                  { label: '1.5x', val: 1.5 },
+                  { label: '2.0x', val: 2.0 },
+                  { label: '2.5x', val: 2.5 },
+                ].map((z) => {
+                  const isActive = Math.abs((config.mediaZoom ?? 1) - z.val) < 0.04;
+                  return (
+                    <button
+                      key={z.label}
+                      type="button"
+                      onClick={() => update({ mediaZoom: z.val })}
+                      className={`py-1 rounded border text-center transition ${
+                        isActive
+                          ? 'bg-yellow-500 text-black font-bold border-yellow-300'
+                          : 'bg-[#181F30] text-gray-400 border-gray-800 hover:bg-[#232D44] hover:text-white'
+                      }`}
+                    >
+                      {z.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. MODO DE ENQUADRAMENTO (FIT) */}
+            <div className="flex flex-col gap-1.5 pt-1 border-t border-gray-800">
+              <label className="text-xs text-gray-300 font-semibold flex items-center justify-between font-mono">
+                <span className="flex items-center gap-1.5">
+                  <Frame className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Modo de Enquadramento (Fit):</span>
+                </span>
+                <span className="text-[10px] text-cyan-300 font-normal">
+                  {config.mediaFit === 'contain'
+                    ? 'Ajustar Tudo (Sem Cortes)'
+                    : config.mediaFit === 'fill'
+                    ? 'Esticar 100%'
+                    : config.mediaFit === 'none'
+                    ? 'Tamanho Real'
+                    : 'Preencher Quadro (Cobre Tudo)'}
+                </span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 text-xs font-mono">
+                {[
+                  { id: 'cover', label: '🖼️ Preencher (Cover)', desc: 'Cobre o quadro sem barras pretas' },
+                  { id: 'contain', label: '🔍 Ajustar (Contain)', desc: 'Mostra o vídeo/foto 100% inteiro' },
+                  { id: 'fill', label: '↔️ Esticar (Fill)', desc: 'Força preenchimento total' },
+                  { id: 'none', label: '📐 Real (None)', desc: 'Escala 1:1 original' },
+                ].map((fitItem) => {
+                  const isActive = (config.mediaFit || 'cover') === fitItem.id;
+                  return (
+                    <button
+                      key={fitItem.id}
+                      type="button"
+                      onClick={() => update({ mediaFit: fitItem.id as any })}
+                      className={`p-2 rounded-lg border text-left flex flex-col justify-between gap-0.5 transition ${
+                        isActive
+                          ? 'bg-cyan-600 text-white font-bold border-cyan-300 shadow'
+                          : 'bg-[#151B2B] text-gray-300 border-gray-800 hover:text-white hover:bg-[#1E263B]'
+                      }`}
+                      title={fitItem.desc}
+                    >
+                      <span className="text-[11px] truncate">{fitItem.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 3. PROPORÇÃO DO QUADRO (ASPECT RATIO) */}
+            <div className="flex flex-col gap-1.5 pt-1 border-t border-gray-800">
+              <label className="text-xs text-gray-300 font-semibold flex items-center justify-between font-mono">
+                <span className="flex items-center gap-1.5">
+                  <Scan className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Proporção do Quadro (Corte / Formato):</span>
+                </span>
+              </label>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 text-[11px] font-mono">
+                {[
+                  { id: 'auto' as const, label: 'Original' },
+                  { id: '1:1' as const, label: '1:1 Quadrado' },
+                  { id: '16:9' as const, label: '16:9 Vídeo' },
+                  { id: '4:3' as const, label: '4:3 TV Tubo' },
+                  { id: '9:16' as const, label: '9:16 Vertical' },
+                  { id: '21:9' as const, label: '21:9 Cinema' },
+                ].map((ar) => {
+                  const isActive = (config.mediaAspectRatio || 'auto') === ar.id;
+                  return (
+                    <button
+                      key={ar.id}
+                      type="button"
+                      onClick={() => update({ mediaAspectRatio: ar.id })}
+                      className={`py-1.5 px-1 rounded-md border text-center transition ${
+                        isActive
+                          ? 'bg-purple-600 text-white font-bold border-purple-300 shadow'
+                          : 'bg-[#151B2B] text-gray-400 border-gray-800 hover:text-white hover:bg-[#1E263B]'
+                      }`}
+                    >
+                      <span className="truncate">{ar.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 4. POSICIONAMENTO E PANORÂMICA (PAN X e PAN Y) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-gray-800">
+              {/* Pan Horizontal X */}
+              <div className="flex flex-col gap-1">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-gray-300 font-bold flex items-center gap-1">
+                    <Move className="w-3 h-3 text-cyan-400" />
+                    Posição Horizontal (X):
+                  </span>
+                  <span className="bg-cyan-950 text-cyan-300 px-1.5 py-0.2 rounded border border-cyan-800 text-[10px] font-bold">
+                    {config.mediaPositionX ?? 50}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={config.mediaPositionX ?? 50}
+                  onChange={(e) => update({ mediaPositionX: parseInt(e.target.value, 10) })}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                />
+                <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                  <span>Esquerda (0%)</span>
+                  <span>Centro (50%)</span>
+                  <span>Direita (100%)</span>
+                </div>
+              </div>
+
+              {/* Pan Vertical Y */}
+              <div className="flex flex-col gap-1">
+                <div className="flex justify-between items-center text-xs font-mono">
+                  <span className="text-gray-300 font-bold flex items-center gap-1">
+                    <Move className="w-3 h-3 text-cyan-400" />
+                    Posição Vertical (Y):
+                  </span>
+                  <span className="bg-cyan-950 text-cyan-300 px-1.5 py-0.2 rounded border border-cyan-800 text-[10px] font-bold">
+                    {config.mediaPositionY ?? 50}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={config.mediaPositionY ?? 50}
+                  onChange={(e) => update({ mediaPositionY: parseInt(e.target.value, 10) })}
+                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                />
+                <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                  <span>Topo (0%)</span>
+                  <span>Centro (50%)</span>
+                  <span>Base (100%)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. ATALHOS RÁPIDOS DE ENQUADRAMENTO / ROTAÇÃO */}
+            <div className="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-gray-800">
+              <div className="flex items-center gap-1 text-[11px] font-mono">
+                <span className="text-gray-400 mr-1">Atalhos de Posição:</span>
+                {[
+                  { label: 'Centro', x: 50, y: 50 },
+                  { label: 'Topo', x: 50, y: 15 },
+                  { label: 'Base', x: 50, y: 85 },
+                  { label: 'Esq', x: 15, y: 50 },
+                  { label: 'Dir', x: 85, y: 50 },
+                ].map((pos) => (
+                  <button
+                    key={pos.label}
+                    type="button"
+                    onClick={() => update({ mediaPositionX: pos.x, mediaPositionY: pos.y })}
+                    className="px-2 py-0.5 rounded bg-[#181F30] hover:bg-[#25304B] text-gray-300 hover:text-white border border-gray-800 text-[10px] transition active:scale-95"
+                  >
+                    {pos.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Rotação rápida 90 graus */}
+              <div className="flex items-center gap-1 text-[11px] font-mono">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const current = config.mediaRotate ?? 0;
+                    const next = (current + 90) % 360;
+                    update({ mediaRotate: next });
+                  }}
+                  className="px-2 py-1 rounded bg-[#181F30] hover:bg-[#25304B] text-cyan-300 border border-cyan-800/60 text-[10px] font-bold flex items-center gap-1 transition active:scale-95"
+                  title="Girar imagem 90 graus"
+                >
+                  <RotateCw className="w-3 h-3 text-cyan-400" />
+                  <span>Girar {(config.mediaRotate ?? 0) !== 0 ? `(${config.mediaRotate}°)` : '90°'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Legenda Opcional */}
         <div>

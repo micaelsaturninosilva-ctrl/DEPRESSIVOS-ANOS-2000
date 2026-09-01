@@ -46,19 +46,37 @@ export type StickerType =
   | 'cursor';
 
 export type MediaDisplayMode = 
-  | 'none'          // Don't render the image inside the card, just used for context
-  | 'tweet-media'   // Embedded under text with retro border
-  | 'tv-vhs'        // 📺 TV de Tubo Bege com VHS, botões 3D & Adesivos (Quasar)
-  | 'tv-dvd'        // 📺 TV de Tubo Prata com DVD, RCA Amarelo/Branco/Vermelho (Memorex)
-  | 'monitor-bege'  // 🖥️ Monitor de Tubo Bege (Windows 95/98) com botões e chanfro 3D
-  | 'celular-flip'  // 📱 Celular Tijolão / Flip (V3 / Nokia) com teclado numérico
-  | 'tv-madeira'    // 📺 TV Analógica de Madeira com botões giratórios
-  | 'gameboy-retro' // 🎮 Console Portátil (Gameboy) com D-Pad e botões A/B
-  | 'mp3-player'    // 🎵 Reprodutor de MP3 (iPod / Winamp) com LCD e Click Wheel
-  | 'win-viewer'    // Windows 98 image viewer window (Visualizador de Fotos)
-  | 'polaroid'      // Polaroid photo sticker taped on the corner
-  | 'msn-webcam'    // MSN webcam / display pic window
-  | 'background';   // Darkened background image with texture
+  | 'none'                  // Don't render the image inside the card, just used for context
+  // === FILTROS PUROS NA IMAGEM (SEM MOCKUP / SEM TEXTO / SEM DATA E HORA) ===
+  | 'filter-crt-tv'         // 📺 Foto/Print de TV de Tubo CRT (Scanlines + Grade RGB + Curvatura + Vinheta de Tubo)
+  | 'filter-vhs-tape'       // 📼 Fita VHS Analógica (Scanlines + RGB Aberration + Ruído Analógico)
+  | 'filter-tv-dvd'         // 💿 TV Analógica 480i (Brilho de Tubo + Scanlines 480i + Cores Saturadas)
+  | 'filter-cell-screen'    // 📱 Visor de Celular Antigo (Matriz de Pixels LCD + Backlight Cristal Líquido)
+  | 'filter-pc-monitor'     // 🖥️ Monitor CRT de Computador (Scanlines VGA 60Hz + Fósforo)
+  | 'filter-tv-static'      // ⚡ TV com Estática / Interferência Analógica de Antena
+  | 'filter-film-photo'     // 📷 Foto Analógica 35mm (Granulação de Filme + Halation + Cores Vintage)
+  | 'filter-security-screen'// 🚨 Monitor de CFTV / P&B Analógico (Scanlines + Alto Contraste)
+  | 'filter-lcd-game'       // 🎮 Visor LCD 8-Bit (Matriz de Pontos Verde-Oliva)
+  | 'tweet-media'           // ⬛ Imagem Pura / Normal (Sem filtro)
+  | 'background'            // 🌌 Fundo do Post
+  // Legados para retrocompatibilidade
+  | 'effect-vhs'
+  | 'effect-dvd'
+  | 'effect-crt'
+  | 'effect-camcorder'
+  | 'effect-digicam'
+  | 'effect-glitch'
+  | 'effect-cftv'
+  | 'tv-vhs'
+  | 'tv-dvd'
+  | 'monitor-bege'
+  | 'celular-flip'
+  | 'tv-madeira'
+  | 'gameboy-retro'
+  | 'mp3-player'
+  | 'win-viewer'
+  | 'polaroid'
+  | 'msn-webcam';
 
 export type MediaFilterType = 
   | 'none'
@@ -121,6 +139,15 @@ export interface PostConfig {
   detectedTopic?: string;
   audioPreviewUrl?: string | null;
   isPlayingAudio?: boolean;
+
+  // Media Framing, Zoom & Positioning
+  mediaFit?: 'cover' | 'contain' | 'fill'; // Modo de preenchimento (Preencher tela vs Mostrar inteiro)
+  mediaZoom?: number; // 50 to 300 (% de zoom)
+  mediaPositionX?: number; // 0 to 100 (% horizontal pan / object-position X)
+  mediaPositionY?: number; // 0 to 100 (% vertical pan / object-position Y)
+  mediaAspectRatio?: 'auto' | '16:9' | '4:3' | '1:1' | '9:16' | '4:5' | '3:4' | '21:9'; // Proporção do quadro da mídia
+  mediaHeight?: number; // Altura personalizada em pixels
+  mediaRotate?: number; // 0, 90, 180, 270 graus
 
   // Percentage Loading / Barra de Progresso Dinâmica
   showPercentageBar?: boolean;

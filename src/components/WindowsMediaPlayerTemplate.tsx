@@ -218,13 +218,25 @@ export const WindowsMediaPlayerTemplate: React.FC<WindowsMediaPlayerTemplateProp
                   loop
                   muted={isMuted}
                   playsInline
-                  className="w-full h-full object-contain"
+                  className="w-full h-full"
+                  style={{
+                    objectFit: config.mediaFit || 'contain',
+                    objectPosition: `${config.mediaPositionX ?? 50}% ${config.mediaPositionY ?? 50}%`,
+                    transform: `scale(${config.mediaZoom || 1}) rotate(${config.mediaRotate || 0}deg)`,
+                    transformOrigin: `${config.mediaPositionX ?? 50}% ${config.mediaPositionY ?? 50}%`,
+                  }}
                 />
               ) : (
                 <img
                   src={config.mediaUrl || ''}
                   alt="Windows Media Player Content"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full"
+                  style={{
+                    objectFit: config.mediaFit || 'contain',
+                    objectPosition: `${config.mediaPositionX ?? 50}% ${config.mediaPositionY ?? 50}%`,
+                    transform: `scale(${config.mediaZoom || 1}) rotate(${config.mediaRotate || 0}deg)`,
+                    transformOrigin: `${config.mediaPositionX ?? 50}% ${config.mediaPositionY ?? 50}%`,
+                  }}
                 />
               )}
 

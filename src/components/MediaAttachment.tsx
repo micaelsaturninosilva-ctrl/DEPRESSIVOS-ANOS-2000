@@ -12,6 +12,13 @@ interface MediaAttachmentProps {
   shadowColor?: string;
   borderWidth?: number;
   mediaType?: 'image' | 'video';
+  mediaFit?: 'cover' | 'contain' | 'fill';
+  mediaZoom?: number;
+  mediaPositionX?: number;
+  mediaPositionY?: number;
+  mediaAspectRatio?: 'auto' | '16:9' | '4:3' | '1:1' | '9:16' | '4:5' | '3:4' | '21:9';
+  mediaHeight?: number;
+  mediaRotate?: number;
 }
 
 export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
@@ -23,8 +30,30 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
   shadowColor = '#0000FF',
   borderWidth = 10,
   mediaType = 'image',
+  mediaFit = 'cover',
+  mediaZoom = 100,
+  mediaPositionX = 50,
+  mediaPositionY = 50,
+  mediaAspectRatio = 'auto',
+  mediaHeight,
+  mediaRotate = 0,
 }) => {
   if (displayMode === 'none') return null;
+
+  // Aspect ratio helper for container frames
+  const getAspectClass = (defaultClass = "aspect-[4/3] sm:aspect-[16/10]") => {
+    if (!mediaAspectRatio || mediaAspectRatio === 'auto') return defaultClass;
+    switch (mediaAspectRatio) {
+      case '16:9': return 'aspect-video';
+      case '4:3': return 'aspect-[4/3]';
+      case '1:1': return 'aspect-square';
+      case '9:16': return 'aspect-[9/16]';
+      case '4:5': return 'aspect-[4/5]';
+      case '3:4': return 'aspect-[3/4]';
+      case '21:9': return 'aspect-[21/9]';
+      default: return defaultClass;
+    }
+  };
 
   // Filter styles
   const getFilterStyle = (): React.CSSProperties => {
@@ -43,9 +72,29 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
     }
   };
 
-  // Helper to render either video or image or retro fallback screen
-  const renderMediaElement = (className = "w-full h-full object-cover", customStyle: React.CSSProperties = {}, fallbackType = 'general') => {
-    const combinedStyle = { ...getFilterStyle(), ...customStyle };
+  // Helper to render either video or image or retro fallback screen with Zoom, Pan, Rotation & Fit
+  const renderMediaElement = (className = "w-full h-full", customStyle: React.CSSProperties = {}, fallbackType = 'general') => {
+    const rawZoom = mediaZoom ?? 1;
+    const zoom = rawZoom > 10 ? rawZoom / 100 : rawZoom;
+    const posX = mediaPositionX ?? 50;
+    const posY = mediaPositionY ?? 50;
+    const rotate = mediaRotate ?? 0;
+    const fit = mediaFit || 'cover';
+
+    const transformParts: string[] = [];
+    if (zoom !== 1) transformParts.push(`scale(${zoom})`);
+    if (rotate !== 0) transformParts.push(`rotate(${rotate}deg)`);
+
+    const combinedStyle: React.CSSProperties = {
+      ...getFilterStyle(),
+      objectFit: fit,
+      objectPosition: `${posX}% ${posY}%`,
+      transform: transformParts.length > 0 ? transformParts.join(' ') : undefined,
+      transformOrigin: `${posX}% ${posY}%`,
+      width: '100%',
+      height: '100%',
+      ...customStyle,
+    };
 
     if (mediaUrl) {
       const isVideo =
@@ -248,6 +297,368 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-25 mix-blend-luminosity">
         {renderMediaElement("w-full h-full object-cover")}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/70" />
+      </div>
+    );
+  }
+
+  // ============================================================
+  // 0. FILTROS PUROS DE EXIBIÇÃO NA IMAGEM (SEM MOCKUP / SEM TEXTO / SEM DATA E HORA)
+  // Efeito idêntico a tirar uma foto ou print da TV / celular antigo
+  // ============================================================
+
+  // ------------------------------------------------------------
+  // A. FOTO / PRINT DE TV DE TUBO CRT (Curvatura, Scanlines, Grade RGB, Vinheta)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-crt-tv' || displayMode === 'effect-crt') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base com Contraste de Tubo CRT */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.22) saturate(1.25) brightness(0.96)',
+          }, 'tv')}
+
+          {/* Scanlines Horizontais de Tubo CRT 15kHz */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-50"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 1.5px, transparent 2px, transparent 4px)',
+            }}
+          />
+
+          {/* Grade de Fósforo RGB Vertical (Aperture Grille Trinitron) */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-25"
+            style={{
+              background: 'repeating-linear-gradient(90deg, rgba(255,0,0,0.6) 0px, rgba(0,255,0,0.6) 1px, rgba(0,0,255,0.6) 2px, transparent 3px)',
+            }}
+          />
+
+          {/* Curvatura Esférica de Vidro & Vinheta Escura de Bordas de Tubo */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.14) 0%, transparent 60%), radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.85) 100%)',
+            }}
+          />
+
+          {/* Reflexo Diagonal Suave de Lente / Luz Ambiente na Tela de Vidro */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 45%, rgba(0,0,0,0.2) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // B. FITA VHS ANALÓGICA (Scanlines, RGB Chroma Shift, Ruído de Fita)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-vhs-tape' || displayMode === 'effect-vhs') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base com Desfoque Analógico e Leve Aberração Cromática */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.18) saturate(1.3) brightness(0.97) hue-rotate(-2deg)',
+          }, 'tv')}
+
+          {/* Scanlines de TV Analógica VHS */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-45"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.92) 0px, rgba(0,0,0,0.92) 1.5px, transparent 2px, transparent 4px)',
+            }}
+          />
+
+          {/* Efeito de Reflexo de Tubo e Vinheta */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 65%), radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.7) 100%)',
+            }}
+          />
+
+          {/* Faixa de Ruído de Cabeçote na Base da Fita VHS (Sem Textos) */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-4 pointer-events-none z-10 opacity-55 mix-blend-screen"
+            style={{
+              background: 'repeating-linear-gradient(90deg, #fff 0, #000 2px, #fff 4px, #444 6px, #bbb 8px)',
+              filter: 'blur(1px)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // C. VISOR DE CELULAR ANTIGO / LCD STN ANOS 2000 (Matriz de Pixels + Backlight)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-cell-screen' || displayMode === 'effect-digicam' || displayMode === 'effect-camcorder') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-[#1a2420] rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base com Cores de LCD dos Anos 2000 */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.25) saturate(1.2) brightness(1.02) sepia(0.08)',
+          }, 'tv')}
+
+          {/* Matriz de Pixels Quadriculada LCD (Grid de Subpixels) */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-35"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(0,0,0,0.75) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.75) 1px, transparent 1px)',
+              backgroundSize: '3px 3px',
+            }}
+          />
+
+          {/* Iluminação de Fundo de Cristal Líquido / Backlight LCD */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(160,220,255,0.08) 0%, transparent 75%), linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(0,0,0,0.4) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // D. MONITOR CRT DE COMPUTADOR (VGA 60Hz + Fósforo Fino + Reflexo Plano)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-pc-monitor') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.15) saturate(1.1) brightness(0.98)',
+          }, 'tv')}
+
+          {/* Scanlines Finas VGA de Alta Frequência */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-35"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.9) 0px, rgba(0,0,0,0.9) 1px, transparent 1.5px, transparent 3px)',
+            }}
+          />
+
+          {/* Fósforo RGB Fino */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-15"
+            style={{
+              background: 'repeating-linear-gradient(90deg, rgba(255,0,0,0.5) 0px, rgba(0,255,0,0.5) 1px, rgba(0,0,255,0.5) 2px, transparent 3px)',
+            }}
+          />
+
+          {/* Reflexo de Vidro Plano Antirreflexo de Monitor PC */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'linear-gradient(125deg, rgba(255,255,255,0.08) 0%, transparent 40%), radial-gradient(circle at 50% 50%, transparent 70%, rgba(0,0,0,0.6) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // E. TV ANALÓGICA 480i / DVD (Scanlines 480i + Cores Vivas + Vidro de Tubo)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-tv-dvd' || displayMode === 'effect-dvd') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.2) saturate(1.35) brightness(1.02)',
+          }, 'tv')}
+
+          {/* Scanlines 480i Suaves */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-35"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.85) 0px, rgba(0,0,0,0.85) 1px, transparent 1.5px, transparent 3px)',
+            }}
+          />
+
+          {/* Camada de Vidro do Tubo e Brilho */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 45%), radial-gradient(circle at 50% 50%, transparent 65%, rgba(0,0,0,0.65) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // F. TV COM ESTÁTICA / INTERFERÊNCIA DE ANTENA (Scanlines Vibrando + Estática)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-tv-static' || displayMode === 'effect-glitch') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.3) saturate(1.35) hue-rotate(8deg)',
+          }, 'tv')}
+
+          {/* Interferência de Antena Analógica */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-45 mix-blend-overlay"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0px, transparent 2px, rgba(0,0,0,0.8) 4px, transparent 8px)',
+            }}
+          />
+
+          {/* Linha de Varredura Sincronismo */}
+          <div
+            className="absolute top-1/4 left-0 right-0 h-6 pointer-events-none z-10 opacity-50 mix-blend-screen"
+            style={{
+              background: 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
+            }}
+          />
+
+          {/* Vinheta Escura de Tubo */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,0.8) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // G. FOTO ANALÓGICA 35MM (Granulação de Filme + Halation + Cores Quentes)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-film-photo') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base com Cores de Filme 35mm */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'contrast(1.12) saturate(1.25) sepia(0.12) brightness(0.98)',
+          }, 'tv')}
+
+          {/* Granulação Fotográfica de Filme Analógico */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-30 mix-blend-overlay"
+            style={{
+              backgroundImage: 'radial-gradient(rgba(0,0,0,0.9) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
+              backgroundSize: '3px 3px, 4px 4px',
+              backgroundPosition: '0 0, 2px 2px',
+            }}
+          />
+
+          {/* Halation / Leve Vazamento de Luz Quente Vintage */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(circle at top right, rgba(255,140,50,0.12) 0%, transparent 60%), radial-gradient(circle at 50% 50%, transparent 60%, rgba(30,15,0,0.4) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // H. MONITOR DE CFTV / PRETO & BRANCO ANALÓGICO (Alto Contraste + Scanlines)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-security-screen' || displayMode === 'effect-cftv') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-black rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base em Preto e Branco com Alto Contraste Analógico */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'grayscale(1) contrast(1.45) brightness(0.95)',
+          }, 'tv')}
+
+          {/* Scanlines de CFTV Analógico */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-45"
+            style={{
+              background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.95) 0px, rgba(0,0,0,0.95) 2px, transparent 2.5px, transparent 5px)',
+            }}
+          />
+
+          {/* Vinheta Escura */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.85) 100%)',
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------
+  // I. VISOR LCD 8-BIT (Matriz de Pontos Verde-Oliva)
+  // ------------------------------------------------------------
+  if (displayMode === 'filter-lcd-game') {
+    return (
+      <div className="w-full max-w-[880px] mx-auto my-4 select-none relative z-10">
+        <div
+          className={`relative w-full ${getAspectClass('aspect-[4/3] sm:aspect-[16/10]')} bg-[#8B956D] rounded-lg overflow-hidden border-2 border-black/80 shadow-[6px_6px_0px_rgba(0,0,0,0.8)]`}
+          style={mediaHeight ? { height: `${mediaHeight}px` } : undefined}
+        >
+          {/* Mídia Base em Tons Verde Oliva de LCD 8-Bit */}
+          {renderMediaElement("w-full h-full", {
+            filter: 'grayscale(1) contrast(1.6) sepia(1) hue-rotate(50deg) saturate(1.8) brightness(0.9)',
+          }, 'tv')}
+
+          {/* Matriz Quadriculada de Pixels */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 opacity-40"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)',
+              backgroundSize: '4px 4px',
+            }}
+          />
+
+          {/* Sombra de Borda do Visor LCD */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0_0_15px_rgba(0,0,0,0.6)]"
+          />
+        </div>
       </div>
     );
   }
@@ -1122,14 +1533,17 @@ export const MediaAttachment: React.FC<MediaAttachmentProps> = ({
   // ============================================================
   return (
     <div
-      className="w-full max-w-[900px] my-6 overflow-hidden relative z-10"
+      className={`w-full max-w-[900px] my-6 overflow-hidden relative z-10 ${getAspectClass('min-h-[280px]')}`}
       style={{
         border: `${borderWidth || 10}px solid #1A1A1A`,
         boxShadow: `16px 16px 0px ${shadowColor}`,
         backgroundColor: '#000000',
+        ...(mediaHeight ? { height: `${mediaHeight}px` } : {}),
       }}
     >
-      {renderMediaElement("w-full max-h-[440px] object-contain bg-black/60 mx-auto")}
+      <div className="w-full h-full flex items-center justify-center overflow-hidden bg-black/60">
+        {renderMediaElement("w-full h-full mx-auto")}
+      </div>
       {caption && (
         <div className="bg-[#1A1A1A] p-3 text-white font-mono-retro text-[24px] font-bold border-t-4 border-black text-center">
           {caption}

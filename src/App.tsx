@@ -11,6 +11,7 @@ import { MediaAnalyzerModal } from './components/MediaAnalyzerModal';
 import { StrategyHubModal } from './components/StrategyHubModal';
 import { VideoExportModal } from './components/VideoExportModal';
 import { RlhfCuratorModal } from './components/RlhfCuratorModal';
+import { ImageEffectsStudioModal } from './components/ImageEffectsStudioModal';
 import { toPng, toBlob } from 'html-to-image';
 import confetti from 'canvas-confetti';
 import {
@@ -33,6 +34,7 @@ import {
   Image as ImageIcon,
   Video,
   Film,
+  Tv,
   BrainCircuit
 } from 'lucide-react';
 
@@ -78,6 +80,7 @@ export default function App() {
   const [isAiModalOpen, setIsAiModalOpen] = useState<boolean>(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
   const [isMediaModalOpen, setIsMediaModalOpen] = useState<boolean>(false);
+  const [isImageStudioOpen, setIsImageStudioOpen] = useState<boolean>(false);
   const [isStrategyOpen, setIsStrategyOpen] = useState<boolean>(false);
   const [isVideoExportOpen, setIsVideoExportOpen] = useState<boolean>(false);
   const [isRlhfCuratorOpen, setIsRlhfCuratorOpen] = useState<boolean>(false);
@@ -279,6 +282,16 @@ export default function App() {
 
           {/* Top Quick Actions (Export & Presets) */}
           <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => setIsImageStudioOpen(true)}
+              id="header-btn-image-studio"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-400 hover:from-amber-400 hover:to-yellow-300 active:scale-95 text-xs text-black font-black rounded-lg shadow-lg shadow-yellow-500/25 border border-yellow-200 transition"
+              title="Colocar Imagem e Aplicar Efeitos de TV VHS, TV DVD, Monitor CRT e Scanlines"
+            >
+              <Tv className="w-4 h-4 text-black animate-pulse" />
+              <span>Imagem & Efeitos TV (VHS/DVD)</span>
+            </button>
+
             <button
               onClick={() => setIsRlhfCuratorOpen(true)}
               id="header-btn-rlhf-curator"
@@ -502,6 +515,7 @@ export default function App() {
             onOpenPresets={() => setIsPresetsOpen(true)}
             onOpenAiGenerator={() => setIsAiModalOpen(true)}
             onOpenMediaAnalyzer={() => setIsMediaModalOpen(true)}
+            onOpenImageStudio={() => setIsImageStudioOpen(true)}
             onOpenVideoExport={() => setIsVideoExportOpen(true)}
             onOpenRlhfCurator={() => setIsRlhfCuratorOpen(true)}
             onRandomQuote={handleRandomQuote}
@@ -589,9 +603,23 @@ export default function App() {
             mediaDisplayMode: memeData.mediaDisplayMode,
             mediaCaption: memeData.mediaCaption,
             detectedTopic: memeData.detectedTopic,
+            mediaZoom: memeData.mediaZoom ?? prev.mediaZoom ?? 1,
           }));
           showToast('📸 Foto/Vídeo e meme contextual aplicados com sucesso!');
         }}
+      />
+
+      <ImageEffectsStudioModal
+        isOpen={isImageStudioOpen}
+        onClose={() => setIsImageStudioOpen(false)}
+        config={config}
+        onApplyConfig={(partial) => {
+          setConfig((prev) => ({
+            ...prev,
+            ...partial,
+          }));
+        }}
+        onShowToast={showToast}
       />
 
       <BatchGalleryModal
